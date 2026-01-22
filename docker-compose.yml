@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  osrm:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    container_name: osrm-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm-data:/data
+    command: osrm-routed --algorithm mld /data/south-korea-latest.osrm --max-table-size 10000 --port 5000 --ip 0.0.0.0
+    restart: unless-stopped
+    networks:
+      - routing-network
+
+  vroom:
+    image: vroom-local:latest
+    container_name: vroom-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./vroom-conf:/conf
+    environment:
+      - VROOM_ROUTER=osrm
+    depends_on:
+      - osrm
+    restart: unless-stopped
+    networks:
+      - routing-network
+
+networks:
+  routing-network:
+    driver: bridge

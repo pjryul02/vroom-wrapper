@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+wrapper.log
+
+# Docker volumes
+.docker/
+
+# OSRM data (too large for git)
+osrm-data/*.osrm*
+osrm-data/*.pbf
+osrm-data/*.ebg
+osrm-data/*.ebg_nodes
+osrm-data/*.edges
+osrm-data/*.enw
+osrm-data/*.fileIndex
+osrm-data/*.geometry
+osrm-data/*.icd
+osrm-data/*.mldgr
+osrm-data/*.names
+osrm-data/*.partition
+osrm-data/*.properties
+osrm-data/*.timestamp
+osrm-data/*.tld
+osrm-data/*.tls
+
+# Keep only directory
+!osrm-data/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+/tmp/
+*.tmp
+/tmp_*
+
+# Test files
+test-*.json
+!test-wrapper.sh
+
+# Private configs
+config.local.yml
+.env
+*.key
+
+# Claude
+.claude/
+
+# Node modules (if using vroom-express)
+node_modules/
+
+# Build artifacts
+vroom-docker/.build/
+vroom/.build/
+
+# Cloned repos (already exist elsewhere)
+vroom/
+vroom-docker/
+osrm-backend/
