@@ -241,3 +241,96 @@ MIT License
 ---
 
 **Made with ❤️ for better delivery routing**
+
+## ⚙️ 설치 및 실행
+
+### 자동 설정 (권장)
+
+```bash
+# 레포지토리 클론
+git clone https://github.com/YOUR_USERNAME/vroom-wrapper.git
+cd vroom-wrapper
+
+# 자동 설정 스크립트 실행
+chmod +x setup.sh
+./setup.sh
+
+# 서비스 시작
+docker-compose up -d
+
+# Wrapper 시작
+python3 vroom_wrapper.py
+```
+
+### 수동 설정
+
+<details>
+<summary>클릭하여 수동 설정 단계 보기</summary>
+
+#### 1. OSRM 맵 데이터 다운로드
+
+```bash
+# 한국 지도 다운로드 (255MB)
+wget -O osrm-data/south-korea-latest.osm.pbf \
+  http://download.geofabrik.de/asia/south-korea-latest.osm.pbf
+```
+
+#### 2. OSRM 데이터 전처리
+
+```bash
+# Extract
+docker run -t -v "${PWD}/osrm-data:/data" \
+  ghcr.io/project-osrm/osrm-backend:latest \
+  osrm-extract -p /opt/car.lua /data/south-korea-latest.osm.pbf
+
+# Partition
+docker run -t -v "${PWD}/osrm-data:/data" \
+  ghcr.io/project-osrm/osrm-backend:latest \
+  osrm-partition /data/south-korea-latest.osrm
+
+# Customize
+docker run -t -v "${PWD}/osrm-data:/data" \
+  ghcr.io/project-osrm/osrm-backend:latest \
+  osrm-customize /data/south-korea-latest.osrm
+```
+
+#### 3. VROOM 이미지 빌드
+
+```bash
+# VROOM Docker 클론
+git clone https://github.com/VROOM-Project/vroom-docker.git
+cd vroom-docker
+
+# 이미지 빌드
+docker build -t vroom-local:latest .
+cd ..
+```
+
+#### 4. 서비스 시작
+
+```bash
+# Docker 서비스 시작
+docker-compose up -d
+
+# Python 의존성 설치
+pip3 install -r requirements.txt
+
+# Wrapper 시작
+python3 vroom_wrapper.py
+```
+
+</details>
+
+## 📍 포트 정보
+
+- **OSRM**: http://localhost:5000
+- **VROOM**: http://localhost:3000
+- **Wrapper**: http://localhost:8000
+
+## ⚠️ 필요 사항
+
+- Docker & Docker Compose
+- Python 3.8+
+- 최소 2GB 디스크 공간 (OSRM 맵 데이터)
+- 최소 4GB RAM
+
