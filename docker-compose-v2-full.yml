@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # Redis 캐싱
+  redis:
+    image: redis:7-alpine
+    container_name: vroom-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - routing-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # OSRM 라우팅 엔진
+  osrm:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    container_name: osrm-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm-data:/data
+    command: osrm-routed --algorithm mld /data/south-korea-latest.osrm --max-table-size 10000 --port 5000 --ip 0.0.0.0
+    restart: unless-stopped
+    networks:
+      - routing-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # VROOM 최적화 엔진
+  vroom:
+    image: vroomvrp/vroom-docker:latest
+    container_name: vroom-server
+    ports:
+      - "3000:3000"
+    environment:
+      - VROOM_ROUTER=osrm
+      - VROOM_LOG_LEVEL=info
+    depends_on:
+      - osrm
+    restart: unless-stopped
+    networks:
+      - routing-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # VROOM Wrapper v2.0
+  wrapper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vroom-wrapper-v2
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - VROOM_URL=http://vroom:3000
+    depends_on:
+      - redis
+      - vroom
+    restart: unless-stopped
+    networks:
+      - routing-network
+    volumes:
+      - ./src:/app/src
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  routing-network:
+    driver: bridge

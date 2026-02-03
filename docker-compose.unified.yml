@@ -1,0 +1,150 @@
+# =============================================================
+# VROOM Wrapper 통합 스택
+# =============================================================
+# 이 파일 하나로 전체 시스템을 한 번에 실행
+#
+# 실행: docker-compose -f docker-compose.unified.yml up -d
+# 중지: docker-compose -f docker-compose.unified.yml down
+#
+# 결과: localhost:8000 하나로 모든 것 처리
+# =============================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------
+  # Layer 1: OSRM (도로망 - 가장 아래 레이어)
+  # ---------------------------------------------------------
+  osrm:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    container_name: osrm-engine
+    ports:
+      - "5000:5000"  # 디버깅용 (프로덕션에서는 제거 가능)
+    volumes:
+      - ./osrm-data:/data
+    command: >
+      osrm-routed
+      --algorithm mld
+      /data/south-korea-latest.osrm
+      --max-table-size 10000
+      --port 5000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---------------------------------------------------------
+  # Layer 2: VROOM (최적화 엔진 - OSRM 사용)
+  # ---------------------------------------------------------
+  vroom:
+    image: vroomvrp/vroom-docker:latest
+    container_name: vroom-engine
+    ports:
+      - "3000:3000"  # 디버깅용 (프로덕션에서는 제거 가능)
+    environment:
+      - VROOM_ROUTER=osrm
+      # 중요: Docker 네트워크 내부에서 osrm 서비스 이름으로 접근
+      - OSRM_URL=http://osrm:5000
+    depends_on:
+      osrm:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---------------------------------------------------------
+  # Layer 3: Redis (캐싱 - 선택)
+  # ---------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"  # 디버깅용
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---------------------------------------------------------
+  # Layer 4: Wrapper (통합 API - 최상위 레이어)
+  # ---------------------------------------------------------
+  #
+  # 실시간 교통 ON/OFF는 .env 파일에서 설정:
+  #
+  #   # 실시간 교통 OFF (기본값)
+  #   TRAFFIC_MATRIX_ENABLED=false
+  #
+  #   # 실시간 교통 ON (TMap)
+  #   TRAFFIC_MATRIX_ENABLED=true
+  #   TRAFFIC_PROVIDER=tmap
+  #   TMAP_API_KEY=your_api_key
+  #
+  # ---------------------------------------------------------
+  wrapper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vroom-wrapper
+    ports:
+      - "8000:8000"  # 이것만 외부에 노출하면 됨
+    environment:
+      # VROOM 연결 (Docker 네트워크 내부)
+      - VROOM_URL=http://vroom:3000
+      # OSRM 연결 (매트릭스 빌드용)
+      - OSRM_URL=http://osrm:5000
+      # Redis 연결
+      - REDIS_URL=redis://redis:6379
+
+      # ========================================
+      # 실시간 교통 설정 (.env에서 오버라이드)
+      # ========================================
+      - TRAFFIC_MATRIX_ENABLED=${TRAFFIC_MATRIX_ENABLED:-false}
+      - TRAFFIC_PROVIDER=${TRAFFIC_PROVIDER:-osrm}
+      - TMAP_API_KEY=${TMAP_API_KEY:-}
+      - KAKAO_API_KEY=${KAKAO_API_KEY:-}
+      - NAVER_CLIENT_ID=${NAVER_CLIENT_ID:-}
+      - NAVER_CLIENT_SECRET=${NAVER_CLIENT_SECRET:-}
+      - MATRIX_CACHE_TTL=${MATRIX_CACHE_TTL:-300}
+      - MATRIX_PARALLEL_REQUESTS=${MATRIX_PARALLEL_REQUESTS:-10}
+
+      # 서버 설정
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      vroom:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  redis-data:
+
+# =============================================================
+# 네트워크 구조:
+#
+#   [외부] → :8000 (wrapper)
+#               ↓
+#           :3000 (vroom) ←→ :5000 (osrm)
+#               ↓
+#           :6379 (redis)
+#
+# 모든 서비스가 같은 Docker 네트워크에 있어서
+# 서비스 이름으로 서로 접근 가능 (예: http://vroom:3000)
+# =============================================================

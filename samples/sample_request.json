@@ -1,0 +1,50 @@
+{
+  "vehicles": [
+    {
+      "id": 1,
+      "start": [126.9780, 37.5665],
+      "capacity": [100],
+      "description": "서울시청 출발 차량"
+    },
+    {
+      "id": 2,
+      "start": [127.0276, 37.4979],
+      "capacity": [100],
+      "description": "강남역 출발 차량"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 1,
+      "location": [127.0276, 37.4979],
+      "service": 300,
+      "delivery": [10],
+      "description": "일반 배송 - 강남역"
+    },
+    {
+      "id": 2,
+      "location": [126.9780, 37.5665],
+      "service": 300,
+      "delivery": [15],
+      "description": "VIP customer delivery - 서울시청",
+      "comment": "description에 'VIP' 키워드 → 자동으로 VIP 스킬(10000) 부여"
+    },
+    {
+      "id": 3,
+      "location": [127.1086, 37.3595],
+      "service": 600,
+      "delivery": [20],
+      "description": "Urgent delivery - 판교",
+      "comment": "description에 'Urgent' 키워드 → 자동으로 긴급 스킬(10001) 부여"
+    },
+    {
+      "id": 4,
+      "location": [126.9520, 37.4783],
+      "service": 300,
+      "delivery": [12],
+      "priority": 50,
+      "description": "중간 우선순위 배송 - 사당"
+    }
+  ],
+  "comment": "v2.0는 자동으로 VIP/긴급 작업을 탐지하고 스킬을 부여합니다"
+}

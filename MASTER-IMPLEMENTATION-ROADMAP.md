@@ -1,7 +1,13 @@
 # VROOM Wrapper v2.0 마스터 구현 로드맵
 
-**작성일**: 2026-01-23
+**작성일**: 2026-01-24 (업데이트: 실시간 ETA 강화 기능 추가)
 **목표**: 단순 미배정 사유 분석 → 완전한 VRP 최적화 플랫폼 진화
+
+**핵심 특징**:
+- ✅ VROOM 최적화 + 실시간 ETA를 **단일 API 호출**로 제공
+- ✅ Time Machine: departure_time 기반 정확한 미래 교통 예측
+- ✅ 누적 지연 추적: 경로 전체에 걸친 자동 시간 재계산
+- ✅ 다중 Provider 지원: Google Maps / Kakao Mobility / TomTom
 
 ---
 
@@ -63,6 +69,9 @@ Wrapper = 지능형 제어 시스템 (완전한 통제)
 | **입력 처리** | 그대로 전달 | 검증, 정규화, 변환 |
 | **비즈니스 로직** | 없음 | VIP/긴급/지역 자동 적용 |
 | **VROOM 제어** | 없음 | 동적 설정, 자동 튜닝 |
+| **실시간 ETA** | ❌ 없음 (OSRM 이론값만) | ✅ Google/Kakao/TomTom 실시간 교통 반영 |
+| **Time Machine** | ❌ 없음 | ✅ departure_time 기반 미래 ETA 예측 |
+| **누적 지연 추적** | ❌ 없음 | ✅ 경로 전체 시간 자동 재계산 |
 | **미배정 분석** | ✅ 사유 추적 | ✅ 개선 + 해결책 제안 |
 | **결과 분석** | 없음 | 품질 점수, 비용 계산 |
 | **외부 연동** | 없음 | 날씨, 교통, ERP, 지오코딩 |
@@ -1974,6 +1983,7 @@ def test_constraint_tuner():
 ## Phase 4: 확장 계층 (Week 8-10)
 
 ### 4.1 목표
+- ✅ **실시간 ETA 계산 및 경로 강화** (핵심 기능)
 - ✅ 외부 시스템 연동 (날씨, 교통, ERP, 지오코딩)
 - ✅ 캐싱 (Redis)
 - ✅ 인증/보안 (API Key, Rate Limiting)
@@ -2111,6 +2121,454 @@ class ExternalAPIIntegrator:
 
         return vrp_input
 ```
+
+#### 4.2.2 실시간 ETA 계산 및 경로 강화
+
+**핵심 개념**: VROOM은 OSRM의 정적 데이터로 최적화하고, Wrapper는 실시간 교통 정보로 정확한 ETA를 계산합니다.
+
+**2단계 접근법**:
+1. **VROOM 최적화**: OSRM 정적 데이터로 빠른 경로 최적화
+2. **ETA 강화**: 실시간 교통 API로 정확한 도착 시간 계산
+
+```python
+# eta_enrichment.py
+
+import httpx
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
+class ETAEnrichmentModule:
+    """
+    VROOM 결과에 실시간 ETA를 추가
+
+    핵심 기능:
+    - VROOM의 최적화된 경로 순서 유지
+    - 각 구간마다 실시간 교통 API 호출
+    - Time Machine: departure_time 기반 정확한 미래 ETA 예측
+    - 누적 지연 추적: 이전 지연이 이후 도착 시간에 자동 반영
+    """
+
+    def __init__(self):
+        self.google_api_key = os.getenv('GOOGLE_MAPS_API_KEY')
+        self.kakao_api_key = os.getenv('KAKAO_MOBILITY_API_KEY')
+        self.tomtom_api_key = os.getenv('TOMTOM_API_KEY')
+        self.provider = os.getenv('ETA_PROVIDER', 'google')  # google/kakao/tomtom
+
+    async def enrich_vroom_result(
+        self,
+        vroom_result: Dict,
+        departure_time: Optional[datetime] = None
+    ) -> Dict:
+        """
+        VROOM 결과를 실시간 ETA로 강화
+
+        입력:
+        - vroom_result: VROOM의 원본 결과
+        - departure_time: 출발 시간 (없으면 현재 시간)
+
+        출력:
+        - 실시간 ETA가 포함된 강화된 결과
+        """
+        if departure_time is None:
+            departure_time = datetime.now()
+
+        enriched_routes = []
+
+        for route in vroom_result.get('routes', []):
+            enriched_route = await self._enrich_single_route(
+                route,
+                departure_time
+            )
+            enriched_routes.append(enriched_route)
+
+        # 원본 결과 복사 후 routes 교체
+        enriched_result = vroom_result.copy()
+        enriched_result['routes'] = enriched_routes
+
+        # 메타 정보 추가
+        enriched_result['enrichment_metadata'] = {
+            'departure_time': departure_time.isoformat(),
+            'eta_provider': self.provider,
+            'enriched_at': datetime.now().isoformat()
+        }
+
+        return enriched_result
+
+    async def _enrich_single_route(
+        self,
+        route: Dict,
+        departure_time: datetime
+    ) -> Dict:
+        """
+        단일 경로의 모든 step에 실시간 ETA 계산
+
+        계산 흐름:
+        Step 1: 출발지
+        → 이동 시간 (실시간) →
+        Step 2: 도착 시간
+        → 체류 시간 (작업) →
+        Step 2: 출발 시간
+        → 이동 시간 (실시간) →
+        Step 3: 도착 시간
+        ...반복...
+        """
+        steps = route.get('steps', [])
+        enriched_steps = []
+
+        current_time = departure_time
+        prev_location = None
+
+        for i, step in enumerate(steps):
+            enriched_step = step.copy()
+
+            step_type = step.get('type')
+            curr_location = step.get('location')
+
+            if step_type == 'start':
+                # 출발지
+                enriched_step['arrival'] = None  # 출발지는 도착 없음
+                enriched_step['departure'] = current_time.isoformat()
+                enriched_step['departure_timestamp'] = int(current_time.timestamp())
+
+                prev_location = curr_location
+                enriched_steps.append(enriched_step)
+                continue
+
+            # 이전 위치에서 현재 위치까지 실시간 이동 시간 계산
+            if prev_location and curr_location:
+                real_travel_duration = await self._get_realtime_travel_duration(
+                    prev_location,
+                    curr_location,
+                    current_time  # Time Machine: 이 시간대의 교통 상황
+                )
+
+                # 도착 시간 계산
+                arrival_time = current_time + timedelta(seconds=real_travel_duration)
+
+                enriched_step['arrival'] = arrival_time.isoformat()
+                enriched_step['arrival_timestamp'] = int(arrival_time.timestamp())
+                enriched_step['realtime_travel_duration'] = real_travel_duration
+
+                # VROOM의 이론값과 실시간 값 비교
+                vroom_duration = step.get('duration', 0)
+                delay = real_travel_duration - vroom_duration
+                enriched_step['delay_seconds'] = delay
+
+                if delay > 0:
+                    logger.info(
+                        f"Route {route.get('vehicle')}, Step {i}: "
+                        f"{delay}초 지연 (VROOM: {vroom_duration}s, Real: {real_travel_duration}s)"
+                    )
+
+                # 체류 시간 (작업 시간)
+                service_duration = step.get('service', 0)
+
+                if step_type == 'job':
+                    # 작업 완료 후 출발 시간
+                    departure_time_next = arrival_time + timedelta(seconds=service_duration)
+                    enriched_step['departure'] = departure_time_next.isoformat()
+                    enriched_step['departure_timestamp'] = int(departure_time_next.timestamp())
+                    current_time = departure_time_next
+                elif step_type == 'end':
+                    # 종료지는 출발 없음
+                    enriched_step['departure'] = None
+                    current_time = arrival_time
+                else:
+                    # 기타 (break 등)
+                    departure_time_next = arrival_time + timedelta(seconds=service_duration)
+                    enriched_step['departure'] = departure_time_next.isoformat()
+                    enriched_step['departure_timestamp'] = int(departure_time_next.timestamp())
+                    current_time = departure_time_next
+
+                prev_location = curr_location
+
+            enriched_steps.append(enriched_step)
+
+        # 경로 전체 통계 재계산
+        enriched_route = route.copy()
+        enriched_route['steps'] = enriched_steps
+
+        # 실제 총 소요 시간
+        if enriched_steps:
+            first_step = enriched_steps[0]
+            last_step = enriched_steps[-1]
+
+            start_time = datetime.fromisoformat(first_step['departure'])
+            end_time = datetime.fromisoformat(last_step['arrival'])
+
+            actual_duration = int((end_time - start_time).total_seconds())
+            vroom_duration = route.get('duration', 0)
+
+            enriched_route['realtime_duration'] = actual_duration
+            enriched_route['vroom_duration'] = vroom_duration
+            enriched_route['total_delay'] = actual_duration - vroom_duration
+
+        return enriched_route
+
+    async def _get_realtime_travel_duration(
+        self,
+        origin: List[float],
+        destination: List[float],
+        departure_time: datetime
+    ) -> int:
+        """
+        실시간 교통 API로 이동 시간 조회 (초 단위)
+
+        Time Machine:
+        - departure_time을 API에 전달하여 해당 시간대의 교통 상황 반영
+        - 예: 오전 8시 출발 시 러시아워 반영, 오후 11시 출발 시 한산한 도로 반영
+        """
+        if self.provider == 'google':
+            return await self._get_google_duration(origin, destination, departure_time)
+        elif self.provider == 'kakao':
+            return await self._get_kakao_duration(origin, destination, departure_time)
+        elif self.provider == 'tomtom':
+            return await self._get_tomtom_duration(origin, destination, departure_time)
+        else:
+            logger.error(f"Unknown ETA provider: {self.provider}")
+            # Fallback: OSRM 추정값 사용
+            return await self._get_osrm_fallback(origin, destination)
+
+    async def _get_google_duration(
+        self,
+        origin: List[float],
+        destination: List[float],
+        departure_time: datetime
+    ) -> int:
+        """Google Maps Directions API"""
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    "https://maps.googleapis.com/maps/api/directions/json",
+                    params={
+                        'origin': f"{origin[1]},{origin[0]}",  # lat,lng
+                        'destination': f"{destination[1]},{destination[0]}",
+                        'departure_time': int(departure_time.timestamp()),
+                        'mode': 'driving',
+                        'traffic_model': 'best_guess',
+                        'key': self.google_api_key
+                    },
+                    timeout=5.0
+                )
+
+                data = response.json()
+
+                if data['status'] == 'OK':
+                    # duration_in_traffic이 실시간 교통 반영
+                    duration = data['routes'][0]['legs'][0]['duration_in_traffic']['value']
+                    return duration
+                else:
+                    logger.warning(f"Google API error: {data['status']}")
+                    return await self._get_osrm_fallback(origin, destination)
+
+        except Exception as e:
+            logger.error(f"Google API exception: {e}")
+            return await self._get_osrm_fallback(origin, destination)
+
+    async def _get_kakao_duration(
+        self,
+        origin: List[float],
+        destination: List[float],
+        departure_time: datetime
+    ) -> int:
+        """Kakao Mobility API"""
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    "https://apis-navi.kakaomobility.com/v1/directions",
+                    headers={'Authorization': f'KakaoAK {self.kakao_api_key}'},
+                    params={
+                        'origin': f"{origin[0]},{origin[1]}",
+                        'destination': f"{destination[0]},{destination[1]}",
+                        'priority': 'RECOMMEND',
+                        'car_type': 1
+                    },
+                    timeout=5.0
+                )
+
+                data = response.json()
+
+                if 'routes' in data and len(data['routes']) > 0:
+                    duration = data['routes'][0]['summary']['duration']
+                    return duration
+                else:
+                    return await self._get_osrm_fallback(origin, destination)
+
+        except Exception as e:
+            logger.error(f"Kakao API exception: {e}")
+            return await self._get_osrm_fallback(origin, destination)
+
+    async def _get_tomtom_duration(
+        self,
+        origin: List[float],
+        destination: List[float],
+        departure_time: datetime
+    ) -> int:
+        """TomTom Routing API"""
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"https://api.tomtom.com/routing/1/calculateRoute/{origin[1]},{origin[0]}:{destination[1]},{destination[0]}/json",
+                    params={
+                        'key': self.tomtom_api_key,
+                        'departAt': departure_time.isoformat(),
+                        'traffic': 'true',
+                        'travelMode': 'car'
+                    },
+                    timeout=5.0
+                )
+
+                data = response.json()
+
+                if 'routes' in data and len(data['routes']) > 0:
+                    duration = data['routes'][0]['summary']['travelTimeInSeconds']
+                    return duration
+                else:
+                    return await self._get_osrm_fallback(origin, destination)
+
+        except Exception as e:
+            logger.error(f"TomTom API exception: {e}")
+            return await self._get_osrm_fallback(origin, destination)
+
+    async def _get_osrm_fallback(
+        self,
+        origin: List[float],
+        destination: List[float]
+    ) -> int:
+        """
+        Fallback: OSRM으로 이론적 시간 계산
+        (실시간 교통 반영 없음)
+        """
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"http://router.project-osrm.org/route/v1/driving/{origin[0]},{origin[1]};{destination[0]},{destination[1]}",
+                    params={'overview': 'false'},
+                    timeout=3.0
+                )
+
+                data = response.json()
+
+                if data['code'] == 'Ok':
+                    duration = data['routes'][0]['duration']
+                    return int(duration)
+                else:
+                    logger.error(f"OSRM fallback failed: {data['code']}")
+                    return 600  # 10분 기본값
+
+        except Exception as e:
+            logger.error(f"OSRM fallback exception: {e}")
+            return 600
+```
+
+**사용 예시**:
+
+```python
+# Wrapper API에서 사용
+
+from eta_enrichment import ETAEnrichmentModule
+from datetime import datetime
+
+eta_enricher = ETAEnrichmentModule()
+
+@app.post("/optimize/with_realtime_eta")
+async def optimize_with_eta(
+    vrp_input: Dict,
+    departure_time: Optional[str] = None  # ISO 8601 형식
+):
+    """
+    VROOM 최적화 + 실시간 ETA를 한 번의 API 호출로 반환
+
+    요청:
+    {
+        "vehicles": [...],
+        "jobs": [...],
+        "departure_time": "2026-01-24T09:00:00"  # 선택적
+    }
+
+    응답:
+    {
+        "routes": [
+            {
+                "vehicle": 1,
+                "steps": [
+                    {
+                        "type": "start",
+                        "departure": "2026-01-24T09:00:00",
+                        "departure_timestamp": 1737702000
+                    },
+                    {
+                        "type": "job",
+                        "job": 1,
+                        "arrival": "2026-01-24T09:15:30",  # 실시간 ETA
+                        "arrival_timestamp": 1737702930,
+                        "service": 300,
+                        "departure": "2026-01-24T09:20:30",
+                        "realtime_travel_duration": 930,  # 실제 15분 30초
+                        "delay_seconds": 30  # VROOM 대비 30초 지연
+                    },
+                    {
+                        "type": "job",
+                        "job": 2,
+                        "arrival": "2026-01-24T09:32:45",  # 누적 지연 반영
+                        "arrival_timestamp": 1737703965,
+                        "service": 600,
+                        "departure": "2026-01-24T09:42:45",
+                        "realtime_travel_duration": 735,
+                        "delay_seconds": 15
+                    },
+                    {
+                        "type": "end",
+                        "arrival": "2026-01-24T09:55:00",
+                        "arrival_timestamp": 1737704700
+                    }
+                ],
+                "realtime_duration": 3300,  # 실제 55분
+                "vroom_duration": 3255,     # VROOM 예상 54분 15초
+                "total_delay": 45           # 총 45초 지연
+            }
+        ],
+        "enrichment_metadata": {
+            "departure_time": "2026-01-24T09:00:00",
+            "eta_provider": "google",
+            "enriched_at": "2026-01-24T08:30:00"
+        }
+    }
+    """
+
+    # 1. 출발 시간 파싱
+    if departure_time:
+        dept_time = datetime.fromisoformat(departure_time)
+    else:
+        dept_time = datetime.now()
+
+    # 2. VROOM 최적화 (OSRM 기반)
+    vroom_result = await call_vroom_api(vrp_input)
+
+    # 3. 실시간 ETA 강화
+    enriched_result = await eta_enricher.enrich_vroom_result(
+        vroom_result,
+        dept_time
+    )
+
+    return enriched_result
+```
+
+**핵심 포인트**:
+
+1. **단일 API 호출**: 사용자는 `/optimize/with_realtime_eta` 한 번 호출로 최적화 + 실시간 ETA를 한 번에 받음
+2. **Time Machine**: `departure_time` 파라미터로 미래 특정 시간대의 교통 상황 예측
+3. **누적 지연 추적**: Step 2에서 30초 지연 → Step 3 도착 시간에 자동 반영
+4. **계산 순서**:
+   - 도착 시간 = 이전 출발 시간 + 실시간 이동 시간
+   - 출발 시간 = 도착 시간 + 체류 시간
+   - 다음 도착 시간 = 출발 시간 + 실시간 이동 시간
+   - (반복...)
+5. **Provider 선택**: 환경 변수로 Google/Kakao/TomTom 선택 가능
+6. **Fallback**: 외부 API 실패 시 OSRM으로 대체
 
 **(상세 구현 코드는 WRAPPER-IMPLEMENTATION-PLAN.md의 Phase 4 참조)**
 

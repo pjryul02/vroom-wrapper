@@ -1,0 +1,233 @@
+{
+  "wrapper_version": "2.0.0",
+  "routes": [
+    {
+      "vehicle": 1,
+      "cost": 0,
+      "delivery": [
+        15
+      ],
+      "amount": [
+        15
+      ],
+      "pickup": [
+        0
+      ],
+      "setup": 0,
+      "service": 300,
+      "duration": 0,
+      "waiting_time": 0,
+      "priority": 100,
+      "distance": 0,
+      "steps": [
+        {
+          "type": "start",
+          "location": [
+            126.978,
+            37.5665
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            15
+          ],
+          "arrival": 0,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "job",
+          "description": "VIP customer",
+          "location": [
+            126.978,
+            37.5665
+          ],
+          "id": 2,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 2,
+          "load": [
+            0
+          ],
+          "arrival": 0,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "end",
+          "location": [
+            126.978,
+            37.5665
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            0
+          ],
+          "arrival": 300,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        }
+      ],
+      "violations": [],
+      "geometry": "yhhdFmk_fW????"
+    },
+    {
+      "vehicle": 2,
+      "cost": 3194,
+      "delivery": [
+        42
+      ],
+      "amount": [
+        42
+      ],
+      "pickup": [
+        0
+      ],
+      "setup": 0,
+      "service": 1200,
+      "duration": 3194,
+      "waiting_time": 0,
+      "priority": 130,
+      "distance": 51385,
+      "steps": [
+        {
+          "type": "start",
+          "location": [
+            127.0276,
+            37.4979
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            42
+          ],
+          "arrival": 0,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "job",
+          "location": [
+            126.952,
+            37.4783
+          ],
+          "id": 4,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 4,
+          "load": [
+            30
+          ],
+          "arrival": 542,
+          "duration": 542,
+          "violations": [],
+          "distance": 8035
+        },
+        {
+          "type": "job",
+          "description": "Urgent delivery",
+          "location": [
+            127.1086,
+            37.3595
+          ],
+          "id": 3,
+          "setup": 0,
+          "service": 600,
+          "waiting_time": 0,
+          "job": 3,
+          "load": [
+            10
+          ],
+          "arrival": 2382,
+          "duration": 2082,
+          "violations": [],
+          "distance": 32973
+        },
+        {
+          "type": "job",
+          "description": "일반 배송",
+          "location": [
+            127.0276,
+            37.4979
+          ],
+          "id": 1,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 1,
+          "load": [
+            0
+          ],
+          "arrival": 4094,
+          "duration": 3194,
+          "violations": [],
+          "distance": 51385
+        },
+        {
+          "type": "end",
+          "location": [
+            127.0276,
+            37.4979
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            0
+          ],
+          "arrival": 4394,
+          "duration": 3194,
+          "violations": [],
+          "distance": 51385
+        }
+      ],
+      "violations": [],
+      "geometry": "yxzcFqaifW?AAGCMMDKBBJ@FFT`@pB\\`B^bBn@bDl@jC@FFZH\\@Fd@zBt@nDf@|BP~@d@nBRZZpAtAxGDR~@pENp@CRn@dD`A`FjApFLj@Jf@FTR`@Jd@Jh@n@|CxAzGpAlGlAbGLl@TdAFVH`@FTVnAFTd@|B\\`BDPDPlAzFzBrLnFvYfBrIZ|Ad@|BXlAP|@BNj@jCl@pCh@|Bh@|Bb@xBf@`Cn@|Cl@xDDJFd@Hx@Db@JbCDj@VrEH`C@PRbDLnCBj@Bd@Dz@JtAJdABJBL@FVfB@FFTDPNl@Pl@Pn@pApEJ^?BH\\RbAf@|BJh@ThAdAdFd@pBLn@Hr@Df@@f@ClBAN?NATGt@Kv@Sv@o@hBIRINMRGHCDOLMJKLKNINIRQd@CJsAxEa@xAQj@ENENCDKTSZ]f@cBxBfBvBhArAPTDDPRVVVLXJhFbAzAXxCj@VHJDb@Pf@f@l@r@|DlFTZf@v@pAfBNR\\d@lCbB`Bt@nAr@h@Zm@zBEJi@nB_BvF}AnFmAdEEN_BpFEJk@pBy@rCyA`Fe@~AMf@S|@G^PDJBNDp@NjAHn@Db@D~CZfAJb@DlAFmAGc@EgAK_D[c@Eo@EkAIK_@OSISGYPm@f@mBXcAzAoF\\mAd@_BbBwFtAwE~AsFLa@pAuEl@yBn@{Bf@cBt@kC~AsFzAmFbB_GBKDSH_@He@JaAJ}@FeABe@Be@@c@Ak@Ao@Ak@Cy@Ek@mA}Im@sDOiAAIUiBIs@K_AIo@IeAIy@G_AI_AGkBGqAC}@Ai@?UD{B@}D@iC@kADeEBg@?E@Y@KBk@JkAHw@JeALkAZuDRcB^oCVoBDi@lFqZRaA?EX{Ap@eE\\yBF]Hm@NeADYFoAFkAFqA@gB@a@?e@?sAAkAEiACq@KwAO{AYyAQ_AYoA[oAk@aBcAqC_@gAWo@IWSg@iIgTeCwGOa@Ys@{@{BiEmKkGqOWm@O[CIQy@CKCQoDgQSgAw@yDYiAI]M]UwAI_@Ia@Gk@MqAk@kIKcBQiCEg@]cEDq@De@Hs@Tw@vAcELYLUNSRSNOPI^O|DcB`AYdRgFbHuBrAg@bAg@`By@zA_AhBuAz@u@dHqGhB_Bj@g@dHyGdH}GVUjAgAxKcK|FkFpBkB\\[jBcBTUrIcI|LaL~CuC^]hCaCxLiLfImHjMaLpD}CtE_ElD_DrDeDnEuDpBaBjByAvBaBrBuAzFsDlG{DfFmD`F{CtB_BvCoCpCqCpFkFxFsFdJoJnBqBvJ{J`DeDbBeBz@}@fBmB|gAahAne@}e@bCaCtG{G~@_AjFcFrB{BvB_C|A}AxHoI`D}Bh@g@jDsDvAqAx@g@bAm@bAc@hAUhAIfACfAJbBHfBg@z@_@t@e@n@o@r@aAn@mArAkCTk@Rc@|A_Bb@{@t@wAr@gBn@mBn@}AZg@LMPENBPPp@t@|@~An@nAf@|@n@fAd@l@z@|@x@x@|@v@r@b@bA`@zA^jAPd@@|@Dh@]`AAt@?LA~AURM~AY~Ae@l@QfAQVErBStEg@fA`@|BE`DPjBJ~CJF?^@NgADSJw@TgBJa@Ne@Pi@`@aAlBiEHUh@gB\\cBz@{C^iAz@qAz@gAl@g@NSV[x@~@VXdBtBf@r@Xb@V`@x@|A~@lBjA~Bv@lAdAbAh@`@z@f@x@Zr@NfBPxBApDD|@@|QAf@AjAExBMvBUpCg@~BWdCIxBAjBPvAPf@F`Ej@bBNvBFfH??}@?U@oA@qD?c@?{ECuC?g@h@?lA?~BGtAIn@GtGs@?c@gIt@cBJoBFe@?A?e@@i@@c@@i@@gC?sB?sC?{D?e@Ci@@aFAkGBsA@{D@iDDK?_@@[?_A?{DA_ECkA@wA?gBYa@Og@_@{BwCm@aAU_@i@@c@AaGAw@?aAAQ?OAOAQCMCOEMCOEOGQGMGOGOKECMISQWSUVGFqDdECBONWTYZU\\GJ_@dA{@fA{@pA_@hA{@zC]bBi@fBITmBhEa@`AQh@Od@K`@_@rAQ`@QZUN[LeFMcCMaB@iADgAVuEf@sBRWDgAPm@P_Bd@_BXSL_BTM@w@OyCEi@QcA_@cA[uAe@cAo@_@Ui@i@y@aA}@oAw@cASYIOEKqAgCy@wAy@iAw@w@]b@[|@{AdDOnA{BlEWf@c@`Aq@xAs@`Ag@d@u@j@_Ad@wAb@wAXiBReBLiARaBd@oAh@iBhAk@`@iBrB{CxDcChC{AnB_BdB{M|MuBdCiEhE_A`AyL~LyX~X{B|Bc}@r}@cRhRcCfCqHxH{LxLuKtKaIbIgFhFwArA}DfDeBlAiErCkFlDuFlDuFrDeC|AwAfAaHrFyHvGwBjByCjC{CjCgXhU_RjQ{DnDgBhB{DpDkBvAiF|E}@NKBI?MBS?Q?mIGM?KAIAMAq@Kw@oAkAgBg@w@g@y@m@r@UVQREDk@j@o@p@uD~D[`@Sh@sAzAwAxAWV{@l@u@`@}@d@g@Ta@P]LQF_Cf@{AJo@DwABkEE]?EA{@?s@?q@?{F?{A?}A?oA?}B?mC@s@Bk@Dq@FiAHc@Hk@Ja@La@Ja@NUFc@N_@La@Pi@Xa@ROJo@d@_@Vm@f@uBtBu@x@Y^e@l@aDfDo@n@iBfBMJEDSP[RQHcAb@gAb@wE~As@XaC|@g@XcAZkBx@yAn@cAZo@Ra@Ja@P_@LcBp@QF_D`ASNaA^_A^kAb@q@Xc@Pi@RmBt@qAb@cBd@aBn@uAj@g@XaBn@kEdB]JsAf@MDKBBJ@FFTHEJECO??"
+    }
+  ],
+  "summary": {
+    "cost": 3194,
+    "routes": 2,
+    "unassigned": 0,
+    "delivery": [
+      57
+    ],
+    "amount": [
+      57
+    ],
+    "pickup": [
+      0
+    ],
+    "setup": 0,
+    "service": 1500,
+    "duration": 3194,
+    "waiting_time": 0,
+    "priority": 230,
+    "distance": 51385,
+    "violations": [],
+    "computing_times": {
+      "loading": 19,
+      "solving": 0,
+      "routing": 5
+    }
+  },
+  "unassigned": [],
+  "analysis": {
+    "quality_score": 84.2,
+    "assignment_rate": 100.0,
+    "route_balance": 50.0,
+    "suggestions": [
+      "경로 균형도가 낮습니다 (50.0%). 작업 분배를 개선하거나 차량 용량을 조정하세요."
+    ]
+  }
+}
