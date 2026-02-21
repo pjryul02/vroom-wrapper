@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-OptimizationController - Phase 2 통합
+OptimizationController - v3.0 정반합
 
-Phase 2.3: VROOMConfigManager, ConstraintTuner, MultiScenarioEngine 통합
+v3.0 변경사항:
+- VROOMExecutor 직접 호출 (vroom-express 제거)
+- TwoPassOptimizer 2단계 최적화
+- UnreachableFilter 도달 불가능 필터링
+- 기존 HTTP 호출 폴백 유지
 """
 
 from typing import Dict, List, Any, Optional
@@ -13,29 +17,83 @@ from .vroom_config import VROOMConfigManager, ControlLevel
 from .constraint_tuner import ConstraintTuner
 from .multi_scenario import MultiScenarioEngine, ScenarioGenerator
 
+from ..optimization.vroom_executor import VROOMExecutor
+from ..optimization.two_pass import TwoPassOptimizer
+from ..preprocessing.unreachable_filter import UnreachableFilter
+
+from .. import config
+
 logger = logging.getLogger(__name__)
 
 
 class OptimizationController:
     """
-    최적화 제어 계층
+    최적화 제어 계층 v3.0
 
-    VROOM 호출 전/후의 모든 제어 로직 담당
+    Roouty Engine 패턴 통합:
+    - VROOM 바이너리 직접 호출 (stdin/stdout)
+    - 2-Pass 최적화 (초기 배정 + 경로별 최적화)
+    - 도달 불가능 작업 사전 필터링
     """
 
     def __init__(
         self,
         vroom_url: str = "http://localhost:3000",
-        enable_multi_scenario: bool = False
+        enable_multi_scenario: bool = False,
+        # v3.0 새 옵션
+        use_direct_call: Optional[bool] = None,
+        vroom_path: Optional[str] = None,
+        enable_two_pass: Optional[bool] = None,
+        enable_unreachable_filter: Optional[bool] = None,
     ):
-        """
-        Args:
-            vroom_url: VROOM 서버 URL
-            enable_multi_scenario: 다중 시나리오 활성화
-        """
+        # 설정 (인자 > 환경변수 > 기본값)
+        self.use_direct_call = use_direct_call if use_direct_call is not None else config.USE_DIRECT_CALL
         self.vroom_url = vroom_url
         self.enable_multi_scenario = enable_multi_scenario
 
+        # v3.0: VROOMExecutor (직접 호출)
+        self.executor = None
+        if self.use_direct_call:
+            vroom_binary = vroom_path or config.VROOM_BINARY_PATH
+            try:
+                self.executor = VROOMExecutor(
+                    vroom_path=vroom_binary,
+                    router=config.VROOM_ROUTER,
+                    router_host=config.OSRM_URL.replace("http://", "").split(":")[0],
+                    router_port=int(config.OSRM_URL.split(":")[-1]),
+                    default_threads=config.VROOM_THREADS,
+                    default_exploration=config.VROOM_EXPLORATION,
+                    timeout=config.VROOM_TIMEOUT,
+                )
+                logger.info(f"VROOMExecutor 초기화 완료 (binary: {vroom_binary})")
+            except Exception as e:
+                logger.warning(f"VROOMExecutor 초기화 실패: {e} - HTTP 폴백 사용")
+                self.use_direct_call = False
+
+        # v3.0: TwoPassOptimizer
+        _enable_two_pass = enable_two_pass if enable_two_pass is not None else config.TWO_PASS_ENABLED
+        self.two_pass_optimizer = None
+        if _enable_two_pass and self.executor:
+            self.two_pass_optimizer = TwoPassOptimizer(
+                executor=self.executor,
+                max_workers=config.TWO_PASS_MAX_WORKERS,
+                initial_threads=config.TWO_PASS_INITIAL_THREADS,
+                route_threads=config.TWO_PASS_ROUTE_THREADS,
+            )
+            logger.info(
+                f"TwoPassOptimizer 초기화 완료 "
+                f"(workers={config.TWO_PASS_MAX_WORKERS})"
+            )
+
+        # v3.0: UnreachableFilter
+        _enable_filter = enable_unreachable_filter if enable_unreachable_filter is not None else config.UNREACHABLE_FILTER_ENABLED
+        self.unreachable_filter = None
+        if _enable_filter:
+            self.unreachable_filter = UnreachableFilter(
+                threshold=config.UNREACHABLE_THRESHOLD
+            )
+
+        # 기존 컴포넌트
         self.config_manager = VROOMConfigManager()
         self.constraint_tuner = ConstraintTuner()
         self.multi_scenario_engine = MultiScenarioEngine(
@@ -52,49 +110,128 @@ class OptimizationController:
         """
         VRP 최적화 실행
 
-        Args:
-            vrp_input: 전처리된 VRP 입력
-            control_level: 제어 레벨
-            custom_config: 사용자 정의 설정
-            enable_auto_retry: 미배정 발생 시 자동 재시도
-
-        Returns:
-            VROOM 결과 (또는 최적 시나리오 결과)
+        v3.0 파이프라인:
+        1. VROOM 설정 생성
+        2. 도달 불가능 필터링 (v3.0)
+        3. 2-Pass / 다중 시나리오 / 단일 최적화
+        4. 미배정 자동 재시도
         """
         # 1. VROOM 설정 생성
-        config = self.config_manager.get_config(control_level, custom_config)
+        vroom_config = self.config_manager.get_config(control_level, custom_config)
 
-        # 2. 문제 크기에 따라 설정 조정
         num_jobs = len(vrp_input.get('jobs', [])) + len(vrp_input.get('shipments', []))
         num_vehicles = len(vrp_input.get('vehicles', []))
 
-        config = self.config_manager.tune_for_problem_size(
-            config,
-            num_jobs,
-            num_vehicles
+        vroom_config = self.config_manager.tune_for_problem_size(
+            vroom_config, num_jobs, num_vehicles
         )
 
-        # 3. VIP/긴급 작업 탐지
+        # VIP/긴급 작업 탐지
         has_vip, has_urgent = self._detect_priority_jobs(vrp_input)
         if has_vip or has_urgent:
-            config = self.config_manager.get_config_for_priority_jobs(
-                config,
-                has_vip,
-                has_urgent
+            vroom_config = self.config_manager.get_config_for_priority_jobs(
+                vroom_config, has_vip, has_urgent
             )
 
-        # 4. 다중 시나리오 실행 (PREMIUM 레벨 또는 명시적 활성화)
+        # 2. 도달 불가능 필터링 (v3.0 - Roouty 패턴)
+        unreachable_jobs = []
+        if self.unreachable_filter and vrp_input.get("matrices"):
+            vrp_input, unreachable_jobs = self.unreachable_filter.filter(vrp_input)
+
+            if not vrp_input.get("jobs") and not vrp_input.get("shipments"):
+                logger.warning("모든 작업 도달 불가능 - VROOM 호출 스킵")
+                return {
+                    "code": 0,
+                    "summary": {"cost": 0, "unassigned": len(unreachable_jobs)},
+                    "routes": [],
+                    "unassigned": unreachable_jobs,
+                }
+
+        # 3. 최적화 실행
         if self.enable_multi_scenario or control_level == ControlLevel.PREMIUM:
-            return await self._optimize_multi_scenario(vrp_input, config)
+            # 다중 시나리오 (기존)
+            result = await self._optimize_multi_scenario(vrp_input, vroom_config)
 
-        # 5. 단일 최적화 실행
-        result = await self._call_vroom(vrp_input, config)
+        elif self.two_pass_optimizer and num_jobs >= 10:
+            # 2-Pass 최적화 (v3.0 - 10개 이상 작업일 때)
+            logger.info(f"[2-PASS] 2단계 최적화 실행 (jobs={num_jobs})")
+            result = await self.two_pass_optimizer.optimize(vrp_input)
 
-        # 6. 미배정 발생 시 자동 재시도
+        else:
+            # 단일 최적화
+            result = await self._call_vroom(vrp_input, vroom_config)
+
+        # 도달 불가능 작업을 unassigned에 추가
+        if unreachable_jobs:
+            existing = result.get("unassigned", [])
+            result["unassigned"] = existing + unreachable_jobs
+            result.setdefault("summary", {})["unassigned"] = len(result["unassigned"])
+
+        # 4. 미배정 자동 재시도
         if enable_auto_retry and result.get('unassigned'):
-            result = await self._retry_with_relaxation(vrp_input, config, result)
+            # unreachable은 재시도해도 의미 없으므로 제외
+            retryable = [
+                u for u in result.get("unassigned", [])
+                if u.get("reason") != "unreachable"
+            ]
+            if retryable:
+                result = await self._retry_with_relaxation(vrp_input, vroom_config, result)
 
         return result
+
+    async def _call_vroom(
+        self,
+        vrp_input: Dict[str, Any],
+        config: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """
+        VROOM 호출 (v3.0 - 직접 호출 우선, HTTP 폴백)
+        """
+        exploration = None
+        if config and 'exploration_level' in config:
+            exploration = config['exploration_level']
+
+        # v3.0: 직접 호출 모드
+        if self.use_direct_call and self.executor:
+            return await self.executor.execute(
+                vrp_input,
+                exploration=exploration,
+            )
+
+        # 폴백: HTTP 호출 (기존 vroom-express)
+        return await self._call_vroom_http(vrp_input, config)
+
+    async def _call_vroom_http(
+        self,
+        vrp_input: Dict[str, Any],
+        config: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """기존 HTTP 호출 (vroom-express 폴백)"""
+        vroom_payload = vrp_input.copy()
+
+        if config:
+            if 'options' not in vroom_payload:
+                vroom_payload['options'] = {}
+            if 'exploration_level' in config:
+                vroom_payload['options']['g'] = config['exploration_level']
+
+        try:
+            async with httpx.AsyncClient(
+                timeout=config.get('timeout', 30000) / 1000 if config else 30.0
+            ) as client:
+                response = await client.post(
+                    f"{self.vroom_url}",
+                    json=vroom_payload
+                )
+                response.raise_for_status()
+                return response.json()
+
+        except httpx.RequestError as e:
+            logger.error(f"VROOM HTTP request failed: {e}")
+            raise
+        except httpx.HTTPStatusError as e:
+            logger.error(f"VROOM HTTP error: {e.response.status_code}")
+            raise
 
     async def _optimize_multi_scenario(
         self,
@@ -104,37 +241,28 @@ class OptimizationController:
         """다중 시나리오 최적화"""
         logger.info("Multi-scenario optimization enabled")
 
-        # 시나리오 생성
         scenarios = ScenarioGenerator.generate_control_level_scenarios(
-            vrp_input,
-            self.config_manager
+            vrp_input, self.config_manager
         )
 
-        # 시나리오 실행
         results = await self.multi_scenario_engine.run_scenarios(scenarios)
 
         if not results:
             logger.error("All scenarios failed, falling back to single optimization")
             return await self._call_vroom(vrp_input, base_config)
 
-        # 최적 결과 선택
         best_result = self.multi_scenario_engine.select_best_result(
-            results,
-            criteria='score'
+            results, criteria='score'
         )
 
-        # 비교 리포트 추가
         comparison = self.multi_scenario_engine.compare_results(results)
 
-        # 메타데이터 추가
         final_result = best_result.vroom_result.copy()
         final_result['multi_scenario_metadata'] = {
             'selected_scenario': best_result.scenario_name,
             'total_scenarios': len(results),
             'comparison': comparison
         }
-
-        logger.info(f"Selected scenario: {best_result.scenario_name}")
 
         return final_result
 
@@ -144,17 +272,7 @@ class OptimizationController:
         config: Dict[str, Any],
         initial_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        제약조건 완화 후 재시도
-
-        Args:
-            vrp_input: VRP 입력
-            config: VROOM 설정
-            initial_result: 초기 결과 (미배정 포함)
-
-        Returns:
-            개선된 결과 (또는 초기 결과)
-        """
+        """제약조건 완화 후 재시도"""
         unassigned = initial_result.get('unassigned', [])
 
         if not unassigned:
@@ -162,36 +280,24 @@ class OptimizationController:
 
         logger.info(f"Found {len(unassigned)} unassigned jobs, attempting relaxation...")
 
-        # 제약조건 조정 제안
         suggestions = self.constraint_tuner.suggest_constraint_adjustments(
-            vrp_input,
-            unassigned
+            vrp_input, unassigned
         )
 
-        for suggestion in suggestions:
-            logger.info(f"Suggestion: {suggestion}")
-
-        # 자동 튜닝 적용
         tuned_input = self.constraint_tuner.auto_tune_for_unassigned(
-            vrp_input,
-            unassigned
+            vrp_input, unassigned
         )
 
-        # 재시도
         retry_result = await self._call_vroom(tuned_input, config)
 
-        # 개선 확인
         retry_unassigned = len(retry_result.get('unassigned', []))
         initial_unassigned = len(unassigned)
 
         if retry_unassigned < initial_unassigned:
             improvement = initial_unassigned - retry_unassigned
             logger.info(
-                f"Relaxation successful: reduced unassigned from "
-                f"{initial_unassigned} to {retry_unassigned} (-{improvement})"
+                f"Relaxation successful: {initial_unassigned} → {retry_unassigned} (-{improvement})"
             )
-
-            # 메타데이터 추가
             retry_result['relaxation_metadata'] = {
                 'applied': True,
                 'initial_unassigned': initial_unassigned,
@@ -199,72 +305,15 @@ class OptimizationController:
                 'improvement': improvement,
                 'suggestions': suggestions
             }
-
             return retry_result
-        else:
-            logger.info("Relaxation did not improve result, returning initial result")
-            return initial_result
 
-    async def _call_vroom(
-        self,
-        vrp_input: Dict[str, Any],
-        config: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
-        """
-        VROOM API 호출
+        logger.info("Relaxation did not improve result")
+        return initial_result
 
-        Args:
-            vrp_input: VRP 입력
-            config: VROOM 설정 (옵션)
-
-        Returns:
-            VROOM 결과
-        """
-        # VROOM 입력 구성
-        vroom_payload = vrp_input.copy()
-
-        # 옵션 추가
-        if config:
-            if 'options' not in vroom_payload:
-                vroom_payload['options'] = {}
-
-            if 'exploration_level' in config:
-                vroom_payload['options']['g'] = config['exploration_level']
-
-        try:
-            async with httpx.AsyncClient(timeout=config.get('timeout', 30000) / 1000 if config else 30.0) as client:
-                response = await client.post(
-                    f"{self.vroom_url}",
-                    json=vroom_payload
-                )
-
-                response.raise_for_status()
-                result = response.json()
-
-                logger.debug(f"VROOM call successful: {result.get('summary', {})}")
-
-                return result
-
-        except httpx.RequestError as e:
-            logger.error(f"VROOM request failed: {e}")
-            raise
-        except httpx.HTTPStatusError as e:
-            logger.error(f"VROOM returned error: {e.response.status_code}")
-            raise
-
-    def _detect_priority_jobs(
-        self,
-        vrp_input: Dict[str, Any]
-    ) -> tuple:
-        """
-        VIP/긴급 작업 탐지
-
-        Returns:
-            (has_vip, has_urgent)
-        """
+    def _detect_priority_jobs(self, vrp_input: Dict[str, Any]) -> tuple:
+        """VIP/긴급 작업 탐지"""
         VIP_SKILL = 10000
         URGENT_SKILL = 10001
-
         has_vip = False
         has_urgent = False
 

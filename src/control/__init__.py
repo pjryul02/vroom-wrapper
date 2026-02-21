@@ -1,5 +1,5 @@
 """
-Control module for VROOM Wrapper v2.0
+Control module for VROOM Wrapper v3.0
 
 Provides VROOM configuration management, constraint tuning, and multi-scenario optimization.
 """

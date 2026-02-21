@@ -1,0 +1,73 @@
+###############################################################
+# VROOM Wrapper v3.0 - Multi-stage Dockerfile
+#
+# vroom-express (Node.js) 제거 → VROOM 바이너리를 직접 포함
+# 컨테이너: 4개 → 3개 (OSRM + Redis + Wrapper+VROOM)
+###############################################################
+
+# ============================================================
+# Stage 1: VROOM 바이너리 + 라이브러리 추출
+# ============================================================
+FROM vroom-local:latest AS vroom-binary
+
+RUN ls -la /usr/local/bin/vroom
+
+# ============================================================
+# Stage 2: Python Wrapper + VROOM 바이너리
+# ============================================================
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# 1) Python 의존성 먼저 설치 (시스템 SSL 그대로 사용)
+COPY requirements-v3.txt .
+RUN pip install --no-cache-dir -r requirements-v3.txt
+
+# 2) 기본 도구 설치
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# 3) VROOM 바이너리 복사
+COPY --from=vroom-binary /usr/local/bin/vroom /usr/local/bin/vroom
+RUN chmod +x /usr/local/bin/vroom
+
+# 4) VROOM 전용 공유 라이브러리 복사
+#    주의: libssl, libcrypto는 시스템 것 사용 (덮어쓰면 Python SSL 깨짐)
+#    VROOM 전용 디렉토리에 넣고 LD_LIBRARY_PATH로 참조
+RUN mkdir -p /opt/vroom-libs
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libglpk.so.40 /opt/vroom-libs/
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libcolamd.so.2 /opt/vroom-libs/
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libamd.so.2 /opt/vroom-libs/
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libltdl.so.7 /opt/vroom-libs/
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libgmp.so.10 /opt/vroom-libs/
+COPY --from=vroom-binary /lib/x86_64-linux-gnu/libsuitesparseconfig.so.5 /opt/vroom-libs/
+RUN echo "/opt/vroom-libs" > /etc/ld.so.conf.d/vroom.conf && ldconfig
+
+# 소스 복사
+COPY src/ ./src/
+
+# 로그 디렉토리
+RUN mkdir -p /app/logs
+
+# 포트 노출
+EXPOSE 8000
+
+# 헬스 체크
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD wget -qO- http://localhost:8000/health > /dev/null 2>&1 || exit 1
+
+# 환경 변수 기본값
+ENV USE_DIRECT_CALL=true \
+    VROOM_BINARY_PATH=/usr/local/bin/vroom \
+    VROOM_ROUTER=osrm \
+    VROOM_THREADS=4 \
+    VROOM_EXPLORATION=5 \
+    VROOM_TIMEOUT=300 \
+    TWO_PASS_ENABLED=false \
+    UNREACHABLE_FILTER_ENABLED=true \
+    LOG_LEVEL=INFO
+
+# 실행
+CMD ["python", "-m", "uvicorn", "src.main_v3:app", "--host", "0.0.0.0", "--port", "8000"]

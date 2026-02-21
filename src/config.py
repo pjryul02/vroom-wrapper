@@ -1,7 +1,7 @@
 """
-VROOM Wrapper v2.0 설정 파일
+VROOM Wrapper v3.0 설정 파일
 
-이 파일을 수정하여 API Key, 외부 서비스, 캐싱 등을 제어합니다.
+v3.0 정반합: Roouty Engine (Go) + Python Wrapper 통합
 """
 
 import os
@@ -28,10 +28,45 @@ API_KEYS = {
 
 
 # ============================================================
-# VROOM 서버
+# VROOM 엔진 (v3.0 - 직접 호출 + HTTP 폴백)
 # ============================================================
 
+# 직접 호출 모드 (vroom-express 없이 바이너리 실행)
+USE_DIRECT_CALL = os.getenv("USE_DIRECT_CALL", "true").lower() == "true"
+VROOM_BINARY_PATH = os.getenv("VROOM_BINARY_PATH", "vroom")
+VROOM_ROUTER = os.getenv("VROOM_ROUTER", "osrm")
+VROOM_THREADS = int(os.getenv("VROOM_THREADS", "4"))
+VROOM_EXPLORATION = int(os.getenv("VROOM_EXPLORATION", "5"))
+VROOM_TIMEOUT = int(os.getenv("VROOM_TIMEOUT", "300"))
+
+# HTTP 폴백 (USE_DIRECT_CALL=false일 때)
 VROOM_URL = os.getenv("VROOM_URL", "http://localhost:3000")
+
+
+# ============================================================
+# 2-Pass 최적화 (Roouty Engine 패턴)
+# ============================================================
+
+TWO_PASS_ENABLED = os.getenv("TWO_PASS_ENABLED", "false").lower() == "true"
+TWO_PASS_MAX_WORKERS = int(os.getenv("TWO_PASS_MAX_WORKERS", "4"))
+TWO_PASS_INITIAL_THREADS = int(os.getenv("TWO_PASS_INITIAL_THREADS", "16"))
+TWO_PASS_ROUTE_THREADS = int(os.getenv("TWO_PASS_ROUTE_THREADS", "4"))
+
+
+# ============================================================
+# 도달 불가능 필터링 (Roouty Engine 패턴)
+# ============================================================
+
+UNREACHABLE_FILTER_ENABLED = os.getenv("UNREACHABLE_FILTER_ENABLED", "true").lower() == "true"
+UNREACHABLE_THRESHOLD = int(os.getenv("UNREACHABLE_THRESHOLD", "43200"))  # 12시간
+
+
+# ============================================================
+# OSRM 매트릭스 청킹 (Roouty Engine 패턴)
+# ============================================================
+
+OSRM_CHUNK_SIZE = int(os.getenv("OSRM_CHUNK_SIZE", "75"))
+OSRM_MAX_WORKERS = int(os.getenv("OSRM_MAX_WORKERS", "8"))
 
 
 # ============================================================
@@ -117,15 +152,23 @@ def get_traffic_api_key() -> Optional[str]:
 
 def print_config():
     """현재 설정 출력 (디버깅용)"""
-    print("=== VROOM Wrapper Configuration ===")
-    print(f"VROOM_URL: {VROOM_URL}")
+    print("=== VROOM Wrapper v3.0 Configuration ===")
+    print(f"USE_DIRECT_CALL: {USE_DIRECT_CALL}")
+    print(f"VROOM_BINARY_PATH: {VROOM_BINARY_PATH}")
+    print(f"VROOM_URL (fallback): {VROOM_URL}")
+    print(f"VROOM_THREADS: {VROOM_THREADS}")
+    print(f"VROOM_EXPLORATION: {VROOM_EXPLORATION}")
+    print(f"TWO_PASS_ENABLED: {TWO_PASS_ENABLED}")
+    print(f"TWO_PASS_MAX_WORKERS: {TWO_PASS_MAX_WORKERS}")
+    print(f"UNREACHABLE_FILTER_ENABLED: {UNREACHABLE_FILTER_ENABLED}")
     print(f"OSRM_URL: {OSRM_URL}")
+    print(f"OSRM_CHUNK_SIZE: {OSRM_CHUNK_SIZE}")
     print(f"REDIS_URL: {REDIS_URL or '(disabled)'}")
     print(f"TRAFFIC_MATRIX_ENABLED: {TRAFFIC_MATRIX_ENABLED}")
     print(f"TRAFFIC_PROVIDER: {TRAFFIC_PROVIDER}")
     print(f"API_KEYS: {list(API_KEYS.keys())}")
     print(f"RATE_LIMIT: {RATE_LIMIT_REQUESTS}/{RATE_LIMIT_WINDOW}s")
-    print("===================================")
+    print("========================================")
 
 
 if __name__ == "__main__":
