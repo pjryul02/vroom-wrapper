@@ -192,10 +192,12 @@ class OptimizationController:
             exploration = config['exploration_level']
 
         # v3.0: 직접 호출 모드
+        # Always enable geometry for OSRM road-following routes
         if self.use_direct_call and self.executor:
             return await self.executor.execute(
                 vrp_input,
                 exploration=exploration,
+                geometry=True,
             )
 
         # 폴백: HTTP 호출 (기존 vroom-express)

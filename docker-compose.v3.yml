@@ -110,6 +110,7 @@ services:
     restart: unless-stopped
     networks:
       - routing-network
+      - routing-net
     volumes:
       - ./logs:/app/logs
     healthcheck:
@@ -125,3 +126,5 @@ volumes:
 networks:
   routing-network:
     driver: bridge
+  routing-net:
+    external: true

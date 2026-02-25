@@ -31,6 +31,31 @@ class ViolationType(str, Enum):
     NO_VEHICLES = "no_vehicles"
 
 
+SKILL_NAMES: Dict[int, str] = {
+    10000: "VIP",
+    10001: "긴급(Urgent)",
+    20000: "서울 지역",
+    20001: "부산 지역",
+    20002: "인천 지역",
+    20003: "대구 지역",
+    20004: "대전 지역",
+    20005: "광주 지역",
+    20006: "울산 지역",
+}
+
+
+def _skill_label(skill_id: int) -> str:
+    """스킬 번호를 사람이 읽을 수 있는 이름으로 변환"""
+    name = SKILL_NAMES.get(skill_id)
+    if name:
+        return f"{name}({skill_id})"
+    return str(skill_id)
+
+
+def _skill_labels(skill_ids: set) -> List[str]:
+    return [_skill_label(s) for s in sorted(skill_ids)]
+
+
 class ConstraintChecker:
     """Analyzes why jobs are unassigned by comparing with original input"""
 
@@ -108,11 +133,13 @@ class ConstraintChecker:
                 skills_compatible.append(vehicle)
 
         if not skills_compatible:
+            missing_labels = _skill_labels(job_skills)
             violations.append({
                 "type": ViolationType.SKILLS,
-                "description": "필요 스킬을 가진 차량 없음",
+                "description": f"필요 스킬을 가진 차량 없음: {', '.join(missing_labels)}",
                 "details": {
                     "required_skills": list(job_skills),
+                    "required_skill_names": missing_labels,
                     "available_vehicle_skills": [v.get('skills', []) for v in self.vehicles]
                 }
             })
@@ -217,10 +244,12 @@ class ConstraintChecker:
         if pickup_skills != delivery_skills:
             violations.append({
                 "type": ViolationType.SKILLS,
-                "description": "픽업과 배달의 스킬 요구가 다름",
+                "description": f"픽업과 배달의 스킬 요구가 다름: 픽업={_skill_labels(pickup_skills)}, 배달={_skill_labels(delivery_skills)}",
                 "details": {
                     "pickup_skills": list(pickup_skills),
-                    "delivery_skills": list(delivery_skills)
+                    "pickup_skill_names": _skill_labels(pickup_skills),
+                    "delivery_skills": list(delivery_skills),
+                    "delivery_skill_names": _skill_labels(delivery_skills),
                 }
             })
 

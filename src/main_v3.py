@@ -17,6 +17,9 @@ import logging
 import time
 import os
 
+# API Models (Swagger 문서화용 Pydantic 모델)
+from .api_models import DistributeRequest, OptimizeRequest, MatrixBuildRequest
+
 # v3.0 설정
 from . import config
 
@@ -147,9 +150,80 @@ def check_rate_limit(api_key: str, limit: Optional[int] = None):
 # Endpoints
 # ============================================================
 
+@app.post("/distribute")
+async def distribute(request_body: DistributeRequest) -> Dict[str, Any]:
+    """
+    VROOM 호환 배차 엔드포인트
+
+    VROOM 표준 JSON 포맷으로 입출력. API Key 불필요.
+    Route Playground 및 외부 VROOM 호환 도구에서 직접 호출 가능.
+    부가 기능: 미배정 작업에 대한 사유 분석(reasons)을 자동 포함.
+    """
+    start_time = time.time()
+    vrp_data = request_body.model_dump(exclude_none=True)
+
+    try:
+        # Always enable geometry for OSRM road-following routes
+        # Without -g flag, VROOM skips OSRM /route calls (distance=None, routing=0)
+        options = vrp_data.get('options', {})
+        user_requested_geometry = options.get('g', False)
+
+        # Direct VROOM call (bypass preprocessing for max compatibility)
+        if controller.executor:
+            result = await controller.executor.execute(
+                vrp_data,
+                geometry=True,  # Always use OSRM for accurate distance/duration
+            )
+        else:
+            # HTTP fallback
+            import httpx
+            async with httpx.AsyncClient(timeout=300.0) as client:
+                resp = await client.post(
+                    config.VROOM_URL,
+                    json=vrp_data,
+                )
+                resp.raise_for_status()
+                result = resp.json()
+
+        # Wrapper value-add: unassigned reason analysis
+        if result.get('unassigned'):
+            try:
+                checker = ConstraintChecker(vrp_data)
+                reasons_map = checker.analyze_unassigned(result['unassigned'])
+                for u in result['unassigned']:
+                    job_id = u.get('id')
+                    if job_id in reasons_map:
+                        u['reasons'] = reasons_map[job_id]
+            except Exception:
+                pass  # Don't fail on analysis error
+
+        # Strip geometry from response if user didn't request it
+        if not user_requested_geometry:
+            for route in result.get('routes', []):
+                route.pop('geometry', None)
+
+        # Ensure VROOM-compatible code field
+        if 'code' not in result:
+            result['code'] = 0
+
+        # Add wrapper metadata (extra field - won't break VROOM consumers)
+        processing_time = int((time.time() - start_time) * 1000)
+        result['_wrapper'] = {
+            'version': '3.0.0',
+            'engine': 'direct' if controller.executor else 'http',
+            'processing_time_ms': processing_time,
+        }
+
+        return result
+
+    except Exception as e:
+        logger.error(f"/distribute failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/optimize")
 async def optimize_standard(
-    request_body: Dict[str, Any],
+    request_body: OptimizeRequest,
     x_api_key: Optional[str] = Header(None)
 ) -> Dict[str, Any]:
     """
@@ -171,12 +245,15 @@ async def optimize_standard(
     start_time = time.time()
 
     try:
-        use_cache = request_body.pop('use_cache', True)
-        business_rules = request_body.pop('business_rules', None)
+        use_cache = request_body.use_cache if request_body.use_cache is not None else True
+        business_rules = request_body.business_rules.model_dump(exclude_none=True) if request_body.business_rules else None
+        vrp_data = request_body.model_dump(exclude_none=True)
+        vrp_data.pop('use_cache', None)
+        vrp_data.pop('business_rules', None)
 
         # 캐시 확인
         if use_cache:
-            cached = cache_manager.get(request_body)
+            cached = cache_manager.get(vrp_data)
             if cached:
                 logger.info(f"Cache hit for {api_key_info['name']}")
                 cached['_metadata'] = {
@@ -186,7 +263,7 @@ async def optimize_standard(
                 return cached
 
         # Phase 1: 전처리
-        vrp_input = await preprocessor.process(request_body, business_rules)
+        vrp_input = await preprocessor.process(vrp_data, business_rules)
 
         # Phase 2: 최적화 (v3.0 - 직접호출 + 필터링 + 2-Pass 통합)
         vroom_result = await controller.optimize(
@@ -233,7 +310,7 @@ async def optimize_standard(
 
         # 캐시에 저장
         if use_cache:
-            cache_manager.set(request_body, response, ttl=3600)
+            cache_manager.set(vrp_data, response, ttl=3600)
 
         logger.info(
             f"Optimization complete for {api_key_info['name']} "
@@ -252,7 +329,7 @@ async def optimize_standard(
 
 @app.post("/optimize/basic")
 async def optimize_basic(
-    request_body: Dict[str, Any],
+    request_body: OptimizeRequest,
     x_api_key: Optional[str] = Header(None)
 ) -> Dict[str, Any]:
     """BASIC 최적화 (빠른 결과, 분석 생략)"""
@@ -260,7 +337,10 @@ async def optimize_basic(
     check_rate_limit(x_api_key)
 
     try:
-        vrp_input = await preprocessor.process(request_body)
+        vrp_data = request_body.model_dump(exclude_none=True)
+        vrp_data.pop('use_cache', None)
+        vrp_data.pop('business_rules', None)
+        vrp_input = await preprocessor.process(vrp_data)
         result = await controller.optimize(
             vrp_input,
             control_level=ControlLevel.BASIC,
@@ -294,7 +374,7 @@ async def optimize_basic(
 
 @app.post("/optimize/premium")
 async def optimize_premium(
-    request_body: Dict[str, Any],
+    request_body: OptimizeRequest,
     x_api_key: Optional[str] = Header(None)
 ) -> Dict[str, Any]:
     """PREMIUM 최적화 (다중 시나리오 + 2-Pass)"""
@@ -311,7 +391,10 @@ async def optimize_premium(
     start_time = time.time()
 
     try:
-        vrp_input = await preprocessor.process(request_body)
+        vrp_data = request_body.model_dump(exclude_none=True)
+        vrp_data.pop('use_cache', None)
+        vrp_data.pop('business_rules', None)
+        vrp_input = await preprocessor.process(vrp_data)
 
         # PREMIUM: 다중 시나리오 + 2-Pass 활성화
         premium_controller = OptimizationController(
@@ -365,26 +448,20 @@ async def optimize_premium(
 
 @app.post("/matrix/build")
 async def build_matrix(
-    request_body: Dict[str, Any],
+    request_body: MatrixBuildRequest,
     x_api_key: Optional[str] = Header(None)
 ) -> Dict[str, Any]:
     """
     v3.0: 대규모 매트릭스 생성 (OSRM 청킹)
 
-    Request Body:
-        {
-            "locations": [[lon, lat], ...],
-            "profile": "driving"  # optional
-        }
-
-    Returns:
-        {"durations": [[int]], "distances": [[int]]}
+    OSRM 서버에서 거리/시간 매트릭스를 75x75 청크 단위로 병렬 생성.
+    250개 이상 좌표에서 유용.
     """
     verify_api_key(x_api_key)
     check_rate_limit(x_api_key)
 
-    locations = request_body.get("locations", [])
-    profile = request_body.get("profile", "driving")
+    locations = request_body.locations
+    profile = request_body.profile or "driving"
 
     if not locations:
         raise HTTPException(status_code=400, detail="locations required")
@@ -453,6 +530,7 @@ async def root():
         "version": "3.0.0",
         "architecture": "Roouty Engine (Go) + Python Wrapper synthesis",
         "endpoints": {
+            "distribute": "POST /distribute (VROOM-compatible, no API Key)",
             "optimize": "POST /optimize (STANDARD, requires API Key)",
             "optimize_basic": "POST /optimize/basic (BASIC, requires API Key)",
             "optimize_premium": "POST /optimize/premium (PREMIUM, requires API Key)",
