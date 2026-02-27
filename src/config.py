@@ -77,6 +77,13 @@ OSRM_URL = os.getenv("OSRM_URL", "http://localhost:5000")
 
 
 # ============================================================
+# Map Matching (GPS 궤적 보정)
+# ============================================================
+
+MAP_MATCHING_ENABLED = os.getenv("MAP_MATCHING_ENABLED", "true").lower() == "true"
+
+
+# ============================================================
 # Redis 캐싱 (선택)
 # ============================================================
 # None이면 메모리 캐싱 사용
@@ -163,6 +170,7 @@ def print_config():
     print(f"UNREACHABLE_FILTER_ENABLED: {UNREACHABLE_FILTER_ENABLED}")
     print(f"OSRM_URL: {OSRM_URL}")
     print(f"OSRM_CHUNK_SIZE: {OSRM_CHUNK_SIZE}")
+    print(f"MAP_MATCHING_ENABLED: {MAP_MATCHING_ENABLED}")
     print(f"REDIS_URL: {REDIS_URL or '(disabled)'}")
     print(f"TRAFFIC_MATRIX_ENABLED: {TRAFFIC_MATRIX_ENABLED}")
     print(f"TRAFFIC_PROVIDER: {TRAFFIC_PROVIDER}")

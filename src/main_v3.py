@@ -41,6 +41,10 @@ from .preprocessing.chunked_matrix import OSRMChunkedMatrix
 # 실시간 교통 매트릭스 (v2.0 통합)
 from .preprocessing.matrix_builder import TrafficProvider
 
+# Map Matching
+from .map_matching import OSRMMapMatcher
+from .map_matching.models import MapMatchingRequest, MapMatchingSummary, MapMatchingResponse, StandardResponse
+
 # 로깅 설정
 logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL, logging.INFO),
@@ -96,6 +100,9 @@ matrix_builder = OSRMChunkedMatrix(
     chunk_size=config.OSRM_CHUNK_SIZE,
     max_workers=config.OSRM_MAX_WORKERS,
 )
+
+# Map Matching 엔진
+map_matcher = OSRMMapMatcher(osrm_url=config.OSRM_URL)
 
 
 # ============================================================
@@ -482,6 +489,221 @@ async def build_matrix(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ============================================================
+# Map Matching Endpoints
+# ============================================================
+
+@app.post("/map-matching/match", response_model=StandardResponse)
+async def map_matching_match(
+    request_body: MapMatchingRequest,
+    x_api_key: Optional[str] = Header(None)
+) -> StandardResponse:
+    """
+    GPS 궤적 맵 매칭
+
+    GPS 궤적을 도로 네트워크에 매칭하여 보정된 경로를 반환합니다.
+
+    입력: [[경도, 위도, 타임스탬프, 정확도, 속도], ...]
+    출력: [[경도, 위도, 타임스탬프, 플래그], ...]
+
+    플래그: 0.5=보정됨, 1.0=원본, 2.0=생성됨, 2.5=보간됨, 4.0=도로점프
+    """
+    verify_api_key(x_api_key)
+    check_rate_limit(x_api_key)
+
+    start_time = time.time()
+
+    try:
+        trajectory = request_body.trajectory
+        logger.info(f"[Map Matching] 요청: {len(trajectory)}개 포인트")
+
+        # 시간 순서 검증
+        for i in range(1, len(trajectory)):
+            if trajectory[i][2] < trajectory[i - 1][2]:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"포인트 {i}: 시간 순서가 올바르지 않습니다"
+                )
+
+        # 선택적 맵 매칭 실행 (정확도 기반)
+        matching_result = await map_matcher.match_trajectory_selective(
+            trajectory,
+            accuracy_threshold=20.0,
+            enable_debug=request_body.enable_debug
+        )
+
+        # 응답용 필드 필터링: [lon, lat, ts, acc, spd, flag] → [lon, lat, ts, flag]
+        filtered_trajectory = []
+        for point in matching_result.get('matched_trace', []):
+            if len(point) >= 6:
+                filtered_trajectory.append([point[0], point[1], point[2], point[5]])
+            elif len(point) >= 4:
+                filtered_trajectory.append([point[0], point[1], point[2], point[3] if len(point) > 5 else 1.0])
+
+        # Summary 필드 매핑
+        summary = matching_result.get('summary', {})
+        matched_points = summary.get('corrected_points', summary.get('matched_points', 0))
+
+        response_data = MapMatchingResponse(
+            matched_trace=filtered_trajectory,
+            summary=MapMatchingSummary(
+                total_points=len(filtered_trajectory),
+                matched_points=matched_points
+            ),
+            debug_info=matching_result.get('debug_info')
+        )
+
+        elapsed = time.time() - start_time
+        logger.info(
+            f"[Map Matching] 완료: {matched_points}/{len(filtered_trajectory)}개 매칭 ({elapsed:.2f}s)"
+        )
+
+        return StandardResponse(
+            status="success",
+            message="맵 매칭이 성공적으로 완료되었습니다",
+            data=response_data
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"[Map Matching] 오류: {e}")
+        raise HTTPException(status_code=500, detail=f"맵 매칭 처리 중 오류: {str(e)}")
+
+
+@app.get("/map-matching/health")
+async def map_matching_health() -> Dict[str, Any]:
+    """Map Matching 서비스 상태 확인 (OSRM 연결 테스트)"""
+    try:
+        # 서울시청 → 을지로입구 테스트 경로
+        test_route = await map_matcher._get_connecting_route(
+            [126.9780, 37.5665], [126.9864, 37.5659]
+        )
+
+        if test_route:
+            return {
+                "status": "healthy",
+                "message": "Map Matching 서비스가 정상 작동 중입니다",
+                "osrm_url": config.OSRM_URL,
+                "osrm_status": "connected",
+                "timestamp": int(time.time())
+            }
+        else:
+            return {
+                "status": "unhealthy",
+                "message": "OSRM 서비스에서 응답이 없습니다",
+                "osrm_url": config.OSRM_URL,
+                "osrm_status": "no_response",
+                "timestamp": int(time.time())
+            }
+
+    except Exception as e:
+        logger.error(f"[Map Matching Health] 오류: {e}")
+        return {
+            "status": "error",
+            "message": f"상태 확인 중 오류: {str(e)}",
+            "osrm_url": config.OSRM_URL,
+            "timestamp": int(time.time())
+        }
+
+
+@app.post("/map-matching/validate")
+async def map_matching_validate(
+    request_body: MapMatchingRequest,
+    x_api_key: Optional[str] = Header(None)
+) -> Dict[str, Any]:
+    """GPS 궤적 유효성 검증 및 품질 분석"""
+    verify_api_key(x_api_key)
+
+    try:
+        trajectory = request_body.trajectory
+        logger.info(f"[Trajectory Validation] 검증: {len(trajectory)}개 포인트")
+
+        result = {
+            "is_valid": True,
+            "total_points": len(trajectory),
+            "issues": [],
+            "recommendations": [],
+            "quality_score": 1.0,
+            "metrics": {
+                "temporal_consistency": 1.0,
+                "spatial_consistency": 1.0,
+                "accuracy_distribution": 1.0,
+                "speed_consistency": 1.0,
+            }
+        }
+
+        # 1. 형식 검증
+        for i, point in enumerate(trajectory):
+            lon, lat, ts, acc, spd = point
+            if not -180 <= lon <= 180:
+                result["issues"].append({
+                    "type": "coordinate_error", "point_index": i,
+                    "message": f"포인트 {i}: 경도 범위 초과 ({lon})"
+                })
+                result["is_valid"] = False
+            if not -90 <= lat <= 90:
+                result["issues"].append({
+                    "type": "coordinate_error", "point_index": i,
+                    "message": f"포인트 {i}: 위도 범위 초과 ({lat})"
+                })
+                result["is_valid"] = False
+
+        # 2. GPS 이상값 감지
+        outliers = map_matcher.outlier_detector.detect_outliers(trajectory)
+        for outlier in outliers:
+            result["issues"].append({
+                "type": "gps_outlier",
+                "point_index": outlier["index"],
+                "outlier_type": outlier["outlier_type"],
+                "severity": outlier["severity"],
+                "message": f"포인트 {outlier['index']}: GPS 이상값 ({outlier['outlier_type']}, 심각도: {outlier['severity']:.2f})"
+            })
+
+        # 3. 품질 분석
+        # 시간 일관성
+        time_intervals = [trajectory[i][2] - trajectory[i-1][2] for i in range(1, len(trajectory))]
+        if time_intervals:
+            avg_interval = sum(time_intervals) / len(time_intervals)
+            if avg_interval > 0:
+                variance = sum((t - avg_interval) ** 2 for t in time_intervals) / len(time_intervals)
+                result["metrics"]["temporal_consistency"] = max(0, 1.0 - variance / (avg_interval ** 2))
+
+        # 정확도 분포
+        accuracies = [p[3] for p in trajectory]
+        avg_accuracy = sum(accuracies) / len(accuracies)
+        result["metrics"]["accuracy_distribution"] = max(0, 1.0 - avg_accuracy / 100.0)
+
+        # 속도 일관성
+        speeds = [p[4] for p in trajectory]
+        if len(speeds) > 1:
+            speed_changes = [abs(speeds[i] - speeds[i-1]) for i in range(1, len(speeds))]
+            avg_change = sum(speed_changes) / len(speed_changes)
+            result["metrics"]["speed_consistency"] = max(0, 1.0 - avg_change / 50.0)
+
+        # 전체 품질 점수
+        result["quality_score"] = round(
+            sum(result["metrics"].values()) / len(result["metrics"]), 3
+        )
+
+        # 4. 권장사항
+        if result["quality_score"] < 0.8:
+            result["recommendations"].append("궤적 품질이 낮습니다. GPS 정확도가 높은 환경에서 데이터를 수집해보세요.")
+        outlier_count = sum(1 for i in result["issues"] if i["type"] == "gps_outlier")
+        if outlier_count > 0:
+            result["recommendations"].append(f"{outlier_count}개의 GPS 이상값이 감지되었습니다. 맵 매칭 시 자동으로 보정됩니다.")
+        if result["metrics"]["accuracy_distribution"] < 0.7:
+            result["recommendations"].append("GPS 정확도가 낮습니다. 실내나 터널 구간을 피해보세요.")
+        if result["metrics"]["temporal_consistency"] < 0.7:
+            result["recommendations"].append("GPS 포인트 간 시간 간격이 불규칙합니다.")
+
+        return result
+
+    except Exception as e:
+        logger.error(f"[Trajectory Validation] 오류: {e}")
+        raise HTTPException(status_code=500, detail=f"궤적 검증 오류: {str(e)}")
+
+
 @app.delete("/cache/clear")
 async def clear_cache(x_api_key: Optional[str] = Header(None)):
     """캐시 전체 삭제"""
@@ -518,6 +740,7 @@ async def health_check():
             "two_pass": "enabled" if controller.two_pass_optimizer else "disabled",
             "unreachable_filter": "enabled" if controller.unreachable_filter else "disabled",
             "matrix_chunking": "ready",
+            "map_matching": "ready",
         }
     }
 
@@ -535,6 +758,9 @@ async def root():
             "optimize_basic": "POST /optimize/basic (BASIC, requires API Key)",
             "optimize_premium": "POST /optimize/premium (PREMIUM, requires API Key)",
             "matrix_build": "POST /matrix/build (v3.0 chunked matrix)",
+            "map_matching": "POST /map-matching/match (GPS trajectory matching)",
+            "map_matching_health": "GET /map-matching/health (OSRM status)",
+            "map_matching_validate": "POST /map-matching/validate (trajectory validation)",
             "clear_cache": "DELETE /cache/clear",
             "health": "GET /health"
         },
@@ -581,6 +807,7 @@ async def startup_event():
     if controller.unreachable_filter:
         logger.info("Unreachable filter: enabled")
 
+    logger.info(f"Map Matching engine: {config.OSRM_URL}")
     logger.info("VROOM Wrapper v3.0 started")
 
 
