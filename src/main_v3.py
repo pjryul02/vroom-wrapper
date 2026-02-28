@@ -22,6 +22,7 @@ from .api import (
     matrix_router,
     map_matching_router,
     health_router,
+    dispatch_router,
 )
 
 # 로깅 설정
@@ -56,6 +57,7 @@ app.include_router(optimize_router)
 app.include_router(matrix_router)
 app.include_router(map_matching_router)
 app.include_router(health_router)
+app.include_router(dispatch_router)
 
 
 # ============================================================

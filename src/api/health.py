@@ -71,6 +71,7 @@ async def root():
             "map_matching": "POST /map-matching/match (GPS trajectory matching)",
             "map_matching_health": "GET /map-matching/health (OSRM status)",
             "map_matching_validate": "POST /map-matching/validate (trajectory validation)",
+            "dispatch": "POST /dispatch (HGLIS C1~C8 배차, requires API Key)",
             "clear_cache": "DELETE /cache/clear",
             "health": "GET /health"
         },
