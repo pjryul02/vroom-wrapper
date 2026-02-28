@@ -10,13 +10,10 @@ import logging
 from typing import List, Dict, Any
 from .models import (
     HglisJob, HglisVehicle, HglisDispatchRequest,
-    METRO_REGIONS, LOCAL_REGIONS, Grade,
+    METRO_REGIONS, LOCAL_REGIONS, Grade, MONTHLY_CAP,
 )
 
 logger = logging.getLogger(__name__)
-
-# C6 월상한 (서비스등급 기준)
-MONTHLY_CAP: Dict[str, int] = {"S": 12_000_000, "A": 11_000_000, "B": 9_000_000, "C": 7_000_000}
 
 # C4 기능도 순서
 GRADE_ORDER: Dict[str, int] = {"C": 1, "B": 2, "A": 3, "S": 4}
@@ -34,10 +31,10 @@ class ValidationResult:
         return len(self.errors) == 0
 
     def add_error(self, code: str, message: str, **kwargs):
-        self.errors.append({"code": code, "message": message, **kwargs})
+        self.errors.append({"type": code, "message": message, **kwargs})
 
     def add_warning(self, code: str, message: str, **kwargs):
-        self.warnings.append({"code": code, "message": message, **kwargs})
+        self.warnings.append({"type": code, "message": message, **kwargs})
 
     def to_dict(self) -> Dict[str, Any]:
         return {

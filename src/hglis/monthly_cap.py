@@ -12,16 +12,9 @@ C6 월설치비 상한 검증 (후처리)
 
 import logging
 from typing import List, Dict, Any
-from .models import HglisVehicle, DriverSummary
+from .models import HglisVehicle, DriverSummary, MONTHLY_CAP
 
 logger = logging.getLogger(__name__)
-
-MONTHLY_CAP: Dict[str, int] = {
-    "S": 12_000_000,
-    "A": 11_000_000,
-    "B": 9_000_000,
-    "C": 7_000_000,
-}
 
 
 def validate_c6(

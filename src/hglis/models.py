@@ -5,7 +5,7 @@ HGLIS 배차 입출력 모델
 """
 
 from typing import List, Optional, Dict, Any, Literal
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 # ============================================================
 # 공통 타입
@@ -18,6 +18,14 @@ CrewType = Literal["1인", "2인", "any"]
 VALID_REGIONS = {"Y1", "Y2", "Y3", "Y5", "W1", "대전", "대구", "광주", "원주", "부산", "울산", "제주"}
 METRO_REGIONS = {"Y1", "Y2", "Y3", "Y5", "W1"}
 LOCAL_REGIONS = {"대전", "대구", "광주", "원주", "부산", "울산", "제주"}
+
+# C6 월상한 (서비스등급 기준, 원)
+MONTHLY_CAP: Dict[str, int] = {
+    "S": 12_000_000,
+    "A": 11_000_000,
+    "B": 9_000_000,
+    "C": 7_000_000,
+}
 
 
 def _validate_korea_coord(lon: float, lat: float, label: str = ""):
@@ -34,6 +42,8 @@ def _validate_korea_coord(lon: float, lat: float, label: str = ""):
 
 class Product(BaseModel):
     """오더 내 개별 제품"""
+    model_config = ConfigDict(protected_namespaces=())
+
     model_code: str = Field(..., min_length=1, description="모델코드")
     model_name: Optional[str] = Field(None, description="모델명")
     cbm: float = Field(..., ge=0, description="CBM")

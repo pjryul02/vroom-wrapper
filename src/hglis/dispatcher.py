@@ -389,24 +389,35 @@ class HglisDispatcher:
         job: Any,
         skill_result: SkillEncodeResult,
     ) -> str:
-        desc = str(unassigned_item.get("description", "")).lower()
+        """
+        미배정 사유 추론.
 
-        if "skill" in desc:
-            job_skills = skill_result.job_skills.get(job.id, [])
-            if any(1 <= s <= 4 for s in job_skills):
-                return "C4_기능도"
-            if any(100 <= s <= 199 for s in job_skills):
-                return "C7_신제품"
-            if any(300 <= s <= 399 for s in job_skills):
-                return "C8_미결이력"
-            if 500 in job_skills:
-                return "소파_권역"
-            return "SKILL_미매칭"
+        VROOM은 미배정 이유를 직접 제공하지 않으므로,
+        job에 부여된 skill 종류를 분석하여 가장 유력한 제약을 추론한다.
+        우선순위: C8(미결) > C7(신제품) > 소파 > C4(기능도) > C5(CBM) > C3(시간) > 기타
+        """
+        job_skills = skill_result.job_skills.get(job.id, [])
 
-        if "time" in desc or "window" in desc:
-            return "C3_시간대"
+        # C8 미결이력 스킬이 있으면 → 회피 모델 매칭 실패 가능성 높음
+        if any(300 <= s <= 399 for s in job_skills):
+            return "C8_미결이력"
 
-        if "capacity" in desc or "load" in desc:
+        # C7 신제품 스킬이 있으면
+        if any(100 <= s <= 199 for s in job_skills):
+            return "C7_신제품"
+
+        # 소파 전용 스킬
+        if 500 in job_skills:
+            return "소파_권역"
+
+        # C4 기능도 — S급(4) 오더인데 기사가 부족할 가능성
+        c4_skills = [s for s in job_skills if 1 <= s <= 4]
+        if c4_skills and max(c4_skills) >= 3:  # A등급 이상
+            return "C4_기능도"
+
+        # C5 CBM — 고용량 오더
+        total_cbm = sum(p.cbm * p.quantity for p in job.products)
+        if total_cbm > 5.0:
             return "C5_CBM"
 
         return "기타"
