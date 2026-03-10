@@ -415,11 +415,154 @@ def test_validation_error():
         return False
 
 
+def test_flexible_region():
+    """flexible 모드: strict에서 미배정 → 인접 권역 기사에 재시도"""
+    print("\n\n=== 통합 시나리오: flexible 권역 모드 ===\n")
+
+    jobs = [
+        # Y1 오더 2건
+        {
+            "id": 1, "order_id": "FLEX-Y1-1",
+            "location": [126.97, 37.55], "region_code": "Y1",
+            "products": [{"model_code": "STD-001", "cbm": 1.0, "fee": 50000, "required_grade": "C"}],
+            "scheduling": {"preferred_time_slot": "하루종일", "service_minutes": 30},
+        },
+        # Y3 오더 — Y3 기사 없음, 인접(Y1,Y2)에서 재시도
+        {
+            "id": 2, "order_id": "FLEX-Y3-1",
+            "location": [127.10, 37.58], "region_code": "Y3",
+            "products": [{"model_code": "STD-002", "cbm": 1.0, "fee": 45000, "required_grade": "C"}],
+            "scheduling": {"preferred_time_slot": "하루종일", "service_minutes": 25},
+        },
+    ]
+
+    vehicles = [
+        # Y1 기사만 — Y3는 인접
+        {
+            "id": 1, "driver_id": "DRV-FLEX-1", "driver_name": "Y1기사",
+            "skill_grade": "A", "service_grade": "A", "capacity_cbm": 15.0,
+            "location": {"start": [127.05, 37.50], "end": [127.05, 37.50]},
+            "region_code": "Y1",
+            "crew": {"size": 1, "is_filler": False},
+        },
+    ]
+
+    # strict: Y3 오더 미배정
+    request_strict = {
+        "meta": {"date": "2026-02-28", "region_mode": "strict"},
+        "jobs": jobs, "vehicles": vehicles,
+        "options": {"max_tasks_per_driver": 12, "geometry": False},
+    }
+    r_strict = httpx.post(f"{API}/dispatch", json=request_strict, headers=HEADERS, timeout=60)
+    strict_result = r_strict.json()
+    strict_assigned = strict_result.get("statistics", {}).get("assigned_orders", 0)
+    strict_unassigned = strict_result.get("unassigned", [])
+
+    print(f"strict: 배정 {strict_assigned}/2, 미배정 {len(strict_unassigned)}")
+    for u in strict_unassigned:
+        print(f"  미배정: {u['order_id']} ({u['constraint']})")
+
+    # flexible: Y3 오더가 Y1 기사에 재시도 배정
+    request_flex = {
+        "meta": {"date": "2026-02-28", "region_mode": "flexible"},
+        "jobs": jobs, "vehicles": vehicles,
+        "options": {"max_tasks_per_driver": 12, "geometry": False},
+    }
+    r_flex = httpx.post(f"{API}/dispatch", json=request_flex, headers=HEADERS, timeout=60)
+    flex_result = r_flex.json()
+    flex_assigned = flex_result.get("statistics", {}).get("assigned_orders", 0)
+    flex_warnings = flex_result.get("warnings", [])
+    flex_retry = [w for w in flex_warnings if w.get("type") == "FLEXIBLE_RETRY"]
+
+    print(f"flexible: 배정 {flex_assigned}/2, 재시도 경고 {len(flex_retry)}건")
+    if flex_retry:
+        print(f"  재시도: {flex_retry[0].get('message', '')}")
+
+    # 검증
+    errors = []
+    if strict_assigned != 1:
+        errors.append(f"strict에서 Y1 오더만 배정되어야: {strict_assigned}")
+    if len(strict_unassigned) != 1:
+        errors.append(f"strict에서 Y3 미배정이어야: {len(strict_unassigned)}")
+    if flex_assigned != 2:
+        errors.append(f"flexible에서 전체 배정되어야: {flex_assigned}")
+
+    if errors:
+        print(f"\n  ISSUES:")
+        for e in errors:
+            print(f"  ⚠ {e}")
+    else:
+        print(f"\n  ✓ 모든 검증 통과")
+
+    return len(errors) == 0
+
+
+def test_driver_distribution():
+    """기사 균등 배분: 5명 기사 모두 최소 1건 배정"""
+    print("\n\n=== 통합 시나리오: 기사 균등 배분 ===\n")
+
+    # 10개 동일 오더
+    jobs = []
+    for i in range(1, 11):
+        jobs.append({
+            "id": i, "order_id": f"DIST-{i:02d}",
+            "location": [126.97 + i * 0.005, 37.55 + i * 0.003],
+            "region_code": "Y1",
+            "products": [{"model_code": "STD-001", "cbm": 1.0, "fee": 50000, "required_grade": "C"}],
+            "scheduling": {"preferred_time_slot": "하루종일", "service_minutes": 30},
+        })
+
+    # 5명 동일 기사 (C급, 15CBM)
+    vehicles = []
+    for i in range(1, 6):
+        vehicles.append({
+            "id": i, "driver_id": f"DRV-DIST-{i}",
+            "driver_name": f"기사{i}", "skill_grade": "C", "service_grade": "C",
+            "capacity_cbm": 15.0,
+            "location": {"start": [127.05, 37.50], "end": [127.05, 37.50]},
+            "region_code": "Y1",
+            "crew": {"size": 1, "is_filler": False},
+        })
+
+    request = {
+        "meta": {"date": "2026-02-28", "region_mode": "ignore"},
+        "jobs": jobs, "vehicles": vehicles,
+        "options": {"max_tasks_per_driver": 12, "geometry": False},
+    }
+
+    r = httpx.post(f"{API}/dispatch", json=request, headers=HEADERS, timeout=60)
+    result = r.json()
+
+    stats = result.get("statistics", {})
+    driver_summary = result.get("driver_summary", [])
+    active = stats.get("active_vehicles", 0)
+
+    print(f"배정: {stats.get('assigned_orders')}/10, 활성 기사: {active}/5")
+    for ds in driver_summary:
+        print(f"  {ds['driver_id']}: {ds['assigned_count']}건")
+
+    # 검증: 최소 3명 이상 활성
+    errors = []
+    if active < 3:
+        errors.append(f"활성 기사 {active}명 < 3명")
+
+    if errors:
+        print(f"\n  ISSUES:")
+        for e in errors:
+            print(f"  ⚠ {e}")
+    else:
+        print(f"\n  ✓ 모든 검증 통과")
+
+    return len(errors) == 0
+
+
 if __name__ == "__main__":
     tests = [
         ("복합 배차", test_complex_scenario),
         ("다권역 strict", test_multi_region_strict),
         ("검증 에러", test_validation_error),
+        ("flexible 권역", test_flexible_region),
+        ("기사 균등 배분", test_driver_distribution),
     ]
 
     passed = 0

@@ -1,5 +1,8 @@
 # VROOM에 "왜 할당 안됐는지" 사유 추가하기 - 실전 구현
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## ⚠️ 현실 확인
 
 ### VROOM 현재 상태 (v1.14.0 기준)

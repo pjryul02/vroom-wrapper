@@ -1,5 +1,8 @@
 # 커스텀 제약 조건의 Violation 보고 시스템 구현 가이드
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## 핵심 목표
 
 **새로운 제약을 추가했을 때, 그 제약이 위반되면 사용자에게 명확한 사유를 설명**

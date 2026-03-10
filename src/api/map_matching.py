@@ -14,12 +14,30 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/map-matching")
 
 
-@router.post("/match", response_model=StandardResponse)
+@router.post(
+    "/match",
+    response_model=StandardResponse,
+    tags=["맵 매칭"],
+    summary="GPS 궤적 맵 매칭",
+    description="""
+GPS 궤적을 도로 네트워크에 매칭한다.
+
+### 동작 방식
+- 정확도 ≤20m: 원본 좌표 유지 (flag=1.0)
+- 정확도 >20m: OSRM Route API로 도로에 스냅 (flag=0.5)
+- 필요 시 중간 포인트 자동 생성 (flag=2.0)
+
+### trajectory 포인트 형식
+`[경도, 위도, Unix타임스탬프, 정확도(m), 속도(m/s)]` — 5개 값 필수, 시간순 정렬
+
+### 인증
+`X-API-Key` 헤더 필수.
+""",
+)
 async def map_matching_match(
     request_body: MapMatchingRequest,
-    x_api_key: Optional[str] = Header(None)
+    x_api_key: Optional[str] = Header(None, description="API Key (필수)")
 ) -> StandardResponse:
-    """GPS 궤적 맵 매칭"""
     verify_api_key(x_api_key)
     check_rate_limit(x_api_key)
 
@@ -80,9 +98,13 @@ async def map_matching_match(
         raise HTTPException(status_code=500, detail=f"맵 매칭 처리 중 오류: {str(e)}")
 
 
-@router.get("/health")
+@router.get(
+    "/health",
+    tags=["맵 매칭"],
+    summary="맵 매칭 서비스 헬스 체크",
+    description="OSRM 연결 상태를 샘플 경로(서울시청→을지로)로 테스트한다. 인증 불필요.",
+)
 async def map_matching_health() -> Dict[str, Any]:
-    """Map Matching 서비스 상태 확인"""
     c = get_components()
     try:
         test_route = await c.map_matcher._get_connecting_route(
@@ -116,10 +138,39 @@ async def map_matching_health() -> Dict[str, Any]:
         }
 
 
-@router.post("/validate")
+@router.post(
+    "/validate",
+    tags=["맵 매칭"],
+    summary="GPS 궤적 유효성 검증 및 품질 분석",
+    description="""
+GPS 궤적의 좌표, 시간, 정확도, 속도를 분석하여 품질 점수를 반환한다.
+
+### 검증 항목
+- **좌표 범위**: 경도(-180~180), 위도(-90~90) 검증
+- **GPS 이상값**: 아웃라이어 탐지 (속도 급변, 위치 점프 등)
+- **시간 일관성**: 포인트 간 시간 간격 균일성
+- **정확도 분포**: GPS 수신 정확도 평균
+- **속도 일관성**: 속도 변화율
+
+### 응답 필드
+- `is_valid`: 유효한 궤적 여부
+- `quality_score`: 종합 품질 (0~1)
+- `metrics`: 항목별 점수
+- `issues`: 발견된 문제 목록
+- `recommendations`: 개선 권장사항
+
+### 인증
+`X-API-Key` 헤더 필수.
+""",
+    responses={
+        200: {"description": "검증 완료 (quality_score, issues, recommendations 포함)"},
+        401: {"description": "API Key 누락"},
+        500: {"description": "검증 처리 오류"},
+    },
+)
 async def map_matching_validate(
     request_body: MapMatchingRequest,
-    x_api_key: Optional[str] = Header(None)
+    x_api_key: Optional[str] = Header(None, description="API Key (필수)")
 ) -> Dict[str, Any]:
     """GPS 궤적 유효성 검증 및 품질 분석"""
     verify_api_key(x_api_key)

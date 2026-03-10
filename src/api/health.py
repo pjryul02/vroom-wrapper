@@ -12,8 +12,26 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.delete("/cache/clear")
-async def clear_cache(x_api_key: Optional[str] = Header(None)):
+@router.delete(
+    "/cache/clear",
+    tags=["시스템"],
+    summary="결과 캐시 전체 삭제",
+    description="""
+Redis(또는 인메모리) 캐시에 저장된 최적화 결과를 모두 삭제한다.
+
+### 용도
+- 좌표/제약 변경 후 이전 캐시 결과가 반환되는 것을 방지
+- 디버깅 시 항상 최신 결과 확인
+
+### 인증
+`X-API-Key` 헤더 필수.
+""",
+    responses={
+        200: {"description": "캐시 삭제 성공"},
+        401: {"description": "API Key 누락 또는 유효하지 않음"},
+    },
+)
+async def clear_cache(x_api_key: Optional[str] = Header(None, description="API Key (필수)")):
     """캐시 전체 삭제"""
     verify_api_key(x_api_key)
     c = get_components()
@@ -21,7 +39,25 @@ async def clear_cache(x_api_key: Optional[str] = Header(None)):
     return {"message": "Cache cleared successfully"}
 
 
-@router.get("/health")
+@router.get(
+    "/health",
+    tags=["시스템"],
+    summary="서비스 헬스 체크",
+    description="""
+VROOM Wrapper 전체 컴포넌트 상태를 반환한다.
+
+### 응답 필드
+- `engine`: `direct`(바이너리) 또는 `http`(VROOM 서버)
+- `components`: 각 컴포넌트 상태
+  - `vroom_binary`: `healthy` / `unhealthy` / `http_fallback`
+  - `two_pass`: `enabled` / `disabled`
+  - `unreachable_filter`: `enabled` / `disabled`
+  - `cache`: `redis` / `memory`
+
+### 인증
+불필요.
+""",
+)
 async def health_check():
     """헬스 체크 (v3.0 - VROOM 바이너리 상태 포함)"""
     c = get_components()
@@ -55,7 +91,12 @@ async def health_check():
     }
 
 
-@router.get("/")
+@router.get(
+    "/",
+    tags=["시스템"],
+    summary="서비스 정보 및 엔드포인트 목록",
+    description="VROOM Wrapper 버전, 사용 가능한 엔드포인트, 데모 API 키를 반환한다. 인증 불필요.",
+)
 async def root():
     """루트 엔드포인트"""
     return {

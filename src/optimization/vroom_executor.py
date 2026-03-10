@@ -78,8 +78,10 @@ class VROOMExecutor:
 
         # 라우터 서버 (libosrm이 아닌 경우)
         if self.router != "libosrm":
-            args.extend(["-a", f"car:{self.router_host}"])
-            args.extend(["-p", f"car:{self.router_port}"])
+            # OSRM: car profile, Valhalla: auto costing
+            profile = "auto" if self.router == "valhalla" else "car"
+            args.extend(["-a", f"{profile}:{self.router_host}"])
+            args.extend(["-p", f"{profile}:{self.router_port}"])
 
         # 스레드 수
         t = threads or self.default_threads

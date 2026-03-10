@@ -1,4 +1,7 @@
 # VROOM Wrapper 완벽 가이드
+
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
 ## 초보자를 위한 구조 이해부터 고도화까지
 
 ---

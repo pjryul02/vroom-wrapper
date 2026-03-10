@@ -1,5 +1,8 @@
 # VROOM Wrapper Setup Guide
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 이 래퍼는 VROOM에 **미배정 사유 보고 기능**을 추가합니다.
 
 ## 왜 필요한가?

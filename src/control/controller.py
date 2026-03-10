@@ -155,7 +155,9 @@ class OptimizationController:
         elif self.two_pass_optimizer and num_jobs >= 10:
             # 2-Pass 최적화 (v3.0 - 10개 이상 작업일 때)
             logger.info(f"[2-PASS] 2단계 최적화 실행 (jobs={num_jobs})")
-            result = await self.two_pass_optimizer.optimize(vrp_input)
+            result = await self.two_pass_optimizer.optimize(
+                vrp_input, geometry=True,
+            )
 
         else:
             # 단일 최적화

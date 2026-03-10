@@ -4,6 +4,7 @@ HGLIS → VROOM JSON 조립
 전처리된 데이터를 VROOM 표준 입력 포맷으로 변환.
 """
 
+import math
 import logging
 from typing import List, Dict, Any, Optional
 from .models import HglisJob, HglisVehicle, HglisDispatchRequest
@@ -27,6 +28,9 @@ PRIORITY_VIP = 50
 PRIORITY_TWO_PERSON = 10
 PRIORITY_MAX = 100
 
+# 기사 활성화 고정 비용 (VROOM costs.fixed) — 기사 분산 유도
+VEHICLE_FIXED_COST = 1000
+
 
 def assemble_vroom_input(
     request: HglisDispatchRequest,
@@ -39,6 +43,16 @@ def assemble_vroom_input(
     """
     base_date = request.meta.date
 
+    # max_tasks 동적 계산: min(사용자 설정, ceil(오더/기사) + 2)
+    num_jobs = len(request.jobs)
+    num_vehicles = len(request.vehicles)
+    user_max = request.options.max_tasks_per_driver
+    if num_vehicles > 0:
+        dynamic_max = math.ceil(num_jobs / num_vehicles) + 2
+        effective_max = min(user_max, dynamic_max)
+    else:
+        effective_max = user_max
+
     vroom_jobs = []
     for job in request.jobs:
         vj = _build_vroom_job(job, base_date, skill_result)
@@ -46,7 +60,7 @@ def assemble_vroom_input(
 
     vroom_vehicles = []
     for vehicle in request.vehicles:
-        vv = _build_vroom_vehicle(vehicle, base_date, skill_result, request.options.max_tasks_per_driver)
+        vv = _build_vroom_vehicle(vehicle, base_date, skill_result, effective_max)
         vroom_vehicles.append(vv)
 
     vroom_input = {
@@ -144,6 +158,7 @@ def _build_vroom_vehicle(
         "skills": skills,
         "time_window": time_window,
         "max_tasks": max_tasks,
+        "costs": {"fixed": VEHICLE_FIXED_COST},
     }
 
     if breaks:

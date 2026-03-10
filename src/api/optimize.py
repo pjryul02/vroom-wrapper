@@ -31,12 +31,34 @@ def _analyze_unassigned(vrp_input: dict, result: dict):
         pass
 
 
-@router.post("/optimize")
+@router.post(
+    "/optimize",
+    tags=["최적화"],
+    summary="STANDARD 최적화 (전체 파이프라인)",
+    description="""
+전체 파이프라인을 실행하는 표준 최적화.
+
+**처리 순서**: 전처리 → 도달불가 필터 → 2-Pass 최적화 → 자동 재시도 → 분석 → 통계 → 캐싱
+
+### 응답 추가 필드
+- `analysis`: 품질 점수, 개선 제안, 차량 활용률
+- `statistics`: 거리/시간 통계
+- `_metadata`: 처리 시간, 캐시 여부
+
+### 인증
+`X-API-Key` 헤더 필수. 데모 키: `demo-key-12345`
+""",
+    responses={
+        200: {"description": "최적화 성공 (routes, summary, analysis, statistics 포함)"},
+        401: {"description": "API Key 누락 또는 유효하지 않음"},
+        429: {"description": "요청률 제한 초과"},
+        500: {"description": "VROOM 실행 오류 또는 내부 오류"},
+    },
+)
 async def optimize_standard(
     request_body: OptimizeRequest,
-    x_api_key: Optional[str] = Header(None)
+    x_api_key: Optional[str] = Header(None, description="API Key (필수). 데모: demo-key-12345")
 ) -> Dict[str, Any]:
-    """STANDARD 최적화"""
     api_key_info = verify_api_key(x_api_key)
     check_rate_limit(x_api_key)
 
@@ -116,12 +138,22 @@ async def optimize_standard(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/optimize/basic")
+@router.post(
+    "/optimize/basic",
+    tags=["최적화"],
+    summary="BASIC 최적화 (빠른 결과)",
+    description="""
+분석(analysis)과 통계(statistics)를 생략한 경량 최적화. 자동 재시도도 하지 않는다.
+캐싱 없이 빠른 결과가 필요할 때 사용.
+
+### 인증
+`X-API-Key` 헤더 필수.
+""",
+)
 async def optimize_basic(
     request_body: OptimizeRequest,
-    x_api_key: Optional[str] = Header(None)
+    x_api_key: Optional[str] = Header(None, description="API Key (필수)")
 ) -> Dict[str, Any]:
-    """BASIC 최적화 (빠른 결과, 분석 생략)"""
     api_key_info = verify_api_key(x_api_key)
     check_rate_limit(x_api_key)
 
@@ -156,12 +188,35 @@ async def optimize_basic(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/optimize/premium")
+@router.post(
+    "/optimize/premium",
+    tags=["최적화"],
+    summary="PREMIUM 최적화 (멀티 시나리오 + 2-Pass)",
+    description="""
+멀티 시나리오 비교와 2-Pass 최적화를 포함한 최고 품질 최적화.
+
+### 처리
+1. 여러 시나리오(탐색 강도, 제약 조합)를 병렬 실행
+2. 각 시나리오에서 2-Pass 최적화 (Pass1: 배정, Pass2: 경로)
+3. 최적 시나리오 자동 선택
+
+### 추가 응답 필드
+- `multi_scenario_metadata`: 시나리오 비교 결과
+
+### 인증
+`X-API-Key` 헤더 필수. Premium 권한 필요. 요청률 50/시간.
+""",
+    responses={
+        200: {"description": "최적화 성공 (멀티 시나리오 메타데이터 포함)"},
+        401: {"description": "API Key 누락 또는 유효하지 않음"},
+        403: {"description": "Premium 권한 없음"},
+        429: {"description": "요청률 제한 초과 (50/시간)"},
+    },
+)
 async def optimize_premium(
     request_body: OptimizeRequest,
-    x_api_key: Optional[str] = Header(None)
+    x_api_key: Optional[str] = Header(None, description="API Key (필수, Premium 권한)")
 ) -> Dict[str, Any]:
-    """PREMIUM 최적화 (다중 시나리오 + 2-Pass)"""
     api_key_info = verify_api_key(x_api_key)
 
     if 'premium' not in api_key_info.get('features', []):

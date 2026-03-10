@@ -1,5 +1,8 @@
 # VROOM API 통제 및 커스터마이징 가이드
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## 개요
 
 VROOM을 API로 통제하고 커스터마이징하는 방법은 크게 4가지 레벨로 나뉩니다:

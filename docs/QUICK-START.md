@@ -1,5 +1,8 @@
 # VROOM Wrapper - Quick Start
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## 현재 상태
 
 ✅ **모든 서비스 실행 중**

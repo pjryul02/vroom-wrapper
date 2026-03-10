@@ -1,5 +1,8 @@
 # VROOM + OSRM Docker 설치 및 실행 가이드
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## 개요
 이 프로젝트는 OSRM (Open Source Routing Machine)과 VROOM (Vehicle Routing Optimization)을 Docker로 로컬에서 실행하는 설정입니다.
 

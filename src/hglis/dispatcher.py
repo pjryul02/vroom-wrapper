@@ -24,13 +24,18 @@ from .models import (
 from .validator import validate_request, ValidationResult
 from .skill_encoder import encode_skills, SkillEncodeResult
 from .vroom_assembler import assemble_vroom_input
-from .region_splitter import split_by_region, merge_vroom_results
+from .region_splitter import split_by_region, merge_vroom_results, get_adjacent_vehicles
 from .joint_dispatch import (
     process_joint_dispatch, apply_joint_skills,
     build_secondary_vroom_jobs, JointDispatchResult,
 )
 from .fee_validator import validate_c2
 from .monthly_cap import validate_c6
+from ..preprocessing.vroom_matrix_preparer import VroomMatrixPreparer
+from ..preprocessing.chunked_matrix import OSRMChunkedMatrix
+from ..postprocessing import ResultAnalyzer, StatisticsGenerator
+from ..postprocessing.constraint_checker import ConstraintChecker
+from .. import config
 
 logger = logging.getLogger(__name__)
 
@@ -38,8 +43,17 @@ logger = logging.getLogger(__name__)
 class HglisDispatcher:
     """HGLIS 배차 파이프라인 오케스트레이터"""
 
-    def __init__(self, controller):
+    def __init__(self, controller, enable_matrix_prep: Optional[bool] = None):
         self.controller = controller
+        self.matrix_preparer: Optional[VroomMatrixPreparer] = None
+        _enable = enable_matrix_prep if enable_matrix_prep is not None else config.MATRIX_PREP_ENABLED
+        if _enable:
+            osrm_matrix = OSRMChunkedMatrix(
+                osrm_url=config.OSRM_URL,
+                chunk_size=config.OSRM_CHUNK_SIZE,
+                max_workers=config.OSRM_MAX_WORKERS,
+            )
+            self.matrix_preparer = VroomMatrixPreparer(osrm_matrix=osrm_matrix)
 
     async def dispatch(self, request: HglisDispatchRequest) -> HglisDispatchResponse:
         """배차 실행 전체 파이프라인"""
@@ -80,6 +94,7 @@ class HglisDispatcher:
         regions = split_by_region(request)
 
         # Step 5: 권역별 VROOM 실행
+        debug_vroom_input = None
         if len(regions) == 1:
             # 단일 권역 — 분할 불필요
             vroom_input = assemble_vroom_input(request, skill_result)
@@ -91,6 +106,10 @@ class HglisDispatcher:
                 )
                 vroom_input["jobs"].extend(secondary_jobs)
 
+            # 중간 VROOM 입력 저장 (디버그용)
+            import copy
+            debug_vroom_input = copy.deepcopy(vroom_input)
+
             vroom_result = await self._execute_vroom(vroom_input)
         else:
             # 다중 권역 — 병렬 실행
@@ -98,10 +117,57 @@ class HglisDispatcher:
                 request, regions, skill_result, joint_result,
             )
 
+        # Step 5.5: flexible 모드 — 미배정 오더 인접 권역 재시도
+        if (request.meta.region_mode == "flexible"
+                and vroom_result.get("unassigned")):
+            vroom_result, flex_warnings = await self._retry_flexible(
+                request, vroom_result, skill_result, joint_result,
+            )
+            all_warnings.extend(flex_warnings)
+
         # Step 6: 결과 매핑 + 후처리
         response = self._build_response(
             request, vroom_result, skill_result, joint_result, start_time,
         )
+
+        # Step 6.1: VROOM routes 포함 (지도 표출용)
+        response.routes = vroom_result.get("routes", [])
+
+        # Step 6.2: 분석 (ResultAnalyzer + StatisticsGenerator)
+        try:
+            analyzer = ResultAnalyzer()
+            analysis = analyzer.analyze(
+                debug_vroom_input or {}, vroom_result,
+            )
+            response.analysis = analysis
+        except Exception as e:
+            logger.warning(f"분석 실패 (비치명적): {e}")
+
+        # Step 6.3: 미배정 정밀 사유 분석 (ConstraintChecker)
+        if vroom_result.get("unassigned") and debug_vroom_input:
+            try:
+                checker = ConstraintChecker(debug_vroom_input)
+                reasons_map = checker.analyze_unassigned(vroom_result["unassigned"])
+                # 기존 추론 사유에 정밀 분석 추가
+                for uj in response.unassigned:
+                    job = next((j for j in request.jobs if j.order_id == uj.order_id), None)
+                    if job and job.id in reasons_map:
+                        uj.reason = "; ".join(reasons_map[job.id])
+            except Exception as e:
+                logger.warning(f"미배정 정밀 분석 실패 (비치명적): {e}")
+
+        # Step 6.4: 디버그 정보 (중간 VROOM 입출력)
+        if debug_vroom_input:
+            response.debug = {
+                "vroom_input": debug_vroom_input,
+                "vroom_output": {
+                    "code": vroom_result.get("code"),
+                    "summary": vroom_result.get("summary"),
+                    "unassigned_count": len(vroom_result.get("unassigned", [])),
+                    "routes_count": len(vroom_result.get("routes", [])),
+                },
+                "skill_legend": skill_result.skill_legend,
+            }
 
         # Step 6.5: C2 거리비 검증
         c2_warnings = validate_c2(
@@ -115,7 +181,7 @@ class HglisDispatcher:
         )
         all_warnings.extend(c6_warnings)
 
-        response.warnings = all_warnings
+        response.warnings.extend(all_warnings)
 
         elapsed = int((time.time() - start_time) * 1000)
         response.meta["execution_time_ms"] = elapsed
@@ -130,22 +196,122 @@ class HglisDispatcher:
 
         return response
 
-    async def _execute_vroom(self, vroom_input: Dict[str, Any]) -> Dict[str, Any]:
-        """VROOM 엔진 호출"""
-        if self.controller.executor:
-            result = await self.controller.executor.execute(
-                vroom_input,
-                geometry=vroom_input.get("options", {}).get("g", True),
-            )
-        else:
-            import httpx
-            from .. import config
-            async with httpx.AsyncClient(timeout=300.0) as client:
-                resp = await client.post(config.VROOM_URL, json=vroom_input)
-                resp.raise_for_status()
-                result = resp.json()
+    async def _retry_flexible(
+        self,
+        request: HglisDispatchRequest,
+        vroom_result: Dict[str, Any],
+        skill_result: SkillEncodeResult,
+        joint_result: Optional[JointDispatchResult],
+    ) -> tuple:
+        """
+        flexible 모드: 미배정 오더를 인접 권역 기사에 재시도.
 
-        return result
+        Returns: (updated_vroom_result, warnings)
+        """
+        warnings: List[Dict[str, Any]] = []
+        job_map = {j.id: j for j in request.jobs}
+
+        # 미배정 오더 추출
+        unassigned_ids = [u.get("id") for u in vroom_result.get("unassigned", [])]
+        unassigned_jobs = [job_map[jid] for jid in unassigned_ids if jid in job_map]
+
+        if not unassigned_jobs:
+            return vroom_result, warnings
+
+        # 이미 배정된 기사 ID
+        assigned_vids = {r.get("vehicle") for r in vroom_result.get("routes", [])}
+
+        # 인접 권역 기사 후보 탐색
+        flex_groups = get_adjacent_vehicles(
+            unassigned_jobs, list(request.vehicles), assigned_vids,
+        )
+
+        if not flex_groups:
+            return vroom_result, warnings
+
+        # 인접 권역 후보가 있는 미배정 오더만 모아서 VROOM 재실행
+        retry_jobs = []
+        retry_vehicles = []
+        seen_vids = set()
+        for region, (jobs, vehicles) in flex_groups.items():
+            retry_jobs.extend(jobs)
+            for v in vehicles:
+                if v.id not in seen_vids:
+                    retry_vehicles.append(v)
+                    seen_vids.add(v.id)
+
+        if not retry_jobs or not retry_vehicles:
+            return vroom_result, warnings
+
+        # 서브 요청 조립
+        from .models import HglisDispatchRequest as _Req
+        sub_request = _Req(
+            meta=request.meta,
+            jobs=retry_jobs,
+            vehicles=retry_vehicles,
+            options=request.options,
+        )
+        retry_skill = encode_skills(retry_jobs, retry_vehicles)
+        retry_vroom = assemble_vroom_input(sub_request, retry_skill)
+        retry_result = await self._execute_vroom(retry_vroom)
+
+        # 재시도에서 배정된 건수
+        retry_assigned = len([
+            s for r in retry_result.get("routes", [])
+            for s in r.get("steps", []) if s.get("type") == "job"
+        ])
+
+        if retry_assigned == 0:
+            return vroom_result, warnings
+
+        # 재시도 결과를 원본에 병합
+        # 1) routes 추가
+        for route in retry_result.get("routes", []):
+            route["_flexible_retry"] = True
+            vroom_result["routes"].append(route)
+
+        # 2) unassigned 교체: 원본 미배정에서 재시도 배정된 건 제거
+        retry_assigned_ids = set()
+        for route in retry_result.get("routes", []):
+            for step in route.get("steps", []):
+                if step.get("type") == "job":
+                    retry_assigned_ids.add(step.get("id"))
+
+        vroom_result["unassigned"] = [
+            u for u in vroom_result.get("unassigned", [])
+            if u.get("id") not in retry_assigned_ids
+        ]
+        # 재시도에서도 미배정인 건 추가
+        for u in retry_result.get("unassigned", []):
+            if u.get("id") not in retry_assigned_ids:
+                # 이미 원본 unassigned에 있으므로 추가 불필요
+                pass
+
+        logger.info(
+            f"flexible 재시도: {len(retry_jobs)}건 시도 → {retry_assigned}건 추가 배정"
+        )
+
+        warnings.append({
+            "type": "FLEXIBLE_RETRY",
+            "message": f"인접 권역 재시도로 {retry_assigned}건 추가 배정",
+            "retry_jobs": len(retry_jobs),
+            "retry_assigned": retry_assigned,
+        })
+
+        return vroom_result, warnings
+
+    async def _execute_vroom(self, vroom_input: Dict[str, Any]) -> Dict[str, Any]:
+        """VROOM 엔진 호출 — 매트릭스 사전 계산 + controller.optimize() 경유"""
+        # OSRM 매트릭스 사전 계산 (있으면)
+        if self.matrix_preparer and "matrices" not in vroom_input:
+            try:
+                vroom_input = await self.matrix_preparer.prepare(vroom_input)
+            except Exception as e:
+                logger.warning(f"매트릭스 사전 계산 실패: {e} - VROOM 직접 OSRM 호출로 fallback")
+
+        return await self.controller.optimize(
+            vroom_input, enable_auto_retry=True,
+        )
 
     async def _execute_parallel(
         self,
@@ -232,10 +398,22 @@ class HglisDispatcher:
         job_map = {j.id: j for j in request.jobs}
         vehicle_map = {v.id: v for v in request.vehicles}
 
-        # 합배차 secondary ID 집합
+        # 합배차 secondary ID → primary ID 매핑
         secondary_ids = set()
+        secondary_to_primary: Dict[int, int] = {}  # secondary_job_id → primary_job_id
         if joint_result and joint_result.joint_groups:
-            secondary_ids = {g["secondary_job_id"] for g in joint_result.joint_groups.values()}
+            for g in joint_result.joint_groups.values():
+                sid = g["secondary_job_id"]
+                secondary_ids.add(sid)
+                secondary_to_primary[sid] = g["primary_job_id"]
+
+        # secondary job이 어떤 기사에 배정됐는지 추적
+        secondary_assignment: Dict[int, int] = {}  # secondary_job_id → vehicle_id
+        for route in vroom_result.get("routes", []):
+            vid = route.get("vehicle")
+            for step in route.get("steps", []):
+                if step.get("type") == "job" and step.get("id") in secondary_ids:
+                    secondary_assignment[step["id"]] = vid
 
         # 배차 결과 추출
         results: List[DispatchResult] = []
@@ -276,16 +454,30 @@ class HglisDispatcher:
                 # 합배차 여부 판단
                 dispatch_type = "단독"
                 total_fee = sum(p.fee * p.quantity for p in job.products)
+                sec_driver_id = None
+                sec_driver_name = None
 
                 if joint_result and joint_result.is_joint.get(job_id):
                     dispatch_type = "합배차_주"
                     total_fee = int(total_fee * 0.6)  # 60% (primary)
+
+                    # secondary 기사 정보 추적
+                    for sid, pid in secondary_to_primary.items():
+                        if pid == job_id and sid in secondary_assignment:
+                            sec_vid = secondary_assignment[sid]
+                            sec_vehicle = vehicle_map.get(sec_vid)
+                            if sec_vehicle:
+                                sec_driver_id = sec_vehicle.driver_id
+                                sec_driver_name = sec_vehicle.driver_name
+                            break
 
                 results.append(DispatchResult(
                     order_id=job.order_id,
                     dispatch_type=dispatch_type,
                     driver_id=vehicle.driver_id,
                     driver_name=vehicle.driver_name,
+                    secondary_driver_id=sec_driver_id,
+                    secondary_driver_name=sec_driver_name,
                     delivery_sequence=seq,
                     scheduled_arrival=self._format_arrival(step.get("arrival")),
                     install_fee=total_fee,
@@ -297,16 +489,31 @@ class HglisDispatcher:
 
         # 미배정 오더
         unassigned: List[UnassignedJob] = []
+        secondary_unassigned_warnings: List[Dict[str, Any]] = []
         for u in vroom_result.get("unassigned", []):
             job_id = u.get("id")
             if job_id in secondary_ids:
-                continue  # secondary 미배정은 무시
+                # secondary 미배정 → 경고 생성 (primary 오더 ID 포함)
+                primary_id = secondary_to_primary.get(job_id)
+                primary_job = job_map.get(primary_id)
+                if primary_job:
+                    secondary_unassigned_warnings.append({
+                        "type": "JOINT_SECONDARY_UNASSIGNED",
+                        "message": f"합배차 보조 기사 미배정: 오더 {primary_job.order_id}",
+                        "order_id": primary_job.order_id,
+                    })
+                continue
             job = job_map.get(job_id)
             if job:
+                desc = u.get("description", "VROOM 미배정")
+                if "기사 없음" in desc:
+                    constraint = "기사_부재"
+                else:
+                    constraint = self._guess_constraint(u, job, skill_result)
                 unassigned.append(UnassignedJob(
                     order_id=job.order_id,
-                    constraint=self._guess_constraint(u, job, skill_result),
-                    reason=u.get("description", "VROOM 미배정"),
+                    constraint=constraint,
+                    reason=desc,
                 ))
 
         # 기사별 요약
@@ -356,7 +563,7 @@ class HglisDispatcher:
             results=results,
             driver_summary=driver_summary,
             unassigned=unassigned,
-            warnings=[],  # 호출자가 채움
+            warnings=secondary_unassigned_warnings,  # + 호출자가 추가
         )
 
     def _error_response(
@@ -378,7 +585,8 @@ class HglisDispatcher:
             return None
         try:
             from datetime import datetime
-            dt = datetime.fromtimestamp(arrival_ts)
+            from zoneinfo import ZoneInfo
+            dt = datetime.fromtimestamp(arrival_ts, tz=ZoneInfo("Asia/Seoul"))
             return dt.strftime("%H:%M")
         except Exception:
             return None

@@ -1,10 +1,11 @@
 ###############################################################
 # VROOM Wrapper v3.0 - Docker Compose
 #
-# 3개 서비스 (vroom-express 제거):
-#   1. osrm    - OSRM 라우팅 엔진
-#   2. redis   - 캐싱 (선택)
-#   3. wrapper - Python Wrapper + VROOM 바이너리 (통합!)
+# 4개 서비스:
+#   1. osrm     - OSRM 라우팅 엔진 (포트 5000)
+#   2. valhalla - Valhalla 라우팅 엔진 (포트 8002)
+#   3. redis    - 캐싱 (선택)
+#   4. wrapper  - Python Wrapper + VROOM 바이너리 (통합!)
 ###############################################################
 
 version: '3.8'
@@ -36,6 +37,37 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+  # ──────────────────────────────────────────────────
+  # Valhalla 라우팅 엔진
+  #
+  # 최초 실행: PBF → 타일 자동 빌드 (한국 255MB ≈ 15~30분)
+  # 이후 재시작: 빌드된 타일 재사용 (수 초 내 기동)
+  # ──────────────────────────────────────────────────
+  valhalla:
+    image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+    container_name: valhalla-server
+    ports:
+      - "8002:8002"
+    volumes:
+      - /home/shawn/valhalla-data/custom_files:/custom_files       # PBF 소스 (심볼릭 링크)
+      - /home/shawn/valhalla-data/valhalla_tiles:/valhalla_tiles   # 빌드된 타일 저장
+    environment:
+      - use_tiles_ignore_pbf=False   # 타일 없으면 PBF에서 빌드
+      - force_rebuild=False          # 타일 있으면 재빌드 안 함
+      - build_elevation=False        # 고도 데이터 생략 (시간/용량 절약)
+      - build_admins=True            # 행정구역 빌드 (라우팅 품질 향상)
+      - build_time_zones=True        # 타임존 빌드
+      - server_threads=4
+    restart: unless-stopped
+    networks:
+      - routing-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8002/status > /dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 1800s  # 타일 빌드 시간 허용 (최대 30분)
 
   # ──────────────────────────────────────────────────
   # Redis 캐싱
@@ -83,11 +115,19 @@ services:
       # OSRM 연결 (컨테이너 내부 네트워크)
       - OSRM_URL=http://osrm:5000
 
-      # 2-Pass 최적화 (대규모 문제에서 활성화)
-      - TWO_PASS_ENABLED=false
+      # Valhalla 연결
+      - VALHALLA_URL=http://valhalla:8002
+      - VALHALLA_CHUNK_SIZE=50
+      - VALHALLA_MAX_WORKERS=4
+
+      # 2-Pass 최적화
+      - TWO_PASS_ENABLED=true
       - TWO_PASS_MAX_WORKERS=4
       - TWO_PASS_INITIAL_THREADS=16
       - TWO_PASS_ROUTE_THREADS=4
+
+      # HGLIS 매트릭스 사전 계산
+      - MATRIX_PREP_ENABLED=true
 
       # 도달 불가능 필터링
       - UNREACHABLE_FILTER_ENABLED=true

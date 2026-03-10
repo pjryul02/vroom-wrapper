@@ -8,7 +8,7 @@ ignore 모드: 전체를 하나의 VROOM 호출로 처리
 
 import asyncio
 import logging
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Set
 
 from .models import (
     HglisJob, HglisVehicle, HglisDispatchRequest, DispatchOptions,
@@ -16,6 +16,22 @@ from .models import (
 )
 
 logger = logging.getLogger(__name__)
+
+# 인접 권역 맵 — flexible 모드에서 미배정 오더 재시도 대상
+ADJACENT_REGIONS: Dict[str, List[str]] = {
+    "Y1": ["Y2", "Y3"],
+    "Y2": ["Y1", "Y3", "Y5"],
+    "Y3": ["Y1", "Y2"],
+    "Y5": ["Y2"],
+    "W1": ["Y1", "Y2"],      # 소파 전용이지만 인접 경인권
+    "대전": ["대구"],
+    "대구": ["대전", "울산", "부산"],
+    "광주": [],
+    "원주": ["Y3"],
+    "부산": ["울산", "대구"],
+    "울산": ["부산", "대구"],
+    "제주": [],
+}
 
 
 def split_by_region(
@@ -54,6 +70,43 @@ def split_by_region(
         f"권역 분할: {len(result)}개 그룹 "
         f"({', '.join(f'{k}:{len(v[0])}j/{len(v[1])}v' for k, v in result.items())})"
     )
+
+    return result
+
+
+def get_adjacent_vehicles(
+    unassigned_jobs: List[HglisJob],
+    all_vehicles: List[HglisVehicle],
+    assigned_vehicle_ids: Set[int],
+) -> Dict[str, Tuple[List[HglisJob], List[HglisVehicle]]]:
+    """
+    미배정 오더를 인접 권역 기사에 매칭할 수 있는 그룹 반환.
+
+    Returns: { region_code: (unassigned_jobs, adjacent_vehicles) }
+    """
+    # 기사 권역 인덱스
+    vehicle_by_region: Dict[str, List[HglisVehicle]] = {}
+    for v in all_vehicles:
+        vehicle_by_region.setdefault(v.region_code, []).append(v)
+
+    # 미배정 오더 권역별 그룹
+    unassigned_by_region: Dict[str, List[HglisJob]] = {}
+    for job in unassigned_jobs:
+        unassigned_by_region.setdefault(job.region_code, []).append(job)
+
+    result = {}
+    for region, jobs in unassigned_by_region.items():
+        adjacent = ADJACENT_REGIONS.get(region, [])
+        candidate_vehicles = []
+        for adj_region in adjacent:
+            candidate_vehicles.extend(vehicle_by_region.get(adj_region, []))
+
+        if candidate_vehicles:
+            result[region] = (jobs, candidate_vehicles)
+            logger.info(
+                f"flexible 재시도: 권역 {region} 미배정 {len(jobs)}건 → "
+                f"인접 기사 {len(candidate_vehicles)}명"
+            )
 
     return result
 

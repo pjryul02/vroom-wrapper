@@ -14,7 +14,10 @@ HGLIS C3 시간윈도우 변환
 import logging
 from datetime import datetime, timedelta
 from typing import List, Tuple, Optional, Dict
+from zoneinfo import ZoneInfo
 from .models import HglisJob, HglisVehicle
+
+KST = ZoneInfo("Asia/Seoul")
 
 logger = logging.getLogger(__name__)
 
@@ -38,8 +41,8 @@ BASE_STAY_MINUTES = 25
 
 
 def _to_unix(base_date: str, hour: int, minute: int) -> int:
-    """날짜 + 시분 → Unix timestamp"""
-    dt = datetime.strptime(base_date, "%Y-%m-%d")
+    """날짜 + 시분 → Unix timestamp (KST 고정)"""
+    dt = datetime.strptime(base_date, "%Y-%m-%d").replace(tzinfo=KST)
     dt = dt.replace(hour=min(hour, 23), minute=min(minute, 59))
     # 24:59 같은 경우 → 다음날 00:59
     if hour >= 24:
@@ -74,12 +77,12 @@ def convert_job_time_windows(
         tw_start = _to_unix(base_date, start_h, start_m)
         tw_end = _to_unix(base_date, end_h, end_m)
     else:
-        # ±60분 버퍼
+        # ±60분 버퍼 (KST 고정)
         buf_start = datetime.strptime(base_date, "%Y-%m-%d").replace(
-            hour=start_h, minute=start_m
+            hour=start_h, minute=start_m, tzinfo=KST
         ) - timedelta(minutes=BUFFER_MINUTES)
         buf_end = datetime.strptime(base_date, "%Y-%m-%d").replace(
-            hour=min(end_h, 23), minute=end_m
+            hour=min(end_h, 23), minute=end_m, tzinfo=KST
         ) + timedelta(minutes=BUFFER_MINUTES)
 
         tw_start = int(buf_start.timestamp())

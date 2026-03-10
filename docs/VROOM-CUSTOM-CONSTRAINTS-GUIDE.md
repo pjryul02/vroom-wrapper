@@ -1,5 +1,8 @@
 # VROOM 커스텀 제약 조건 추가 가이드
 
+> **레거시 문서 (v1.0~v2.0 기준)** — 최신 기술 문서는 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요. 이 문서는 참고용으로만 보존됩니다.
+
+
 ## VROOM 기본 제약 조건 (Built-in Constraints)
 
 VROOM이 기본적으로 지원하는 제약 조건들:

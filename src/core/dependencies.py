@@ -12,7 +12,10 @@ from .. import config
 from ..preprocessing import PreProcessor
 from ..preprocessing.matrix_builder import TrafficProvider
 from ..preprocessing.chunked_matrix import OSRMChunkedMatrix
+from ..preprocessing.valhalla_matrix import ValhallaChunkedMatrix
+from ..preprocessing.vroom_matrix_preparer import VroomMatrixPreparer
 from ..control import OptimizationController
+from ..optimization.vroom_executor import VROOMExecutor
 from ..postprocessing import ResultAnalyzer, StatisticsGenerator, ConstraintChecker
 from ..extensions import CacheManager
 from ..map_matching import OSRMMapMatcher
@@ -30,6 +33,10 @@ class Components:
     cache_manager: CacheManager
     matrix_builder: OSRMChunkedMatrix
     map_matcher: OSRMMapMatcher
+    # Valhalla 컴포넌트 (옵션)
+    valhalla_executor: Optional[VROOMExecutor] = None
+    valhalla_matrix: Optional[ValhallaChunkedMatrix] = None
+    valhalla_preparer: Optional[VroomMatrixPreparer] = None
 
 
 _components: Optional[Components] = None
@@ -66,6 +73,45 @@ def init_components() -> Components:
 
     map_matcher = OSRMMapMatcher(osrm_url=config.OSRM_URL)
 
+    # ── Valhalla 컴포넌트 (선택적) ───────────────────────────────────────────
+    valhalla_executor = None
+    valhalla_matrix   = None
+    valhalla_preparer = None
+
+    if config.VALHALLA_URL:
+        try:
+            vh = config.VALHALLA_URL.replace("http://", "").replace("https://", "")
+            vh_host = vh.split(":")[0]
+            vh_port = int(vh.split(":")[-1]) if ":" in vh else 8002
+
+            valhalla_executor = VROOMExecutor(
+                vroom_path=config.VROOM_BINARY_PATH,
+                router="valhalla",
+                router_host=vh_host,
+                router_port=vh_port,
+                default_threads=config.VROOM_THREADS,
+                default_exploration=config.VROOM_EXPLORATION,
+                timeout=config.VROOM_TIMEOUT,
+            )
+
+            valhalla_matrix = ValhallaChunkedMatrix(
+                valhalla_url=config.VALHALLA_URL,
+                chunk_size=config.VALHALLA_CHUNK_SIZE,
+                max_workers=config.VALHALLA_MAX_WORKERS,
+            )
+
+            valhalla_preparer = VroomMatrixPreparer(
+                osrm_matrix=valhalla_matrix,  # 같은 인터페이스 (build_matrix 메서드)
+            )
+
+            logger.info(
+                f"Valhalla 컴포넌트 초기화 완료 "
+                f"(executor: {vh_host}:{vh_port}, "
+                f"matrix chunk_size={config.VALHALLA_CHUNK_SIZE})"
+            )
+        except Exception as e:
+            logger.warning(f"Valhalla 컴포넌트 초기화 실패 (비활성): {e}")
+
     _components = Components(
         preprocessor=preprocessor,
         controller=controller,
@@ -74,6 +120,9 @@ def init_components() -> Components:
         cache_manager=cache_manager,
         matrix_builder=matrix_builder,
         map_matcher=map_matcher,
+        valhalla_executor=valhalla_executor,
+        valhalla_matrix=valhalla_matrix,
+        valhalla_preparer=valhalla_preparer,
     )
 
     logger.info("All components initialized")

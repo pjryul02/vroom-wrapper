@@ -1,5 +1,8 @@
 # VROOM Wrapper 처리 로직 상세 명세 v1.0
 
+> **참고: 이 문서는 HGLIS v8.3 명세 기준 처리 로직 v1.0입니다.** 최신 구현(2-Pass, 매트릭스 사전계산, 비동기 모드)은 [`docs/TECHNICAL-ARCHITECTURE.md`](TECHNICAL-ARCHITECTURE.md)를 참조하세요.
+
+
 **기준 문서**: HGLIS_배차엔진_통합명세서_v8.3
 **대상**: vroom-wrapper-project (`src/`)
 **작성일**: 2026-02-28

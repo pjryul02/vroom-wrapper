@@ -47,7 +47,7 @@ VROOM_URL = os.getenv("VROOM_URL", "http://localhost:3000")
 # 2-Pass 최적화 (Roouty Engine 패턴)
 # ============================================================
 
-TWO_PASS_ENABLED = os.getenv("TWO_PASS_ENABLED", "false").lower() == "true"
+TWO_PASS_ENABLED = os.getenv("TWO_PASS_ENABLED", "true").lower() == "true"
 TWO_PASS_MAX_WORKERS = int(os.getenv("TWO_PASS_MAX_WORKERS", "4"))
 TWO_PASS_INITIAL_THREADS = int(os.getenv("TWO_PASS_INITIAL_THREADS", "16"))
 TWO_PASS_ROUTE_THREADS = int(os.getenv("TWO_PASS_ROUTE_THREADS", "4"))
@@ -74,6 +74,18 @@ OSRM_MAX_WORKERS = int(os.getenv("OSRM_MAX_WORKERS", "8"))
 # ============================================================
 
 OSRM_URL = os.getenv("OSRM_URL", "http://localhost:5000")
+
+# HGLIS 매트릭스 사전 계산 (VROOM에 매트릭스 인풋으로 전달)
+MATRIX_PREP_ENABLED = os.getenv("MATRIX_PREP_ENABLED", "true").lower() == "true"
+
+
+# ============================================================
+# Valhalla 라우팅 엔진
+# ============================================================
+
+VALHALLA_URL = os.getenv("VALHALLA_URL", "http://localhost:8002")
+VALHALLA_CHUNK_SIZE = int(os.getenv("VALHALLA_CHUNK_SIZE", "50"))
+VALHALLA_MAX_WORKERS = int(os.getenv("VALHALLA_MAX_WORKERS", "4"))
 
 
 # ============================================================
@@ -167,6 +179,7 @@ def print_config():
     print(f"VROOM_EXPLORATION: {VROOM_EXPLORATION}")
     print(f"TWO_PASS_ENABLED: {TWO_PASS_ENABLED}")
     print(f"TWO_PASS_MAX_WORKERS: {TWO_PASS_MAX_WORKERS}")
+    print(f"MATRIX_PREP_ENABLED: {MATRIX_PREP_ENABLED}")
     print(f"UNREACHABLE_FILTER_ENABLED: {UNREACHABLE_FILTER_ENABLED}")
     print(f"OSRM_URL: {OSRM_URL}")
     print(f"OSRM_CHUNK_SIZE: {OSRM_CHUNK_SIZE}")

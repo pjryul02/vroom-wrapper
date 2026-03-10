@@ -128,31 +128,32 @@ class UnreachableFilter:
         self, vehicles: List[Dict[str, Any]]
     ) -> List[int]:
         """
-        차량 시작 위치의 매트릭스 인덱스
-
-        VROOM 매트릭스 인덱스 순서:
-        [vehicle_start_0, vehicle_start_1, ..., vehicle_end_0, ..., job_0, job_1, ...]
+        차량 시작 위치의 매트릭스 인덱스.
+        start_index 필드가 있으면 우선 사용 (VroomMatrixPreparer가 설정).
         """
         indices = []
-        for i in range(len(vehicles)):
-            indices.append(i)  # vehicle start index
+        for i, v in enumerate(vehicles):
+            if "start_index" in v:
+                indices.append(v["start_index"])
+            else:
+                indices.append(i)  # fallback: 순서 기반
         return indices
 
     def _build_job_location_map(
         self, jobs: List[Dict[str, Any]], vehicle_count: int
     ) -> Dict[int, int]:
         """
-        Job ID → 매트릭스 인덱스 매핑
-
-        vehicle가 start만 있으면: offset = len(vehicles)
-        vehicle가 start+end면: offset = len(vehicles) * 2
+        Job ID → 매트릭스 인덱스 매핑.
+        location_index 필드가 있으면 우선 사용 (VroomMatrixPreparer가 설정).
         """
-        # 간단한 매핑: vehicles 뒤에 jobs 순서대로
-        # 실제로는 vehicle start/end 여부에 따라 달라짐
-        offset = vehicle_count  # start만 있는 경우
         job_map = {}
         for i, job in enumerate(jobs):
-            job_map[job.get("id")] = offset + i
+            if "location_index" in job:
+                job_map[job.get("id")] = job["location_index"]
+            else:
+                # fallback: vehicles 뒤에 jobs 순서대로
+                offset = vehicle_count
+                job_map[job.get("id")] = offset + i
         return job_map
 
     def _is_reachable_from_any_vehicle(

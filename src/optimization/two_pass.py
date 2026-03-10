@@ -232,9 +232,9 @@ class TwoPassOptimizer:
         if not job_ids and not shipment_ids:
             return None
 
-        # vehicle 필터
+        # vehicle 필터 (deepcopy: _extract_sub_matrix가 인덱스를 재매핑하므로)
         vehicles = [
-            v for v in original_input.get("vehicles", [])
+            copy.deepcopy(v) for v in original_input.get("vehicles", [])
             if v.get("id") == vehicle_id
         ]
 
@@ -243,13 +243,13 @@ class TwoPassOptimizer:
 
         # jobs 필터
         jobs = [
-            j for j in original_input.get("jobs", [])
+            copy.deepcopy(j) for j in original_input.get("jobs", [])
             if j.get("id") in job_ids
         ]
 
         # shipments 필터
         shipments = [
-            s for s in original_input.get("shipments", [])
+            copy.deepcopy(s) for s in original_input.get("shipments", [])
             if s.get("id") in shipment_ids
         ]
 
@@ -278,20 +278,73 @@ class TwoPassOptimizer:
         shipments: List[Dict],
     ) -> Dict[str, Any]:
         """
-        전체 매트릭스에서 관련 위치만 추출
+        전체 매트릭스에서 단일 경로에 필요한 인덱스만 추출.
+        인덱스를 0부터 순차적으로 재매핑.
 
-        VROOM은 매트릭스 인덱스를 위치 순서대로 매핑:
-        [vehicle starts] + [vehicle ends] + [job locations] + [shipment pickups] + [shipment deliveries]
-
-        단일 경로에는 해당 위치만 필요하므로 서브 매트릭스 추출.
-        단, 매트릭스 인덱스 재매핑이 복잡하므로 커스텀 매트릭스가 없으면 스킵.
+        1. vehicle start_index/end_index + job location_index에서 고유 인덱스 수집
+        2. 해당 행/열만 추출해서 서브매트릭스 생성
+        3. vehicles/jobs의 *_index를 새 인덱스로 업데이트
         """
-        # 매트릭스 재매핑은 복잡도가 높아 Phase 2 경로별 최적화에서는
-        # 매트릭스를 제외하고 VROOM이 직접 OSRM 호출하도록 함.
-        # (위치가 적으므로 OSRM 호출 비용 낮음)
-        #
-        # 향후 최적화: 서브 매트릭스 추출 구현으로 OSRM 호출 제거
-        return {}
+        matrices = original_input.get("matrices", {})
+        if not matrices:
+            return {}
+
+        # 1. 필요한 원본 인덱스 수집 (순서 유지)
+        needed_indices = []
+        seen = set()
+
+        def _add_index(idx):
+            if idx is not None and idx not in seen:
+                needed_indices.append(idx)
+                seen.add(idx)
+
+        for v in vehicles:
+            _add_index(v.get("start_index"))
+            _add_index(v.get("end_index"))
+        for j in jobs:
+            _add_index(j.get("location_index"))
+        for s in shipments:
+            if "pickup" in s:
+                _add_index(s["pickup"].get("location_index"))
+            if "delivery" in s:
+                _add_index(s["delivery"].get("location_index"))
+
+        if not needed_indices:
+            return {}
+
+        # 2. 원본 인덱스 → 새 인덱스 매핑
+        old_to_new = {old: new for new, old in enumerate(needed_indices)}
+
+        # 3. 서브매트릭스 추출
+        new_matrices = {}
+        for profile, profile_data in matrices.items():
+            new_profile = {}
+            for key in ("durations", "distances"):
+                full = profile_data.get(key)
+                if full:
+                    sub = []
+                    for src_idx in needed_indices:
+                        row = [full[src_idx][dst_idx] for dst_idx in needed_indices]
+                        sub.append(row)
+                    new_profile[key] = sub
+            new_matrices[profile] = new_profile
+
+        # 4. vehicles/jobs의 *_index를 새 인덱스로 재매핑
+        for v in vehicles:
+            if "start_index" in v:
+                v["start_index"] = old_to_new[v["start_index"]]
+            if "end_index" in v:
+                v["end_index"] = old_to_new[v["end_index"]]
+        for j in jobs:
+            if "location_index" in j:
+                j["location_index"] = old_to_new[j["location_index"]]
+        for s in shipments:
+            if "pickup" in s and "location_index" in s.get("pickup", {}):
+                s["pickup"]["location_index"] = old_to_new[s["pickup"]["location_index"]]
+            if "delivery" in s and "location_index" in s.get("delivery", {}):
+                s["delivery"]["location_index"] = old_to_new[s["delivery"]["location_index"]]
+
+        return new_matrices
 
     def _merge_results(
         self,
@@ -303,6 +356,15 @@ class TwoPassOptimizer:
 
         Roouty의 appendSingleResponse() 패턴.
         """
+        # delivery/pickup 차원을 결과에서 동적으로 파악 (HGLIS: [cbm,0,0] 3차원)
+        dim = 1
+        for result in route_results:
+            if isinstance(result, dict):
+                for key in ("delivery", "pickup"):
+                    d = result.get(key, [])
+                    if len(d) > dim:
+                        dim = len(d)
+
         merged = {
             "code": 0,
             "routes": [],
@@ -310,8 +372,8 @@ class TwoPassOptimizer:
             "summary": {
                 "cost": 0,
                 "unassigned": pass1_result.get("summary", {}).get("unassigned", 0),
-                "delivery": [0],
-                "pickup": [0],
+                "delivery": [0] * dim,
+                "pickup": [0] * dim,
                 "service": 0,
                 "duration": 0,
                 "waiting_time": 0,

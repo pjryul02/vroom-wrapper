@@ -191,6 +191,42 @@ class DispatchOptions(BaseModel):
 
 class HglisDispatchRequest(BaseModel):
     """POST /dispatch 요청 본문"""
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "meta": {"date": "2026-03-01", "region_mode": "strict"},
+                "vehicles": [
+                    {
+                        "id": 1, "driver_id": "D001", "driver_name": "김기사",
+                        "skill_grade": "A", "service_grade": "A",
+                        "capacity_cbm": 12.0,
+                        "location": {"start": [127.0276, 37.4979], "end": [127.0276, 37.4979]},
+                        "region_code": "Y1",
+                        "crew": {"size": 2, "is_filler": False},
+                        "new_product_restricted": False, "avoid_models": [],
+                        "fee_status": {"monthly_accumulated": 3000000}
+                    }
+                ],
+                "jobs": [
+                    {
+                        "id": 1, "order_id": "ORD-001",
+                        "location": [127.0500, 37.5172],
+                        "region_code": "Y1",
+                        "products": [
+                            {"model_code": "REF-001", "model_name": "냉장고 500L",
+                             "cbm": 2.5, "fee": 80000, "is_new_product": False,
+                             "required_grade": "B", "quantity": 1}
+                        ],
+                        "scheduling": {"preferred_time_slot": "오전1", "service_minutes": 45},
+                        "constraints": {"crew_type": "2인"},
+                        "priority": {"level": 0, "is_urgent": False, "is_vip": False}
+                    }
+                ],
+                "options": {"max_tasks_per_driver": 12, "geometry": True}
+            }
+        }
+    )
+
     meta: DispatchMeta
     jobs: List[HglisJob] = Field(..., min_length=1, description="오더 목록")
     vehicles: List[HglisVehicle] = Field(..., min_length=1, description="기사 목록")
@@ -205,6 +241,8 @@ class DispatchResult(BaseModel):
     dispatch_type: Literal["단독", "합배차_주", "합배차_보조"]
     driver_id: str
     driver_name: Optional[str] = None
+    secondary_driver_id: Optional[str] = None
+    secondary_driver_name: Optional[str] = None
     delivery_sequence: int
     scheduled_arrival: Optional[str] = None
     install_fee: int = 0
@@ -243,3 +281,9 @@ class HglisDispatchResponse(BaseModel):
     driver_summary: List[DriverSummary] = []
     unassigned: List[UnassignedJob] = []
     warnings: List[Dict[str, Any]] = []
+    # 지도 표출용: VROOM 원본 routes (geometry 포함)
+    routes: List[Dict[str, Any]] = []
+    # 분석 결과 (ResultAnalyzer)
+    analysis: Optional[Dict[str, Any]] = None
+    # 디버그: 중간 VROOM 입출력 확인용
+    debug: Optional[Dict[str, Any]] = Field(None, alias="debug")
