@@ -1,0 +1,4678 @@
+{
+  "mode": "solving",
+  "jobs": [
+    {
+      "id": 0,
+      "description": "20JB26011000010 - 정수희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        14,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 1,
+      "description": "20JB26011200065 - 황은빈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        180,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 2,
+      "description": "20JT25122600144 - 신현주",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2100,
+      "delivery": [
+        38,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 3,
+      "description": "20JT25122800309 - 정민기",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 5100,
+      "delivery": [
+        57,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 4,
+      "description": "20JT25123100174 - 김원중",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 7140,
+      "delivery": [
+        27,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 5,
+      "description": "20JT26010100015 - 민창기",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 780,
+      "delivery": [
+        141,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 6,
+      "description": "20JT26010100016 - 백형숙",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 5220,
+      "delivery": [
+        149,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 7,
+      "description": "20JT26010400187 - 박은영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        66,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 8,
+      "description": "20JT26010500159 - 박민서",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3900,
+      "delivery": [
+        69,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 9,
+      "description": "20JT26010900126 - 김하나",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 4560,
+      "delivery": [
+        31,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10,
+      "description": "20JT26011000112 - 정수희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        132,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 11,
+      "description": "20JT26011200105 - 황은빈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        48,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 12,
+      "description": "21JT25122100381 - 이다민",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        23,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 13,
+      "description": "21JT25122800296 - 김재호",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        41,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 14,
+      "description": "21JT25122800297 - 김재호",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 180,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 15,
+      "description": "21JT25122900336 - 정은이",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1380,
+      "delivery": [
+        20,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 16,
+      "description": "21JT26010100128 - 임은진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 7260,
+      "delivery": [
+        75,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 17,
+      "description": "21JT26010100505 - 이미진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1080,
+      "delivery": [
+        63,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        100
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 18,
+      "description": "21JT26010200501 - 이주현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1080,
+      "delivery": [
+        32,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 19,
+      "description": "21JT26010200630 - 김아정",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3300,
+      "delivery": [
+        32,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 20,
+      "description": "21JT26010300266 - 장현철",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 600,
+      "delivery": [
+        92,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768903200,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 21,
+      "description": "21JT26010300287 - 고지운",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1380,
+      "delivery": [
+        52,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 22,
+      "description": "21JT26010400005 - 임지영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 4200,
+      "delivery": [
+        141,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 23,
+      "description": "21JT26010400136 - 공태인",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        11,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768903200,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 24,
+      "description": "21JT26010400371 - 안채윤",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        95,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 25,
+      "description": "21JT26010500101 - 신윤희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 5400,
+      "delivery": [
+        23,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 26,
+      "description": "21JT26010500138 - 박정희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1800,
+      "delivery": [
+        92,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 27,
+      "description": "21JT26010500350 - 오송이",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1080,
+      "delivery": [
+        24,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 28,
+      "description": "21JT26010500491 - 회계법인나루",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        133,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 29,
+      "description": "21JT26010500553 - 홍성임",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        53,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 30,
+      "description": "21JT26010500644 - 김재문",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1800,
+      "delivery": [
+        66,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 31,
+      "description": "21JT26010500790 - 김지혜",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2520,
+      "delivery": [
+        71,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 32,
+      "description": "21JT26010501006 - 양형모",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1500,
+      "delivery": [
+        20,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 33,
+      "description": "21JT26010501007 - 김태형",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        14,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 34,
+      "description": "21JT26010601052 - 최록희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3300,
+      "delivery": [
+        136,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 35,
+      "description": "21JT26010700053 - 이희경",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        136,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 36,
+      "description": "21JT26010700605 - 조민현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 360,
+      "delivery": [
+        20,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 37,
+      "description": "21JT26010701023 - 변이솜",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1800,
+      "delivery": [
+        44,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768903200,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 38,
+      "description": "21JT26010800240 - 성연조",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        129,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 39,
+      "description": "21JT26010800463 - 김선하",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        50,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 40,
+      "description": "21JT26010800596 - 박소현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        46,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 41,
+      "description": "21JT26010800672 - 기영숙",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1560,
+      "delivery": [
+        48,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 42,
+      "description": "21JT26010800735 - 김혜진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 4740,
+      "delivery": [
+        86,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 43,
+      "description": "21JT26010900001 - 차서란",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 300,
+      "delivery": [
+        69,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 44,
+      "description": "21JT26010900015 - 하미경",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2700,
+      "delivery": [
+        6,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 45,
+      "description": "21JT26010900024 - 김민지",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        33,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 46,
+      "description": "21JT26010900071 - 김가연",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        50,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 47,
+      "description": "21JT26010900081 - 송대섭",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        50,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 48,
+      "description": "21JT26010900084 - 안햇님",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 600,
+      "delivery": [
+        16,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 49,
+      "description": "21JT26010900103 - 송유민",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 600,
+      "delivery": [
+        13,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 50,
+      "description": "21JT26010900127 - 집",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1800,
+      "delivery": [
+        143,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 51,
+      "description": "21JT26010900152 - 이형수",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        114,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 52,
+      "description": "21JT26010900168 - 김재원",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1560,
+      "delivery": [
+        144,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 53,
+      "description": "21JT26010900201 - 송선화",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        98,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 54,
+      "description": "21JT26010900346 - 안성훈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        23,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 55,
+      "description": "21JT26010900410 - 김수현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        81,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 56,
+      "description": "21JT26010900532 - 민주홍",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1680,
+      "delivery": [
+        48,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 57,
+      "description": "21JT26010900586 - 안해숙",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 480,
+      "delivery": [
+        50,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 58,
+      "description": "21JT26010900611 - 손창우",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 5580,
+      "delivery": [
+        35,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 59,
+      "description": "21JT26010900681 - 김창수",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3000,
+      "delivery": [
+        56,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 60,
+      "description": "21JT26010900755 - 이진희",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 360,
+      "delivery": [
+        40,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 61,
+      "description": "51JT25122300158 - 김민권",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 7140,
+      "delivery": [
+        4,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 62,
+      "description": "51JT25122400010 - 길태균",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 8340,
+      "delivery": [
+        53,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 63,
+      "description": "51JT25122600004 - 김세준",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 780,
+      "delivery": [
+        93,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 64,
+      "description": "51JT25122700057 - 성기영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        120,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 65,
+      "description": "51JT25122900061 - 남유선",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1560,
+      "delivery": [
+        126,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 66,
+      "description": "51JT26010200021 - 이주훈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 0,
+      "delivery": [
+        80,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 67,
+      "description": "51JT26010300086 - 강혜영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2760,
+      "delivery": [
+        45,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 68,
+      "description": "51JT26010500140 - 황정원",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2160,
+      "delivery": [
+        16,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 69,
+      "description": "51JT26010600270 - 김윤진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 780,
+      "delivery": [
+        3,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 70,
+      "description": "51JT26010600271 - 김경숙",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2340,
+      "delivery": [
+        146,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 71,
+      "description": "51JT26010700063 - 강지윤",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 780,
+      "delivery": [
+        5,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 72,
+      "description": "51JT26010700225 - 문한빈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1200,
+      "delivery": [
+        44,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 73,
+      "description": "51JT26010800226 - 이지우",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 6000,
+      "delivery": [
+        26,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 74,
+      "description": "51JT26010900057 - 윤경섭",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 600,
+      "delivery": [
+        92,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 75,
+      "description": "51JT26011000015 - 최경진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3360,
+      "delivery": [
+        87,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 76,
+      "description": "61JT26010900001 - 김나영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2700,
+      "delivery": [
+        15,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 77,
+      "description": "80JB26010900011 - 오지영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3840,
+      "delivery": [
+        56,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 78,
+      "description": "80JT25120700140 - 박인선",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3300,
+      "delivery": [
+        32,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 79,
+      "description": "80JT25121100046 - 류한용",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 4740,
+      "delivery": [
+        98,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 80,
+      "description": "80JT25121700140 - 삼양식품",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 15480,
+      "delivery": [
+        121,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 81,
+      "description": "80JT25122300225 - 정주연",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 8400,
+      "delivery": [
+        64,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 82,
+      "description": "80JT25123000475 - 안소영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 20640,
+      "delivery": [
+        127,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 83,
+      "description": "80JT25123100426 - 임주환",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 11400,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 84,
+      "description": "80JT26010200386 - 안병현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 2580,
+      "delivery": [
+        69,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 85,
+      "description": "80JT26010400046 - 이정훈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 0,
+      "delivery": [
+        106,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 86,
+      "description": "80JT26010400452 - 김기현",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 4200,
+      "delivery": [
+        56,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 87,
+      "description": "80JT26010400713 - 김유선",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 7740,
+      "delivery": [
+        5,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 88,
+      "description": "80JT26010400864 - 남혜림",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3780,
+      "delivery": [
+        31,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 89,
+      "description": "80JT26010500340 - 이현아",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 6060,
+      "delivery": [
+        103,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 90,
+      "description": "80JT26010500357 - 김우식",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 600,
+      "delivery": [
+        128,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 91,
+      "description": "80JT26010500457 - 곽창훈",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 12120,
+      "delivery": [
+        146,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 92,
+      "description": "80JT26010800124 - 이재균",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 6000,
+      "delivery": [
+        48,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 93,
+      "description": "80JT26010800172 - 이경진",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 0,
+      "delivery": [
+        105,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 94,
+      "description": "80JT26010800206 - 신성엔지니어링",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 11520,
+      "delivery": [
+        46,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 95,
+      "description": "80JT26010800213 - 이대환",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 1800,
+      "delivery": [
+        90,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 96,
+      "description": "80JT26010800367 - 김현선",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 900,
+      "delivery": [
+        122,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 97,
+      "description": "80JT26010900135 - HSAD",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 8640,
+      "delivery": [
+        744,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 98,
+      "description": "80JT26010900244 - 오지영",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3480,
+      "delivery": [
+        65,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        2
+      ],
+      "time_windows": [
+        [
+          1768892400,
+          1768903140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 99,
+      "description": "80JT26010900257 - 이수정",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 300,
+      "delivery": [
+        26,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        1
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 100,
+      "description": "SOFA260100001 - 소파고객1",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        150,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 101,
+      "description": "SOFA260100002 - 소파고객2",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        120,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 102,
+      "description": "SOFA260100003 - 소파고객3",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        180,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 103,
+      "description": "SOFA260100004 - 소파고객4",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        300,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 104,
+      "description": "SOFA260100005 - 소파고객5",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        150,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 105,
+      "description": "SOFA260100006 - 소파고객6",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        450,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 106,
+      "description": "SOFA260100007 - 소파고객7",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        180,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 107,
+      "description": "SOFA260100008 - 소파고객8",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        250,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 108,
+      "description": "SOFA260100009 - 소파고객9",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        450,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 109,
+      "description": "SOFA260100010 - 소파고객10",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        450,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4,
+        100,
+        101
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 110,
+      "description": "SOFA260100011 - 소파고객11",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        180,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 111,
+      "description": "SOFA260100012 - 소파고객12",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        120,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 112,
+      "description": "SOFA260100013 - 소파고객13",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        150,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768877940
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 113,
+      "description": "SOFA260100014 - 소파고객14",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        150,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        3,
+        100
+      ],
+      "time_windows": [
+        [
+          1768878000,
+          1768892340
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 114,
+      "description": "SOFA260100015 - 소파고객15",
+      "location": [
+        126.978,
+        37.5665
+      ],
+      "setup": 60,
+      "service": 3600,
+      "delivery": [
+        450,
+        0,
+        0
+      ],
+      "priority": 0,
+      "skills": [
+        4,
+        100
+      ],
+      "time_windows": [
+        [
+          1768863600,
+          1768921140
+        ]
+      ],
+      "groups": [
+        "W1"
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 10000,
+      "description": "최경훈 (821저 8319)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10001,
+      "description": "이상준 (94고 5859)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10002,
+      "description": "전남섭 (61루 6250)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10003,
+      "description": "김은상 (83루 2361)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10004,
+      "description": "채희민 (84다 9208)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10005,
+      "description": "최선근 (88자 1798)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10006,
+      "description": "안창수 (85서 3135)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10007,
+      "description": "이동혁 (92누 8999)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10008,
+      "description": "이용교 (94자 5499)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10009,
+      "description": "이윤구 (83서 4677)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10010,
+      "description": "김창희 (84모 9871)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10011,
+      "description": "김길문 (91누 2163)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10012,
+      "description": "이용민 (82사 5183)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10013,
+      "description": "임재환 (82러 6553)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10014,
+      "description": "박병정 (94러 3660)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10015,
+      "description": "박과진 (91사 2579)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10016,
+      "description": "이내혁 (86수 2542)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10017,
+      "description": "함형만 (88자 1929)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10018,
+      "description": "정수철 (81저 4611)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10019,
+      "description": "서정우 (82사 5178)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10020,
+      "description": "오병근 (844나 5390)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10021,
+      "description": "전영균 (80아 2549)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10022,
+      "description": "김진수 (90모 8525)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1800,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10023,
+      "description": "이동한 (91누 7259)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10024,
+      "description": "우형윤 (91루 4739)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1800,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10025,
+      "description": "노종관 (803더 9533)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10026,
+      "description": "이기원 (85부 4712)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10027,
+      "description": "박진목 (91소 7663)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10028,
+      "description": "이관용 (841가 3038)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1800,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10029,
+      "description": "박상훈 (87거 1262)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10030,
+      "description": "황성우 (89저 8676)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10031,
+      "description": "이동규 (84주 9987)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10032,
+      "description": "황진호 (89나 0137)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10033,
+      "description": "김달산 (801수 2625)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10034,
+      "description": "권선일 (86도 0652)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10035,
+      "description": "송현섭 (81로 4495)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "groups": [
+        "Y1"
+      ]
+    },
+    {
+      "id": 10036,
+      "description": "조광희 (85루 4156)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10037,
+      "description": "김중현 (811수 1065)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1800,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10038,
+      "description": "박지광 (85저 1396)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10039,
+      "description": "김태민 (813보 9592)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1800,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    },
+    {
+      "id": 10040,
+      "description": "박주광 (89나5888)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        1200,
+        0,
+        0
+      ],
+      "time_window": [
+        1768863600,
+        1768917600
+      ],
+      "max_tasks": 12,
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        100
+      ],
+      "groups": [
+        "W1"
+      ]
+    }
+  ],
+  "distribute_options": {
+    "custom_matrix": {
+      "enabled": true
+    },
+    "calc_time_limit": 60
+  },
+  "constraints": {
+    "hard": {
+      "C1": {
+        "enabled": true,
+        "name": "2인팀 매칭"
+      },
+      "C3": {
+        "enabled": true,
+        "name": "희망배송시간"
+      },
+      "C4": {
+        "enabled": true,
+        "name": "기능도 매칭"
+      },
+      "C5": {
+        "enabled": true,
+        "name": "CBM 용량"
+      },
+      "C7": {
+        "enabled": true,
+        "name": "신제품/교육 제약"
+      },
+      "C8": {
+        "enabled": true,
+        "name": "미결 이력 회피"
+      }
+    },
+    "soft": {
+      "C2": {
+        "enabled": true,
+        "name": "설치비 하한",
+        "weight": 50
+      },
+      "C6": {
+        "enabled": true,
+        "name": "월 설치비 상한",
+        "weight": 70
+      }
+    }
+  },
+  "engine_settings": {
+    "skill_mapping": {
+      "enabled": true,
+      "grade_to_skill_id": {
+        "S": 4,
+        "A": 3,
+        "B": 2,
+        "C": 1,
+        "D": 0
+      },
+      "two_person_skill_id": 100,
+      "filler_skill_id": 101,
+      "note": "C4 비활성화 시 jobs.skills에 기능도 미포함"
+    },
+    "time_settings": {
+      "enabled": true,
+      "buffer_minutes": 60,
+      "work_start": "08:00",
+      "work_end": "23:00",
+      "lunch_start": "12:00",
+      "lunch_end": "13:00",
+      "note": "C3 비활성화 시 time_windows를 전체 업무시간으로 설정"
+    },
+    "capacity_settings": {
+      "enabled": true,
+      "cbm_multiplier": 100,
+      "max_cbm_ratio": 1.0,
+      "note": "C5 비활성화 시 capacity 제한 해제 (매우 큰 값 설정)"
+    },
+    "driver_limits": {
+      "max_orders_per_driver": 12,
+      "max_work_minutes": 600,
+      "max_distance_km": 200
+    },
+    "depot_settings": {
+      "start_location": "center",
+      "end_location": "home",
+      "return_required": true
+    },
+    "region_constraint": {
+      "mode": "strict",
+      "allow_cross_region": false,
+      "adjacent_regions": {
+        "Y1": [
+          "Y2",
+          "Y3"
+        ],
+        "Y2": [
+          "Y1",
+          "Y3",
+          "Y5"
+        ],
+        "Y3": [
+          "Y1",
+          "Y2"
+        ],
+        "Y5": [
+          "Y2"
+        ],
+        "W1": [
+          "Y1",
+          "Y2"
+        ]
+      },
+      "note": "strict=기사 권역만, flexible=인접 권역 허용, ignore=전체 허용"
+    },
+    "pre_filter": {
+      "C7_excluded_sku": {
+        "enabled": true,
+        "action": "기사-오더 SKU 매칭 필터링"
+      },
+      "C8_history_avoid": {
+        "enabled": true,
+        "action": "기사-고객 미결이력 회피 필터링"
+      },
+      "C6_monthly_limit": {
+        "enabled": true,
+        "action": "월 상한 초과 기사 제외"
+      }
+    },
+    "general": {
+      "work_start": "08:00",
+      "work_end": "23:00",
+      "avg_speed_kmh": 40,
+      "base_stay_minutes": 25,
+      "distance_calc_type": "road",
+      "traffic_factor": 1.0,
+      "priority_enabled": true,
+      "priority_weight": 100
+    }
+  },
+  "_simulation": {
+    "simulation_name": "배차_20260120_W1-Y1",
+    "delivery_date": "2026-01-20",
+    "total_jobs": 115,
+    "total_vehicles": 41,
+    "generated_at": "2026-02-27T18:10:27.038122"
+  }
+}

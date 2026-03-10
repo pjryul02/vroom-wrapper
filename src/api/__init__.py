@@ -6,6 +6,8 @@ from .matrix import router as matrix_router
 from .map_matching import router as map_matching_router
 from .health import router as health_router
 from .dispatch import router as dispatch_router
+from .jobs import router as jobs_router
+from .valhalla import router as valhalla_router
 
 __all__ = [
     'distribute_router',
@@ -14,4 +16,6 @@ __all__ = [
     'map_matching_router',
     'health_router',
     'dispatch_router',
+    'jobs_router',
+    'valhalla_router',
 ]

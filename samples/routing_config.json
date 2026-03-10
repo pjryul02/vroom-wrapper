@@ -1,0 +1,180 @@
+{
+  "constraint_summary": {
+    "hard": {
+      "C1": {
+        "enabled": true,
+        "name": "2인팀 매칭",
+        "description": "2인 작업 필수 오더는 2인팀 또는 합배차로만 배정",
+        "details": {
+          "allow_joint_dispatch": true,
+          "joint_fee_split": {
+            "primary": 0.6,
+            "secondary": 0.4
+          }
+        }
+      },
+      "C3": {
+        "enabled": true,
+        "name": "희망배송시간",
+        "description": "고객 희망시간대 내 도착 필수",
+        "details": {
+          "time_window_buffer_minutes": 60,
+          "time_slots": {
+            "오전1": {"start": "08:00", "end": "12:00"},
+            "오후1": {"start": "12:00", "end": "16:00"},
+            "오후2": {"start": "16:00", "end": "19:00"},
+            "오후3": {"start": "19:00", "end": "24:00"},
+            "하루종일": {"start": "08:00", "end": "24:00"}
+          }
+        }
+      },
+      "C4": {
+        "enabled": true,
+        "name": "기능도 매칭",
+        "description": "오더 필요기능도 ≤ 기사 기능도",
+        "details": {
+          "grade_hierarchy": ["S", "A", "B", "C", "D"],
+          "joint_dispatch_exception": true
+        }
+      },
+      "C5": {
+        "enabled": true,
+        "name": "CBM 용량",
+        "description": "차량 적재용량(CBM) 초과 불가",
+        "details": {
+          "allow_overflow": false,
+          "overflow_margin_percent": 0
+        }
+      },
+      "C7": {
+        "enabled": true,
+        "name": "신제품/교육 제약",
+        "description": "신입 기사에게 신제품 배정 제외 + 교육 미이수 SKU 배정 제외",
+        "details": {
+          "checks": [
+            {
+              "name": "신입×신제품",
+              "match_field": {"vehicle": "is_rookie", "job": "has_new_product"},
+              "match_logic": "vehicle.is_rookie=true AND job.has_new_product=true → 배정 제외"
+            },
+            {
+              "name": "교육 미이수 SKU",
+              "match_field": {"vehicle": "excluded_skus", "job": "sku_codes"},
+              "match_logic": "job.sku_codes와 vehicle.excluded_skus 교집합 있으면 배정 제외"
+            }
+          ],
+          "action_on_violation": "skip_assignment"
+        }
+      },
+      "C8": {
+        "enabled": true,
+        "name": "미결 이력 회피",
+        "description": "과거 설치 미숙 미결 발생 모델은 해당 기사에게 재배정 제외",
+        "details": {
+          "match_field": {"vehicle": "avoid_models", "job": "sku_codes"},
+          "match_logic": "job.sku_codes와 vehicle.avoid_models 교집합 있으면 배정 제외",
+          "history_period_days": 365,
+          "action_on_violation": "skip_assignment"
+        }
+      }
+    },
+    "soft": {
+      "C2": {
+        "enabled": true,
+        "name": "설치비 하한",
+        "description": "기사 일일 설치비 최소 보장선",
+        "weight": 50,
+        "details": {
+          "min_fee_by_grade": {
+            "2인팀": 400000,
+            "S": 280000,
+            "A": 250000,
+            "B": 220000,
+            "C": 180000
+          }
+        }
+      },
+      "C6": {
+        "enabled": true,
+        "name": "월 설치비 상한",
+        "description": "서비스등급별 월 상한 관리",
+        "weight": 70,
+        "details": {
+          "monthly_limit_by_grade": {
+            "S": 12000000,
+            "A": 11000000,
+            "B": 9000000,
+            "C": 7000000
+          },
+          "warn_threshold_percent": 90
+        }
+      }
+    }
+  },
+  "engine_skill_mapping": {
+    "enabled": true,
+    "grade_to_skill_id": {"S": 4, "A": 3, "B": 2, "C": 1, "D": 0},
+    "two_person_skill_id": 100,
+    "filler_skill_id": 101,
+    "note": "C4 비활성화 시 jobs.skills에 기능도 미포함"
+  },
+  "engine_time_settings": {
+    "enabled": true,
+    "buffer_minutes": 60,
+    "work_start": "08:00",
+    "work_end": "23:00",
+    "lunch_start": "12:00",
+    "lunch_end": "13:00",
+    "note": "C3 비활성화 시 time_windows를 전체 업무시간으로 설정"
+  },
+  "engine_capacity_settings": {
+    "enabled": true,
+    "cbm_multiplier": 100,
+    "max_cbm_ratio": 1,
+    "note": "C5 비활성화 시 capacity 제한 해제 (매우 큰 값 설정)"
+  },
+  "driver_limits": {
+    "max_orders_per_driver": 12,
+    "max_work_minutes": 600,
+    "max_distance_km": 200
+  },
+  "depot_settings": {
+    "start_location": "center",
+    "end_location": "center",
+    "return_required": true
+  },
+  "region_constraint": {
+    "mode": "strict",
+    "allow_cross_region": false,
+    "adjacent_regions": {
+      "Y1": ["Y2", "Y3"],
+      "Y2": ["Y1", "Y3", "Y5"],
+      "Y3": ["Y1", "Y2"],
+      "Y5": ["Y2"],
+      "W1": ["Y1", "Y2"]
+    },
+    "note": "strict=기사 권역만, flexible=인접 권역 허용, ignore=전체 허용"
+  },
+  "distribute_options": {
+    "custom_matrix": {"enabled": true},
+    "balance_mode": "balanced",
+    "max_orders_per_driver": 12,
+    "calc_time_limit": 60,
+    "exploration_level": 5
+  },
+  "pre_filter_constraints": {
+    "C7_excluded_sku": {"enabled": true, "action": "기사-오더 SKU 매칭 필터링"},
+    "C8_history_avoid": {"enabled": true, "action": "기사-고객 미결이력 회피 필터링"},
+    "C6_monthly_limit": {"enabled": true, "action": "월 상한 초과 기사 제외"}
+  },
+  "general_options": {
+    "work_start": "08:00",
+    "work_end": "23:00",
+    "avg_speed_kmh": 40,
+    "base_stay_minutes": 25,
+    "distance_calc_type": "road",
+    "traffic_factor": 1,
+    "priority_enabled": true,
+    "priority_weight": 100
+  }
+}
