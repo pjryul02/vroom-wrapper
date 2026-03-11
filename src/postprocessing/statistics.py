@@ -75,17 +75,18 @@ class StatisticsGenerator:
         """시간 분석"""
         summary = vroom_result.get('summary', {})
 
-        total_duration = summary.get('duration', 0)
+        # VROOM의 duration은 순수 이동시간만 포함 (service/waiting 별도)
+        travel_time = summary.get('duration', 0)
         service_time = summary.get('service', 0)
         waiting_time = summary.get('waiting_time', 0)
-        travel_time = total_duration - service_time - waiting_time
+        total_time = travel_time + service_time + waiting_time
 
         return {
-            'total_duration_sec': total_duration,
+            'total_duration_sec': total_time,
             'travel_time_sec': travel_time,
             'service_time_sec': service_time,
             'waiting_time_sec': waiting_time,
-            'travel_percentage': round(travel_time / total_duration * 100, 1) if total_duration > 0 else 0
+            'travel_percentage': round(travel_time / total_time * 100, 1) if total_time > 0 else 0
         }
 
     def _calculate_efficiency(
