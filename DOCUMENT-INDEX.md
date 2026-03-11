@@ -30,13 +30,14 @@ src/
 ├── config.py                     # 환경 변수 설정 (30+)
 ├── api_models.py                 # Pydantic 요청 모델
 │
-├── api/                          # 엔드포인트 라우터 (13개)
+├── api/                          # 엔드포인트 라우터
 │   ├── distribute.py             #   POST /distribute
 │   ├── optimize.py               #   POST /optimize, /optimize/basic, /optimize/premium
 │   ├── dispatch.py               #   POST /dispatch (HGLIS)
 │   ├── jobs.py                   #   GET /jobs/{job_id} (비동기)
 │   ├── matrix.py                 #   POST /matrix/build
 │   ├── map_matching.py           #   POST /map-matching/match, /validate
+│   ├── valhalla.py               #   /valhalla/* 엔드포인트 (OSRM 병렬 비교)
 │   └── health.py                 #   GET /, /health, DELETE /cache/clear
 │
 ├── core/                         # 공통 인프라
@@ -49,19 +50,20 @@ src/
 │   ├── normalizer.py             #   입력 정규화
 │   ├── business_rules.py         #   비즈니스 규칙 (VIP/긴급/지역)
 │   ├── unreachable_filter.py     #   도달불가 사전 필터링
-│   ├── vroom_matrix_preparer.py  #   OSRM 매트릭스 사전계산
+│   ├── vroom_matrix_preparer.py  #   OSRM 매트릭스 사전계산 + VROOM 주입
+│   ├── valhalla_matrix.py        #   Valhalla 매트릭스 계산
 │   ├── chunked_matrix.py         #   OSRM 75×75 청킹
 │   └── matrix_builder.py         #   실시간 교통 매트릭스
 │
 ├── control/                      # Phase 2: 최적화 제어
 │   ├── controller.py             #   OptimizationController
-│   ├── vroom_executor.py         #   VROOM 바이너리 직접 호출
 │   ├── vroom_config.py           #   BASIC/STANDARD/PREMIUM 설정
 │   ├── constraint_tuner.py       #   제약 완화 6단계 자동 재시도
 │   └── multi_scenario.py         #   다중 시나리오 병렬 실행
 │
 ├── optimization/                 # 최적화 엔진
-│   └── two_pass.py               #   2-Pass 최적화
+│   ├── two_pass.py               #   2-Pass 최적화
+│   └── vroom_executor.py         #   VROOM 바이너리 직접 호출
 │
 ├── postprocessing/               # Phase 3: 후처리
 │   ├── constraint_checker.py     #   미배정 사유 역추적 분석
@@ -74,11 +76,18 @@ src/
 │   ├── skill_encoder.py          #   C4/C7/C8/소파 → VROOM skills
 │   ├── vroom_assembler.py        #   HGLIS → VROOM JSON 변환
 │   ├── fee_validator.py          #   C2 설치비 하한 검증
-│   └── monthly_cap.py            #   C6 월상한 검증
+│   ├── monthly_cap.py            #   C6 월상한 검증
+│   ├── joint_dispatch.py         #   합배차 처리
+│   ├── region_splitter.py        #   권역 분할
+│   ├── time_converter.py         #   시간 변환
+│   └── validator.py              #   HGLIS 입력 검증
 │
 ├── map_matching/                 # GPS 궤적 도로 매칭
 │   ├── engine.py                 #   OSRM 기반 Map Matcher
-│   └── models.py                 #   맵 매칭 요청/응답 모델
+│   ├── models.py                 #   맵 매칭 요청/응답 모델
+│   ├── config.py                 #   맵 매칭 설정
+│   ├── geometry.py               #   기하학 유틸리티
+│   └── parameters.py             #   파라미터 정의
 │
 ├── services/                     # 공통 서비스
 │   └── job_manager.py            #   비동기 작업 진행률 관리
@@ -94,7 +103,7 @@ src/
 | 파일 | 용도 |
 |------|------|
 | `Dockerfile.v3` | 멀티스테이지 빌드 (vroom-local → python:3.11-slim) |
-| `docker-compose.v3.yml` | 3-서비스 구성 (OSRM + Redis + Wrapper) |
+| `docker-compose.v3.yml` | 4-서비스 구성 (OSRM + Valhalla + Redis + Wrapper) |
 | `requirements-v3.txt` | Python 의존성 |
 
 ---

@@ -1,4 +1,4 @@
-# VROOM Wrapper v3.0 - Synthesis Edition
+# VROOM Wrapper v3.1 - Synthesis Edition
 
 VROOM 배차 최적화 엔진의 Python Wrapper 플랫폼.
 VROOM 바이너리 직접 호출, 미배정 사유 분석, 비즈니스 규칙, 제약 완화 자동 재시도, 다중 시나리오 비교를 제공합니다.
@@ -19,12 +19,14 @@ VROOM 바이너리 직접 호출, 미배정 사유 분석, 비즈니스 규칙, 
 ## 시스템 구성
 
 ```
-Docker Compose (3 컨테이너)
-  OSRM (:5000)  ─┐
-  Redis (:6379)  ─┤── Wrapper (:8000)
-                  │   FastAPI + VROOM 바이너리
-                  └── (vroom-express 제거!)
+Docker Compose (4 컨테이너)
+  OSRM (:5000)      ─┐
+  Valhalla (:8002)   ─┤── Wrapper (:8000)
+  Redis (:6379)      ─┤   FastAPI + VROOM 바이너리
+                      └── (vroom-express 제거!)
 ```
+
+- **Valhalla** — 한국 전체 데이터(south-korea-latest.osm.pbf), time-dependent routing 지원
 
 ## Quick Start
 
@@ -52,10 +54,20 @@ curl -X POST http://localhost:8000/optimize \
 
 | 메서드 | 경로 | 설명 | 인증 |
 |--------|------|------|------|
+| POST | `/distribute` | VROOM 호환 배차 | - |
 | POST | `/optimize` | STANDARD 최적화 | API Key |
 | POST | `/optimize/basic` | BASIC 최적화 (빠른 결과) | API Key |
 | POST | `/optimize/premium` | PREMIUM 최적화 (다중 시나리오) | API Key |
+| POST | `/dispatch` | HGLIS 가전 배송 배차 | API Key |
+| GET | `/jobs/{job_id}` | 비동기 배차 작업 진행률/결과 조회 | - |
 | POST | `/matrix/build` | OSRM 매트릭스 생성 | API Key |
+| POST | `/map-matching/match` | GPS 궤적 맵 매칭 | API Key |
+| GET | `/map-matching/health` | OSRM 맵 매칭 연결 확인 | - |
+| POST | `/map-matching/validate` | GPS 궤적 유효성 검증 | API Key |
+| POST | `/valhalla/distribute` | Valhalla 배차 (인증 불필요) | - |
+| POST | `/valhalla/optimize` | Valhalla STANDARD 최적화 | API Key |
+| POST | `/valhalla/optimize/basic` | Valhalla BASIC 최적화 | API Key |
+| POST | `/valhalla/optimize/premium` | Valhalla PREMIUM 최적화 | API Key |
 | DELETE | `/cache/clear` | 캐시 삭제 | API Key |
 | GET | `/health` | 헬스 체크 | - |
 
@@ -65,10 +77,15 @@ curl -X POST http://localhost:8000/optimize \
 src/
   main_v3.py              # FastAPI 메인 앱
   config.py               # 환경 변수 설정
+  api/                     # 라우터 (distribute, optimize, dispatch, jobs, valhalla, map_matching 등)
+  core/                    # 인증, 의존성 주입
   preprocessing/           # 검증, 정규화, 비즈니스 규칙, 교통 매트릭스
   control/                 # VROOM 설정, 제약 완화, 다중 시나리오
   optimization/            # VROOM 직접 호출, 2-Pass 최적화
   postprocessing/          # 미배정 분석, 품질 점수, 통계
+  hglis/                   # HGLIS 배차 (스킬 인코딩, 권역 분할, 요금 검증)
+  map_matching/            # GPS 궤적 맵 매칭 엔진
+  services/                # 비동기 Job 관리
   extensions/              # Redis/메모리 캐싱
 ```
 
@@ -91,6 +108,7 @@ src/
 
 - **VROOM** v1.14+ (C++ 바이너리, 직접 호출)
 - **OSRM** (OpenStreetMap 라우팅)
+- **Valhalla** v3.5+ (time-dependent routing, 한국 전체 데이터)
 - **FastAPI** + **uvicorn** (Python 웹 프레임워크)
 - **Redis** 7+ (캐싱, 선택)
 - **Docker** (멀티스테이지 빌드)

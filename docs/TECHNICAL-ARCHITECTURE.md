@@ -26,15 +26,17 @@
 
 ```
 docker-compose.v3.yml
-├── osrm     (ghcr.io/project-osrm/osrm-backend) → :5000
-├── redis    (redis:7-alpine)                     → :6379
-└── wrapper  (Dockerfile.v3 멀티스테이지)           → :8000
+├── osrm      (ghcr.io/project-osrm/osrm-backend)       → :5000
+├── valhalla  (ghcr.io/gis-ops/docker-valhalla/valhalla) → :8002
+├── redis     (redis:7-alpine)                           → :6379
+└── wrapper   (Dockerfile.v3 멀티스테이지)                 → :8000
     ├── Stage 1: vroom-local:latest → VROOM 바이너리 추출
     └── Stage 2: python:3.11-slim + VROOM + FastAPI
 ```
 
 v2.0까지 4컨테이너(OSRM + VROOM + vroom-express + Wrapper)였으나,
 v3.0에서 vroom-express 제거 → **VROOM 바이너리 직접 호출**로 3컨테이너 구성.
+v3.1에서 **Valhalla 추가** → 4컨테이너 구성 (OSRM 대체/보완, time-dependent routing).
 
 ### 1.2 호출 흐름
 
@@ -43,6 +45,7 @@ v3.0에서 vroom-express 제거 → **VROOM 바이너리 직접 호출**로 3컨
                          │
                          ├─ stdin/stdout ──→ VROOM 바이너리 (subprocess)
                          ├─ HTTP ──→ OSRM (:5000)
+                         ├─ HTTP ──→ Valhalla (:8002)
                          └─ TCP ──→ Redis (:6379)
 ```
 
@@ -57,7 +60,7 @@ VROOM은 HTTP 서버가 아님. Wrapper가 `asyncio.create_subprocess_exec()`로
 | 매트릭스 | VROOM이 OSRM 직접 호출 | **Wrapper가 1회 사전계산** → VROOM에 주입 |
 | 도달불가 처리 | 없음 | **매트릭스 기반 사전 필터링** |
 | 대규모 매트릭스 | 단일 요청 | **75×75 청킹 + 8 워커 병렬** |
-| 컨테이너 | 4개 | 3개 |
+| 컨테이너 | 4개 | 3개 (v3.0) → 4개 (v3.1, +Valhalla) |
 
 ---
 
@@ -76,6 +79,7 @@ src/
 │   ├── jobs.py             # GET /jobs/{job_id} (비동기 진행률)
 │   ├── matrix.py           # POST /matrix/build
 │   ├── map_matching.py     # POST /map-matching/match, /validate
+│   ├── valhalla.py         # /valhalla/* 엔드포인트 (OSRM 병렬 비교)
 │   └── health.py           # GET /, /health, DELETE /cache/clear
 │
 ├── core/                   # 공통 인프라
@@ -89,18 +93,19 @@ src/
 │   ├── business_rules.py   # VIP/긴급/지역 비즈니스 규칙
 │   ├── unreachable_filter.py  # 도달불가 사전 필터링
 │   ├── vroom_matrix_preparer.py  # OSRM 매트릭스 사전계산 + VROOM 주입
+│   ├── valhalla_matrix.py  # Valhalla 매트릭스 계산
 │   ├── chunked_matrix.py   # OSRM 75×75 청킹 매트릭스
 │   └── matrix_builder.py   # 실시간 교통 매트릭스 (TMap/Kakao/Naver)
 │
 ├── control/                # Phase 2: 최적화 제어
 │   ├── controller.py       # OptimizationController (2-Pass/시나리오/재시도)
-│   ├── vroom_executor.py   # VROOM 바이너리 직접 호출
 │   ├── vroom_config.py     # BASIC/STANDARD/PREMIUM 설정 생성
 │   ├── constraint_tuner.py # 제약 완화 6단계 자동 재시도
 │   └── multi_scenario.py   # 다중 시나리오 병렬 실행
 │
 ├── optimization/           # 최적화 엔진
-│   └── two_pass.py         # 2-Pass 최적화 (Pass1 배정 + Pass2 경로)
+│   ├── two_pass.py         # 2-Pass 최적화 (Pass1 배정 + Pass2 경로)
+│   └── vroom_executor.py   # VROOM 바이너리 직접 호출
 │
 ├── postprocessing/         # Phase 3: 후처리
 │   ├── constraint_checker.py  # 미배정 사유 역추적 분석
@@ -113,11 +118,18 @@ src/
 │   ├── skill_encoder.py    # C4/C7/C8/소파 → VROOM skills 인코딩
 │   ├── vroom_assembler.py  # HGLIS → VROOM JSON 변환
 │   ├── fee_validator.py    # C2 설치비 하한 검증
-│   └── monthly_cap.py      # C6 월상한 검증
+│   ├── monthly_cap.py      # C6 월상한 검증
+│   ├── joint_dispatch.py   # 합배차 처리
+│   ├── region_splitter.py  # 권역 분할
+│   ├── time_converter.py   # 시간 변환
+│   └── validator.py        # HGLIS 입력 검증
 │
 ├── map_matching/           # GPS 궤적 도로 매칭
 │   ├── engine.py           # OSRM 기반 Map Matcher
-│   └── models.py           # 맵 매칭 요청/응답 모델
+│   ├── models.py           # 맵 매칭 요청/응답 모델
+│   ├── config.py           # 맵 매칭 설정
+│   ├── geometry.py         # 기하학 유틸리티
+│   └── parameters.py       # 파라미터 정의
 │
 ├── services/               # 공통 서비스
 │   └── job_manager.py      # 비동기 작업 진행률 관리

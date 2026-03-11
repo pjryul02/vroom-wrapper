@@ -4,6 +4,24 @@
 
 ---
 
+## [v3.1.0] - 2026-03-02
+
+### 신규 기능
+- **Valhalla 통합** - 4개 엔드포인트 추가 (`/valhalla/distribute`, `/valhalla/optimize`, `/valhalla/optimize/basic`, `/valhalla/optimize/premium`)
+- **Valhalla 매트릭스 사전계산** - ValhallaChunkedMatrix로 청킹 병렬 처리
+- **HGLIS `/dispatch` 엔드포인트** - HGLIS 연동 배차 API
+- **비동기 Job 시스템** - `/jobs/{job_id}`로 비동기 작업 상태 조회/결과 수신
+- **OSRM 매트릭스 사전계산** - VroomMatrixPreparer로 매트릭스 사전 구축
+
+### 개선
+- **2-Pass 최적화 기본 활성화** - 별도 설정 없이 기본 ON
+- **Swagger UI 보강** - 엔드포인트 설명/예시 강화
+
+### 인프라
+- Docker 컨테이너 3개 → 4개 (Valhalla 서버 추가, 포트 8002)
+
+---
+
 ## [v3.0.0] - 2026-02-13 (정반합 Synthesis Edition)
 
 Roouty Engine(Go) 성능 패턴 + Python Wrapper v2.0 기능의 통합.

@@ -75,12 +75,13 @@ docker run -t -v $(pwd):/data ghcr.io/project-osrm/osrm-backend:latest \
 ```bash
 cd /home/shawn/vroom-wrapper-project
 
-# 빌드 + 실행 (3개 컨테이너)
+# 빌드 + 실행 (4개 컨테이너)
 docker compose -f docker-compose.v3.yml up -d --build
 ```
 
 이 명령 하나로:
 - OSRM 서버 가동 (:5000)
+- Valhalla 서버 가동 (:8002)
 - Redis 캐시 가동 (:6379)
 - Wrapper + VROOM 바이너리 통합 컨테이너 가동 (:8000)
 
@@ -93,6 +94,7 @@ docker compose -f docker-compose.v3.yml ps
 # 기대 결과:
 # NAME              STATUS      PORTS
 # osrm-server       Up          0.0.0.0:5000->5000/tcp
+# valhalla-server   Up          0.0.0.0:8002->8002/tcp
 # vroom-redis       Up          0.0.0.0:6379->6379/tcp
 # vroom-wrapper-v3  Up          0.0.0.0:8000->8000/tcp
 
@@ -133,6 +135,7 @@ docker compose -f docker-compose.v3.yml logs -f wrapper
 
 # 특정 서비스 로그
 docker compose -f docker-compose.v3.yml logs osrm
+docker compose -f docker-compose.v3.yml logs valhalla
 docker compose -f docker-compose.v3.yml logs redis
 ```
 
@@ -360,7 +363,40 @@ curl -X POST http://localhost:8000/matrix/build \
 - `distances` - 미터 단위 거리 (A→B: 4,405m = 약 4.4km)
 - 75x75 청크 단위로 병렬 처리하므로 500+ 지점도 빠르게 계산
 
-### 2-5. 기타 엔드포인트
+### 2-5. Valhalla 엔드포인트 (v3.1 신규)
+
+OSRM 대신 Valhalla를 라우팅 엔진으로 사용. Time-dependent 라우팅 지원.
+
+```bash
+# Valhalla 기반 배차 (인증 불필요)
+curl -X POST http://localhost:8000/valhalla/distribute \
+  -H "Content-Type: application/json" \
+  -d '{
+    "vehicles": [
+      {"id": 1, "start": [127.0276, 37.4979], "end": [127.0276, 37.4979],
+       "capacity": [100], "time_window": [1700000000, 1700036000]}
+    ],
+    "jobs": [
+      {"id": 1, "location": [127.0500, 37.5172], "service": 300, "amount": [10]},
+      {"id": 2, "location": [127.0300, 37.4850], "service": 300, "amount": [15]}
+    ]
+  }'
+
+# Valhalla 기반 최적화 (API Key 필요)
+curl -X POST http://localhost:8000/valhalla/optimize \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: demo-key-12345" \
+  -d '{ ... }'  # /optimize와 동일한 요청 형식
+
+# Valhalla BASIC/PREMIUM도 동일 패턴
+# /valhalla/optimize/basic
+# /valhalla/optimize/premium
+```
+
+Valhalla 엔드포인트는 OSRM 엔드포인트와 동일한 요청/응답 형식을 사용합니다.
+Valhalla의 매트릭스를 사전계산(ValhallaChunkedMatrix)하여 VROOM에 전달하는 방식입니다.
+
+### 2-6. 기타 엔드포인트
 
 ```bash
 # 캐시 삭제
@@ -613,10 +649,11 @@ Python에서 유지한 것 (기능):
 ├── API Key 인증 + Rate Limiting
 └── 상세 통계 생성
 
-컨테이너 구성: 3개 (v2.0은 4개)
-├── OSRM (:5000)     - 거리/시간 계산
-├── Redis (:6379)    - 캐싱
-└── Wrapper (:8000)  - Python + VROOM 바이너리 통합
+컨테이너 구성: 4개
+├── OSRM (:5000)      - 거리/시간 계산
+├── Valhalla (:8002)  - Time-dependent 라우팅
+├── Redis (:6379)     - 캐싱
+└── Wrapper (:8000)   - Python + VROOM 바이너리 통합
 ```
 
 ---

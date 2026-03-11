@@ -32,6 +32,10 @@ VRP(Vehicle Routing Problem) 최적화 플랫폼 - Python FastAPI 기반 VROOM C
    - [GET /map-matching/health - 맵 매칭 헬스](#11-get-map-matchinghealth---맵-매칭-헬스)
    - [POST /map-matching/validate - 궤적 검증](#12-post-map-matchingvalidate---궤적-검증)
    - [DELETE /cache/clear - 캐시 초기화](#13-delete-cacheclear---캐시-초기화)
+   - [POST /valhalla/distribute - Valhalla 배차](#14-post-valhalladistribute---valhalla-배차)
+   - [POST /valhalla/optimize - Valhalla 표준 최적화](#15-post-valhallaoptimize---valhalla-표준-최적화)
+   - [POST /valhalla/optimize/basic - Valhalla 기본 최적화](#16-post-valhallaoptimizebasic---valhalla-기본-최적화)
+   - [POST /valhalla/optimize/premium - Valhalla 프리미엄 최적화](#17-post-valhallaoptimizepremium---valhalla-프리미엄-최적화)
 6. [요청 형식](#요청-형식)
    - [VROOM 표준 (Vehicles, Jobs, Shipments)](#vroom-표준-vehicles-jobs-shipments)
    - [HGLIS 형식 (HglisVehicle, HglisJob)](#hglis-형식-hglisvehicle-hglisjob)
@@ -424,6 +428,10 @@ API Key 단위로 요청률 제한(Rate Limiting)이 적용된다.
 | 11 | GET | `/map-matching/health` | 맵 매칭 서비스 헬스 체크 | 불필요 |
 | 12 | POST | `/map-matching/validate` | 궤적 품질 검증 | 필요 |
 | 13 | DELETE | `/cache/clear` | 캐시 전체 초기화 | 필요 |
+| 14 | POST | `/valhalla/distribute` | Valhalla 라우팅 배차 (VROOM 호환) | 불필요 |
+| 15 | POST | `/valhalla/optimize` | Valhalla 표준 최적화 | 필요 |
+| 16 | POST | `/valhalla/optimize/basic` | Valhalla 기본 최적화 (경량) | 필요 |
+| 17 | POST | `/valhalla/optimize/premium` | Valhalla 프리미엄 최적화 (2-Pass) | 필요 |
 
 ---
 
@@ -1559,11 +1567,352 @@ curl -X DELETE http://localhost:8000/cache/clear \
 
 ---
 
+### 14. POST /valhalla/distribute -- Valhalla 배차
+
+OSRM 대신 **Valhalla**를 라우팅 백엔드로 사용하는 VROOM 호환 배차 엔드포인트이다. 입출력 포맷은 `/distribute`와 동일하다.
+
+**인증**: 불필요
+
+**OSRM 버전과의 차이점**:
+- Valhalla `sources_to_targets` API로 실도로 매트릭스 계산
+- Valhalla `/route` API로 실제 도로 geometry 획득
+- vehicle profile이 `car` → `auto`로 자동 패치됨 (Valhalla costing method)
+
+**요청**:
+
+```bash
+curl -X POST http://localhost:8000/valhalla/distribute \
+  -H "Content-Type: application/json" \
+  -d '{
+    "vehicles": [
+      {
+        "id": 1,
+        "start": [126.9780, 37.5665],
+        "end": [126.9780, 37.5665],
+        "capacity": [100],
+        "skills": [1, 2],
+        "time_window": [28800, 64800]
+      }
+    ],
+    "jobs": [
+      {
+        "id": 101,
+        "location": [127.0276, 37.4979],
+        "service": 300,
+        "delivery": [20],
+        "skills": [1],
+        "time_windows": [[32400, 36000]]
+      }
+    ]
+  }'
+```
+
+**응답 예시**:
+
+```json
+{
+  "code": 0,
+  "summary": {
+    "cost": 1234,
+    "routes": 1,
+    "unassigned": 0,
+    "service": 300,
+    "duration": 2400,
+    "distance": 12500
+  },
+  "routes": [
+    {
+      "vehicle": 1,
+      "steps": [
+        {"type": "start", "location": [126.9780, 37.5665], "arrival": 28800},
+        {"type": "job", "id": 101, "location": [127.0276, 37.4979], "arrival": 32400, "service": 300},
+        {"type": "end", "location": [126.9780, 37.5665], "arrival": 35400}
+      ],
+      "geometry": "encoded_polyline_string..."
+    }
+  ],
+  "unassigned": [],
+  "_wrapper": {
+    "version": "3.0.0",
+    "engine": "valhalla",
+    "processing_time_ms": 320
+  }
+}
+```
+
+**geometry 제어**: `"options": {"g": true}` 포함 시 응답에 geometry 유지. 미지정 시 내부적으로 geometry를 요청하되 응답에서 제거.
+
+**상태 코드**:
+
+| 코드 | 설명 |
+|------|------|
+| `200 OK` | 최적화 성공 |
+| `400 Bad Request` | 잘못된 입력 |
+| `500 Internal Server Error` | VROOM/Valhalla 실행 오류 |
+| `503 Service Unavailable` | Valhalla 서버 미가동 |
+
+---
+
+### 15. POST /valhalla/optimize -- Valhalla 표준 최적화
+
+Valhalla 라우팅 기반 표준 최적화. OSRM `/optimize`와 동일한 파이프라인을 Valhalla로 실행한다.
+
+**처리 순서**: 전처리 → Valhalla 매트릭스 사전 계산 → 도달 불가 필터링 → VROOM 최적화 → 미배정 자동 재시도 → 분석 → 통계 → 캐싱
+
+**인증**: 필요 (`X-API-Key` 헤더)
+
+**추가 입력 필드** (VROOM 표준 필드 외):
+
+| 필드 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `use_cache` | boolean | `true` | 캐시 사용 여부 |
+| `business_rules` | object | `null` | 비즈니스 규칙 설정 |
+
+**요청**:
+
+```bash
+curl -X POST http://localhost:8000/valhalla/optimize \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: demo-key-12345" \
+  -d '{
+    "vehicles": [
+      {
+        "id": 1,
+        "start": [126.9780, 37.5665],
+        "end": [126.9780, 37.5665],
+        "capacity": [100],
+        "skills": [1, 2],
+        "time_window": [28800, 64800],
+        "max_tasks": 10
+      }
+    ],
+    "jobs": [
+      {
+        "id": 101,
+        "location": [127.0276, 37.4979],
+        "service": 300,
+        "delivery": [20],
+        "skills": [1],
+        "priority": 100,
+        "time_windows": [[32400, 36000]]
+      },
+      {
+        "id": 102,
+        "location": [127.0594, 37.5140],
+        "service": 600,
+        "delivery": [30],
+        "skills": [2],
+        "time_windows": [[43200, 50400]]
+      }
+    ],
+    "use_cache": true
+  }'
+```
+
+**응답 예시**:
+
+```json
+{
+  "wrapper_version": "3.0.0",
+  "routes": [
+    {
+      "vehicle": 1,
+      "cost": 1400,
+      "service": 600,
+      "duration": 4800,
+      "distance": 18500,
+      "steps": [
+        {"type": "start", "location": [126.9780, 37.5665], "arrival": 28800},
+        {"type": "job", "id": 101, "location": [127.0276, 37.4979], "arrival": 32400, "service": 300},
+        {"type": "end", "location": [126.9780, 37.5665], "arrival": 35400}
+      ],
+      "geometry": "encoded_polyline_string..."
+    }
+  ],
+  "summary": {
+    "cost": 1400,
+    "routes": 1,
+    "unassigned": 1,
+    "service": 600,
+    "duration": 4800,
+    "distance": 18500
+  },
+  "unassigned": [
+    {
+      "id": 102,
+      "reasons": [{"type": "skills", "description": "No vehicle has required skills"}]
+    }
+  ],
+  "analysis": {
+    "quality_score": 0.85,
+    "vehicle_utilization": [{"vehicle_id": 1, "utilization": 0.75, "tasks": 1}]
+  },
+  "statistics": {
+    "distances": {"total": 18500, "per_vehicle": [18500]},
+    "durations": {"total": 4800, "per_vehicle": [4800]}
+  },
+  "_metadata": {
+    "api_key": "demo",
+    "control_level": "STANDARD",
+    "engine": "valhalla",
+    "processing_time_ms": 980,
+    "from_cache": false
+  }
+}
+```
+
+**상태 코드**:
+
+| 코드 | 설명 |
+|------|------|
+| `200 OK` | 최적화 성공 |
+| `400 Bad Request` | 잘못된 입력 |
+| `401 Unauthorized` | API Key 누락 또는 유효하지 않음 |
+| `429 Too Many Requests` | 요청률 제한 초과 |
+| `500 Internal Server Error` | 내부 오류 |
+| `503 Service Unavailable` | Valhalla 서버 미가동 |
+
+---
+
+### 16. POST /valhalla/optimize/basic -- Valhalla 기본 최적화
+
+분석(analysis)·통계(statistics)·재시도 단계를 생략한 Valhalla 경량 최적화. 빠른 결과가 필요할 때 사용한다.
+
+**인증**: 필요 (`X-API-Key` 헤더)
+
+**요청**: `/valhalla/optimize`와 동일한 입력 형식
+
+```bash
+curl -X POST http://localhost:8000/valhalla/optimize/basic \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: demo-key-12345" \
+  -d '{
+    "vehicles": [
+      {"id": 1, "start": [126.9780, 37.5665], "end": [126.9780, 37.5665], "capacity": [100]}
+    ],
+    "jobs": [
+      {"id": 101, "location": [127.0276, 37.4979], "service": 300, "delivery": [20]},
+      {"id": 102, "location": [127.0594, 37.5140], "service": 600, "delivery": [30]}
+    ]
+  }'
+```
+
+**응답**: `analysis`, `statistics` 필드 없이 `wrapper_version`, `routes`, `summary`, `unassigned`, `_metadata`만 포함.
+
+```json
+{
+  "wrapper_version": "3.0.0",
+  "routes": [...],
+  "summary": {...},
+  "unassigned": [],
+  "_metadata": {
+    "api_key": "demo",
+    "engine": "valhalla",
+    "control_level": "BASIC"
+  }
+}
+```
+
+**상태 코드**:
+
+| 코드 | 설명 |
+|------|------|
+| `200 OK` | 최적화 성공 |
+| `401 Unauthorized` | API Key 누락 또는 유효하지 않음 |
+| `500 Internal Server Error` | 내부 오류 |
+| `503 Service Unavailable` | Valhalla 서버 미가동 |
+
+---
+
+### 17. POST /valhalla/optimize/premium -- Valhalla 프리미엄 최적화
+
+Valhalla 매트릭스 선계산 + **2-Pass 최적화** (10개 이상 job 시 활성화)를 지원하는 프리미엄 엔드포인트이다.
+
+**인증**: 필요 (`X-API-Key` 헤더, Premium 권한)
+
+**요청률 제한**: 50 요청 / 3600초
+
+**요청**: `/valhalla/optimize`와 동일한 입력 형식
+
+```bash
+curl -X POST http://localhost:8000/valhalla/optimize/premium \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: demo-key-12345" \
+  -d '{
+    "vehicles": [
+      {"id": 1, "start": [126.9780, 37.5665], "end": [126.9780, 37.5665], "capacity": [100], "max_tasks": 10},
+      {"id": 2, "start": [127.0594, 37.5140], "end": [127.0594, 37.5140], "capacity": [200]}
+    ],
+    "jobs": [
+      {"id": 101, "location": [127.0276, 37.4979], "service": 300, "delivery": [20]},
+      {"id": 102, "location": [127.0594, 37.5140], "service": 600, "delivery": [30]},
+      {"id": 103, "location": [126.9910, 37.5512], "service": 300, "delivery": [15]},
+      {"id": 104, "location": [127.0100, 37.5300], "service": 300, "delivery": [10]},
+      {"id": 105, "location": [127.0200, 37.5100], "service": 600, "delivery": [25]},
+      {"id": 106, "location": [126.9900, 37.5600], "service": 300, "delivery": [20]},
+      {"id": 107, "location": [127.0400, 37.5000], "service": 300, "delivery": [15]},
+      {"id": 108, "location": [127.0300, 37.5200], "service": 600, "delivery": [30]},
+      {"id": 109, "location": [126.9800, 37.5400], "service": 300, "delivery": [10]},
+      {"id": 110, "location": [127.0500, 37.5050], "service": 300, "delivery": [20]}
+    ]
+  }'
+```
+
+**응답 예시**:
+
+```json
+{
+  "wrapper_version": "3.0.0",
+  "routes": [...],
+  "summary": {
+    "cost": 4200,
+    "routes": 2,
+    "unassigned": 0,
+    "duration": 14400,
+    "distance": 52000
+  },
+  "unassigned": [],
+  "analysis": {
+    "quality_score": 0.94,
+    "vehicle_utilization": [
+      {"vehicle_id": 1, "utilization": 0.90, "tasks": 5},
+      {"vehicle_id": 2, "utilization": 0.85, "tasks": 5}
+    ]
+  },
+  "statistics": {
+    "distances": {"total": 52000, "per_vehicle": [26000, 26000]},
+    "durations": {"total": 14400, "per_vehicle": [7200, 7200]}
+  },
+  "_metadata": {
+    "api_key": "demo",
+    "engine": "valhalla",
+    "control_level": "PREMIUM",
+    "two_pass": true,
+    "processing_time_ms": 2100
+  }
+}
+```
+
+**2-Pass 동작**: job + shipment 합계가 10개 이상일 때 자동 활성화. Pass 1에서 배정을 결정하고, Pass 2에서 경로 순서를 최적화한다. 10개 미만이면 단일 실행.
+
+**상태 코드**:
+
+| 코드 | 설명 |
+|------|------|
+| `200 OK` | 최적화 성공 |
+| `401 Unauthorized` | API Key 누락 또는 유효하지 않음 |
+| `403 Forbidden` | Premium 권한 없음 |
+| `429 Too Many Requests` | 요청률 제한 초과 |
+| `500 Internal Server Error` | 내부 오류 |
+| `503 Service Unavailable` | Valhalla 서버 미가동 |
+
+---
+
 ## 요청 형식
 
 ### VROOM 표준 (Vehicles, Jobs, Shipments)
 
-`/distribute`, `/optimize`, `/optimize/basic`, `/optimize/premium` 엔드포인트에서 사용한다.
+`/distribute`, `/optimize`, `/optimize/basic`, `/optimize/premium`, `/valhalla/distribute`, `/valhalla/optimize`, `/valhalla/optimize/basic`, `/valhalla/optimize/premium` 엔드포인트에서 사용한다.
 
 #### 기본 구조
 
