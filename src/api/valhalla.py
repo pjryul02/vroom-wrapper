@@ -149,7 +149,6 @@ async def valhalla_optimize_standard(
         vrp_data = request_body.model_dump(exclude_none=True)
         vrp_data.pop("use_cache", None)
         vrp_data.pop("business_rules", None)
-        _patch_valhalla_profiles(vrp_data)
 
         # 캐시 확인
         if use_cache:
@@ -160,6 +159,9 @@ async def valhalla_optimize_standard(
 
         # 1. 전처리 (검증 + 정규화 + 비즈니스 규칙)
         vrp_input = await c.preprocessor.process(vrp_data)
+
+        # Valhalla profile 패치 (preprocessor가 profile 필드를 제거하므로 이후에 적용)
+        _patch_valhalla_profiles(vrp_input)
 
         # 2. Valhalla 매트릭스 사전 계산 + VROOM 입력에 주입
         #    (UnreachableFilter 동작, 2-Pass 매트릭스 재사용 가능)
@@ -242,9 +244,9 @@ async def valhalla_optimize_basic(
         vrp_data = request_body.model_dump(exclude_none=True)
         vrp_data.pop("use_cache", None)
         vrp_data.pop("business_rules", None)
-        _patch_valhalla_profiles(vrp_data)
 
         vrp_input = await c.preprocessor.process(vrp_data)
+        _patch_valhalla_profiles(vrp_input)
 
         if c.valhalla_preparer:
             vrp_input = await c.valhalla_preparer.prepare(vrp_input)
@@ -297,9 +299,9 @@ async def valhalla_optimize_premium(
         vrp_data = request_body.model_dump(exclude_none=True)
         vrp_data.pop("use_cache", None)
         vrp_data.pop("business_rules", None)
-        _patch_valhalla_profiles(vrp_data)
 
         vrp_input = await c.preprocessor.process(vrp_data)
+        _patch_valhalla_profiles(vrp_input)
 
         if c.valhalla_preparer:
             vrp_input = await c.valhalla_preparer.prepare(vrp_input)

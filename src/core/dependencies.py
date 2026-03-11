@@ -102,6 +102,7 @@ def init_components() -> Components:
 
             valhalla_preparer = VroomMatrixPreparer(
                 osrm_matrix=valhalla_matrix,  # 같은 인터페이스 (build_matrix 메서드)
+                profile="auto",  # Valhalla: "auto" costing = VROOM의 car에 대응
             )
 
             logger.info(

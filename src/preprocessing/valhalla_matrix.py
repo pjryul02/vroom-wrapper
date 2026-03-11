@@ -136,7 +136,8 @@ class ValhallaChunkedMatrix:
     ) -> Dict[str, List[List[int]]]:
         """소규모: sources=locations, targets=locations (전체 N×N)"""
         vl = [self._to_valhalla_loc(l) for l in locations]
-        return await self._call_api(vl, vl)
+        durations, distances = await self._call_api(vl, vl)
+        return {"durations": durations, "distances": distances}
 
     async def _fetch_chunk(
         self,
