@@ -258,17 +258,84 @@ HGLIS JSON
 
 ---
 
-## 엔드포인트별 파이프라인 요약
+## 엔드포인트 전체 구조 — 3개 축으로 이해
 
-| 엔드포인트 | 전처리 | 최적화 | 후처리 | 비고 |
-|-----------|--------|--------|--------|------|
-| `/distribute` | Validator만 | 1-Pass | 미배정 분석 | 인증 불필요 |
-| `/optimize` | 풀 파이프라인 (OSRM) | 2-Pass + 재시도 | 전체 분석 | STANDARD |
-| `/optimize/basic` | 풀 파이프라인 (OSRM) | 1-Pass | 전체 분석 | 빠른 결과 |
-| `/optimize/premium` | 풀 파이프라인 (OSRM) | 멀티 시나리오 | 전체 분석 | 최고 품질 |
-| `/dispatch` | HGLIS 전용 7단계 | 권역별 병렬 2-Pass | C2/C6 검증 | 가전배송 |
-| `/valhalla/distribute` | Validator + Valhalla 매트릭스 | 1-Pass | 미배정 분석 | OSRM 대신 Valhalla |
-| `/valhalla/optimize` | 풀 파이프라인 (Valhalla) | 2-Pass + 재시도 | 전체 분석 | ETA 정확도 향상 |
+래퍼의 엔드포인트는 3가지 독립 축의 조합이다.
+
+### 축 1. 파이프라인 깊이 — distribute vs optimize
+
+```
+distribute (배분)                        optimize (최적화)
+─────────────────────────────            ─────────────────────────────────────────
+전처리: 검증만                            전처리: 검증+정규화+비즈니스규칙+도달불가필터
+                                                  + OSRM/Valhalla 매트릭스 사전계산
+VROOM: 1-Pass                            VROOM: 2-Pass (Pass1=배정, Pass2=경로순서)
+                                                  + 미배정 많으면 제약 완화 자동 재시도
+후처리: 미배정 분석만                     후처리: 품질점수+통계+개선제안 전체 분석
+인증: 불필요                              인증: X-API-Key 필수
+```
+
+"돌아는 가는 해" vs "더 나은 해 찾기".
+
+### 축 2. optimize 품질 등급 — 3단계
+
+```
+/optimize/basic    1-Pass, 낮은 탐색              빠름, 품질 낮음
+/optimize          2-Pass + 재시도 (STANDARD)     균형 (기본값)
+/optimize/premium  3시나리오 병렬 → 최고점수 반환   느림, 최고 품질
+```
+
+premium = basic + standard + premium 셋 다 실행 후 quality_score 가장 높은 것 반환.
+
+### 축 3. 매트릭스 엔진 — OSRM vs Valhalla
+
+매트릭스 엔진은 **거리/시간 계산 방식**만 바꾼다. 그 위의 VROOM 파이프라인은 동일.
+
+```
+OSRM    → 정적 (교통 정보 없음), 빠름, 기본값
+Valhalla → 시간대별 ETA 반영 가능, 느림, ETA 정확도 중요할 때
+```
+
+`/valhalla/*` 엔드포인트 = 매트릭스 계산 단계만 `valhalla_matrix.py`로 교체, 나머지 동일.
+
+---
+
+### dispatch(HGLIS) — 별도 레이어, optimize의 변형이 아님
+
+dispatch는 **가전배송 도메인 전용 시스템**이다. optimize 위에 얹은 게 아니라 독립 레이어.
+
+```
+/optimize 계열                           /dispatch (HGLIS)
+──────────────────────────               ──────────────────────────────
+범용 VRP 인터페이스                        가전배송 도메인 인터페이스
+
+입력: 클라이언트가 VROOM 포맷으로 직접 작성  입력: HGLIS 비즈니스 언어 (기사/오더/제품)
+     skill, capacity, time_windows 직접 설정  skill 인코딩, 시간 변환, 권역 분할 → 래퍼가 자동 처리
+
+비즈니스 제약 없음                          C1~C8 자동 적용
+(제약은 클라이언트가 skill로 표현)           (기능도/용량/신제품/월상한 등 내장)
+
+단일 공간 최적화                            권역 분할 → 병렬 실행 → 결과 병합
+
+후처리: 표준 분석                           후처리: C2 설치비 하한 + C6 월상한 검증 추가
+```
+
+dispatch는 내부에서 VROOM 2-Pass를 돌리지만, 클라이언트가 보는 인터페이스는 완전히 다른 언어.
+HGLIS JSON → (래퍼 통번역) → VROOM → (래퍼 역번역) → HGLIS 결과.
+
+---
+
+### 전체 엔드포인트 한 눈에
+
+| 엔드포인트 | 도메인 | 전처리 깊이 | 매트릭스 | VROOM 전략 | 인증 |
+|-----------|--------|------------|---------|-----------|------|
+| `/distribute` | 범용 VRP | 검증만 | OSRM | 1-Pass | 불필요 |
+| `/optimize/basic` | 범용 VRP | 풀 파이프라인 | OSRM | 1-Pass | 필요 |
+| `/optimize` | 범용 VRP | 풀 파이프라인 | OSRM | 2-Pass + 재시도 | 필요 |
+| `/optimize/premium` | 범용 VRP | 풀 파이프라인 | OSRM | 3시나리오 병렬 | 필요 |
+| `/dispatch` | **HGLIS 전용** | HGLIS 9단계 통번역 | OSRM | 권역별 2-Pass | 필요 |
+| `/valhalla/distribute` | 범용 VRP | 검증만 | **Valhalla** | 1-Pass | 불필요 |
+| `/valhalla/optimize` | 범용 VRP | 풀 파이프라인 | **Valhalla** | 2-Pass + 재시도 | 필요 |
 
 ---
 
