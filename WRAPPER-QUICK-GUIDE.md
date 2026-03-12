@@ -333,9 +333,11 @@ HGLIS JSON → (래퍼 통번역) → VROOM → (래퍼 역번역) → HGLIS 결
 | `/optimize/basic` | 범용 VRP | 풀 파이프라인 | OSRM | 1-Pass | 필요 |
 | `/optimize` | 범용 VRP | 풀 파이프라인 | OSRM | 2-Pass + 재시도 | 필요 |
 | `/optimize/premium` | 범용 VRP | 풀 파이프라인 | OSRM | 3시나리오 병렬 | 필요 |
-| `/dispatch` | **HGLIS 전용** | HGLIS 9단계 통번역 | OSRM | 권역별 2-Pass | 필요 |
+| `/dispatch` | **HGLIS 전용** | HGLIS 9단계 통번역 | OSRM | 권역별 2-Pass + **Pass3 ETA** (예정) | 필요 |
 | `/valhalla/distribute` | 범용 VRP | 검증만 | **Valhalla** | 1-Pass | 불필요 |
+| `/valhalla/optimize/basic` | 범용 VRP | 풀 파이프라인 | **Valhalla** | 1-Pass | 필요 |
 | `/valhalla/optimize` | 범용 VRP | 풀 파이프라인 | **Valhalla** | 2-Pass + 재시도 | 필요 |
+| `/valhalla/optimize/premium` | 범용 VRP | 풀 파이프라인 | **Valhalla** | 3시나리오 병렬 | 필요 |
 
 ---
 
