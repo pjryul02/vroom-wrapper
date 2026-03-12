@@ -14,6 +14,7 @@ from ..preprocessing.matrix_builder import TrafficProvider
 from ..preprocessing.chunked_matrix import OSRMChunkedMatrix
 from ..preprocessing.valhalla_matrix import ValhallaChunkedMatrix
 from ..preprocessing.vroom_matrix_preparer import VroomMatrixPreparer
+from ..preprocessing.valhalla_eta import ValhallaEtaUpdater
 from ..control import OptimizationController
 from ..optimization.vroom_executor import VROOMExecutor
 from ..postprocessing import ResultAnalyzer, StatisticsGenerator, ConstraintChecker
@@ -37,6 +38,7 @@ class Components:
     valhalla_executor: Optional[VROOMExecutor] = None
     valhalla_matrix: Optional[ValhallaChunkedMatrix] = None
     valhalla_preparer: Optional[VroomMatrixPreparer] = None
+    valhalla_eta_updater: Optional[ValhallaEtaUpdater] = None  # Pass 3: ETA 업데이터
 
 
 _components: Optional[Components] = None
@@ -105,13 +107,23 @@ def init_components() -> Components:
                 profile="auto",  # Valhalla: "auto" costing = VROOM의 car에 대응
             )
 
+            # Pass 3: Valhalla ETA 업데이터 (HGLIS dispatch 전용)
+            # 현재: 틀만 잡힌 상태 (pass-through), TODO: /route API 구현 후 활성화
+            valhalla_eta_updater = ValhallaEtaUpdater(
+                valhalla_url=config.VALHALLA_URL,
+                costing="auto",   # 소형화물차 기본값
+                enabled=False,    # TODO: 구현 완료 후 True로 변경
+            )
+
             logger.info(
                 f"Valhalla 컴포넌트 초기화 완료 "
                 f"(executor: {vh_host}:{vh_port}, "
-                f"matrix chunk_size={config.VALHALLA_CHUNK_SIZE})"
+                f"matrix chunk_size={config.VALHALLA_CHUNK_SIZE}, "
+                f"eta_updater: pass-through)"
             )
         except Exception as e:
             logger.warning(f"Valhalla 컴포넌트 초기화 실패 (비활성): {e}")
+            valhalla_eta_updater = None
 
     _components = Components(
         preprocessor=preprocessor,
@@ -124,6 +136,7 @@ def init_components() -> Components:
         valhalla_executor=valhalla_executor,
         valhalla_matrix=valhalla_matrix,
         valhalla_preparer=valhalla_preparer,
+        valhalla_eta_updater=valhalla_eta_updater,
     )
 
     logger.info("All components initialized")

@@ -33,6 +33,7 @@ from .fee_validator import validate_c2
 from .monthly_cap import validate_c6
 from ..preprocessing.vroom_matrix_preparer import VroomMatrixPreparer
 from ..preprocessing.chunked_matrix import OSRMChunkedMatrix
+from ..preprocessing.valhalla_eta import ValhallaEtaUpdater
 from ..postprocessing import ResultAnalyzer, StatisticsGenerator
 from ..postprocessing.constraint_checker import ConstraintChecker
 from .. import config
@@ -43,7 +44,12 @@ logger = logging.getLogger(__name__)
 class HglisDispatcher:
     """HGLIS 배차 파이프라인 오케스트레이터"""
 
-    def __init__(self, controller, enable_matrix_prep: Optional[bool] = None):
+    def __init__(
+        self,
+        controller,
+        enable_matrix_prep: Optional[bool] = None,
+        valhalla_eta_updater: Optional[ValhallaEtaUpdater] = None,
+    ):
         self.controller = controller
         self.matrix_preparer: Optional[VroomMatrixPreparer] = None
         _enable = enable_matrix_prep if enable_matrix_prep is not None else config.MATRIX_PREP_ENABLED
@@ -54,6 +60,7 @@ class HglisDispatcher:
                 max_workers=config.OSRM_MAX_WORKERS,
             )
             self.matrix_preparer = VroomMatrixPreparer(osrm_matrix=osrm_matrix)
+        self.valhalla_eta_updater: Optional[ValhallaEtaUpdater] = valhalla_eta_updater
 
     async def dispatch(self, request: HglisDispatchRequest) -> HglisDispatchResponse:
         """배차 실행 전체 파이프라인"""
@@ -124,6 +131,17 @@ class HglisDispatcher:
                 request, vroom_result, skill_result, joint_result,
             )
             all_warnings.extend(flex_warnings)
+
+        # ── Pass 3: Valhalla ETA 업데이트 ──────────────────────────────────────
+        # VROOM이 결정한 경로 순서는 그대로 유지.
+        # 각 step의 도착 시간(arrival)만 Valhalla time-dependent routing으로 재계산.
+        # 현재: enabled=False (pass-through). TODO: valhalla_eta.py 구현 완료 후 활성화.
+        if self.valhalla_eta_updater:
+            try:
+                vroom_result = await self.valhalla_eta_updater.update(vroom_result)
+            except Exception as e:
+                logger.warning(f"Pass3 ETA 업데이트 실패 (비치명적 — OSRM ETA 유지): {e}")
+        # ─────────────────────────────────────────────────────────────────────
 
         # Step 6: 결과 매핑 + 후처리
         response = self._build_response(

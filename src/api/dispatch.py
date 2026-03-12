@@ -89,7 +89,10 @@ async def dispatch(
     # 동기 모드: 기존 동작
     try:
         c = get_components()
-        dispatcher = HglisDispatcher(controller=c.controller)
+        dispatcher = HglisDispatcher(
+            controller=c.controller,
+            valhalla_eta_updater=c.valhalla_eta_updater,  # Pass 3: ETA 업데이터 주입
+        )
         response = await dispatcher.dispatch(request_body)
 
         if response.status == "failed" and "검증 실패" in response.meta.get("error", ""):
@@ -112,7 +115,10 @@ async def _run_dispatch_async(job_id: str, request_body: HglisDispatchRequest):
         jm.update_progress(job_id, JobStage.VALIDATING)
 
         c = get_components()
-        dispatcher = HglisDispatcher(controller=c.controller)
+        dispatcher = HglisDispatcher(
+            controller=c.controller,
+            valhalla_eta_updater=c.valhalla_eta_updater,  # Pass 3: ETA 업데이터 주입
+        )
 
         jm.update_progress(job_id, JobStage.OPTIMIZING)
 
