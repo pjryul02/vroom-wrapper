@@ -64,7 +64,7 @@ def get_threshold(vehicle: HglisVehicle) -> int:
     """기사별 C2 하한 기준액"""
     if vehicle.crew.size == 2:
         return FEE_THRESHOLD["2인팀"]
-    return FEE_THRESHOLD.get(vehicle.skill_grade, FEE_THRESHOLD["C"])
+    return FEE_THRESHOLD.get(vehicle.grade, FEE_THRESHOLD["C"])
 
 
 def validate_c2(

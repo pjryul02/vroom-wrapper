@@ -4,6 +4,18 @@
 
 ---
 
+## [v3.1.1] - 2026-03-14
+
+### 개선 (HGLIS /dispatch)
+- **`results[].model_name` 추가** — `products` 기반 자동 계산. 단품: `"냉장고 500L"`, 복수: `"냉장고 500L 외 1건"`. `product.model_name` 없으면 `model_code` 사용
+- **`unassigned[].reasons[]` 구조 변경** — 기존 `{constraint, reason}` → `{description, reasons: [{type, description}]}` 배열로 변경. HGLIS 제약코드(C5_CBM 등) → VROOM type 자동 매핑
+- **VROOM step description 포맷 변경** — `"{order_id}_{customer} [{model_name}]"` 형식으로 통일
+
+### 인터페이스 변경 (Breaking)
+- `unassigned[]` 응답 구조 변경: `constraint` / `reason` 단일 필드 → `reasons[]` 배열
+
+---
+
 ## [v3.1.0] - 2026-03-02
 
 ### 신규 기능

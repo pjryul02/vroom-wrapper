@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 BUFFER_MINUTES = 60
 
 # 시간대 → (시작, 종료) 시:분
+# "시간미정"은 여기에 없음 → convert_job_time_windows에서 None 반환
 TIME_SLOTS: Dict[str, Tuple[Tuple[int, int], Tuple[int, int]]] = {
     "오전1":    ((8, 0), (12, 0)),
     "오후1":    ((12, 0), (16, 0)),
@@ -59,20 +60,23 @@ def _parse_hhmm(time_str: str) -> Tuple[int, int]:
 def convert_job_time_windows(
     job: HglisJob,
     base_date: str,
-) -> List[List[int]]:
+) -> Optional[List[List[int]]]:
     """
     오더의 희망배송시간 → VROOM time_windows
 
-    Returns: [[unix_start, unix_end]]
+    Returns: [[unix_start, unix_end]] 또는 None (시간미정 시 제약 없음)
     """
     slot = job.scheduling.preferred_time_slot
+
+    if slot == "시간미정":
+        return None  # time_windows 미설정 → VROOM이 시간 제약 없이 처리
 
     if slot not in TIME_SLOTS:
         raise ValueError(f"유효하지 않은 시간대: {slot}")
 
     (start_h, start_m), (end_h, end_m) = TIME_SLOTS[slot]
 
-    if slot == "하루종일":
+    if slot in ("하루종일", "시간미정"):
         # 버퍼 없음
         tw_start = _to_unix(base_date, start_h, start_m)
         tw_end = _to_unix(base_date, end_h, end_m)

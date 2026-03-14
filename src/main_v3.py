@@ -10,8 +10,10 @@ Roouty Engine (Go) + Python Wrapper 통합:
 - 기존 v2.0 기능 전체 유지 (인증, 캐싱, 분석, 비즈니스 규칙)
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 import logging
 
 from . import config
@@ -91,6 +93,24 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """422 → 400으로 변환 + 필드별 사유를 readable 형태로 반환"""
+    errors = []
+    for e in exc.errors():
+        loc = " → ".join(str(x) for x in e.get("loc", []))
+        errors.append({"field": loc, "message": e.get("msg", ""), "type": e.get("type", "")})
+    return JSONResponse(
+        status_code=400,
+        content={
+            "status": "failed",
+            "error": "입력 데이터 검증 실패",
+            "validation_errors": errors,
+            "hint": "필드명/타입을 확인하세요. grade(구 skill_grade), crew.type, exclusions.avoid_models 등 신규 포맷 변경 사항을 확인하세요.",
+        },
+    )
 
 # ============================================================
 # 라우터 등록

@@ -16,7 +16,7 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 # C4 기능도 순서
-GRADE_ORDER: Dict[str, int] = {"C": 1, "B": 2, "A": 3, "S": 4}
+GRADE_ORDER: Dict[str, int] = {"D": 0, "C": 1, "B": 2, "A": 3, "S": 4}
 
 
 class ValidationResult:
@@ -116,20 +116,27 @@ def _validate_crew_supply(request: HglisDispatchRequest, result: ValidationResul
 def _validate_grade_supply(request: HglisDispatchRequest, result: ValidationResult):
     """C4: 기능도별 수요-공급 검증"""
     # 오더 측: 제품 중 최고 필요기능도
-    demand: Dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0}
+    demand: Dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0, "D": 0}
     for j in request.jobs:
-        max_grade = max((p.required_grade for p in j.products), key=lambda g: GRADE_ORDER[g])
-        demand[max_grade] += 1
+        product_grades = [p.required_grade for p in j.products]
+        constraint_grade = j.constraints.required_grade
+        if product_grades:
+            max_grade = max(product_grades, key=lambda g: GRADE_ORDER.get(g, 0))
+        elif constraint_grade:
+            max_grade = constraint_grade
+        else:
+            max_grade = "C"
+        demand[max_grade] = demand.get(max_grade, 0) + 1
 
     # 기사 측: 해당 등급 이상 처리 가능
-    supply: Dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0}
+    supply: Dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0, "D": 0}
     for v in request.vehicles:
-        supply[v.skill_grade] += 1
+        supply[v.grade] = supply.get(v.grade, 0) + 1
 
     # 상위 등급은 하위 처리 가능 → 누적
     cumulative_supply = 0
     cumulative_demand = 0
-    for grade in ["S", "A", "B", "C"]:
+    for grade in ["S", "A", "B", "C", "D"]:
         cumulative_supply += supply[grade]
         cumulative_demand += demand[grade]
         if cumulative_demand > cumulative_supply:

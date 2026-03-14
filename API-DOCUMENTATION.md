@@ -108,15 +108,20 @@ X-API-Key: demo-key-12345
       "id": 1,
       "driver_id": "DRV-001",
       "driver_name": "홍길동",
-      "skill_grade": "A",        # S | A | B | C
+      "grade": "A",              # S | A | B | C (기능도, C1 제약 기준)
       "service_grade": "A",
       "capacity_cbm": 10.0,
       "location": {
-        "start": [127.05, 37.50],
-        "end": [127.05, 37.50]
+        "start": [127.05, 37.50],  # 물류센터(상차지) 좌표
+        "end": [127.05, 37.50],    # 기사 자택 좌표
+        "home": [127.05, 37.50],
+        "center": [127.05, 37.50]
       },
       "region_code": "Y1",
-      "crew": { "size": 1, "is_filler": false }
+      "center_code": "용인",
+      "crew": { "size": 1, "type": "1인팀", "is_filler": false, "can_joint_dispatch": true },
+      "exclusions": { "excluded_skus": [], "avoid_models": [] },
+      "fee_status": { "monthly_accumulated": 0, "daily_target": 250000 }
     }
   ],
   "options": {
@@ -158,6 +163,7 @@ GET /jobs/abc-123
   "results": [
     {
       "order_id": "ORD-001",
+      "model_name": "냉장고 870L",
       "driver_id": "DRV-001",
       "delivery_sequence": 1,
       "estimated_arrival": "10:30",
@@ -167,8 +173,13 @@ GET /jobs/abc-123
   "unassigned": [
     {
       "order_id": "ORD-002",
-      "constraint": "C1",
-      "reason": "required_grade S, 가용 기사 최고 등급 A"
+      "description": "ORD-002",
+      "reasons": [
+        {
+          "type": "capacity",
+          "description": "CBM 용량 초과 — 배정 가능한 기사 없음"
+        }
+      ]
     }
   ],
   "driver_summary": [...],
@@ -181,7 +192,7 @@ GET /jobs/abc-123
 }
 ```
 
-`unassigned`의 `constraint` 필드가 C1~C8 중 어느 제약인지 알려준다. 미배정 원인 분석에 바로 쓸 수 있다.
+`unassigned[].reasons[]` 배열에 미배정 사유가 담긴다. `type`은 VROOM 제약 유형, `description`은 한국어 사유 설명.
 
 ---
 
@@ -191,13 +202,36 @@ GET /jobs/abc-123
 
 플레이그라운드 백엔드(`POST /solve/{server}`)가 래퍼로 프록시한다. 직접 래퍼를 호출할 필요 없고, 플레이그라운드에서 서버를 선택하면 된다.
 
+**VROOM + OSRM 계열** (정적 거리, 빠른 응답):
+
 | 플레이그라운드 서버 선택 | 실제 호출 | 특징 |
 |---|---|---|
-| `vroom-distribute` | `POST /distribute` | 가장 빠름. 비즈니스 룰 없음 |
+| `vroom-distribute` | `POST /distribute` | 가장 빠름. 인증 불필요. 비즈니스 룰 없음 |
+| `vroom-optimize-basic` | `POST /optimize/basic` | 1-Pass. 빠른 결과 |
 | `vroom-optimize` | `POST /optimize` | 2-Pass 최적화. 도달불가 필터 포함 |
-| `vroom-optimize-basic` | `POST /optimize/basic` | 빠른 결과, 품질 낮음 |
-| `vroom-optimize-premium` | `POST /optimize/premium` | 최고 품질, 시간 오래 걸림 |
-| `ortools-local` | 플레이그라운드 내장 | 유클리디안 거리. OSRM 안 씀 |
+| `vroom-optimize-premium` | `POST /optimize/premium` | 3-시나리오 병렬 실행 → 최적해 선택 |
+
+**VROOM + Valhalla 계열** (시간대별 ETA 보정 포함):
+
+| 플레이그라운드 서버 선택 | 실제 호출 | 특징 |
+|---|---|---|
+| `valhalla-distribute` | `POST /valhalla/distribute` | 1-Pass. 인증 불필요. Valhalla 라우팅 |
+| `valhalla-optimize-basic` | `POST /valhalla/optimize/basic` | 1-Pass + ETA 보정 |
+| `valhalla-optimize` | `POST /valhalla/optimize` | 2-Pass + ETA 보정 |
+| `valhalla-optimize-premium` | `POST /valhalla/optimize/premium` | 3-시나리오 병렬 + ETA 보정 |
+
+**OR-Tools 계열** (플레이그라운드 백엔드 내장):
+
+| 플레이그라운드 서버 선택 | 실제 호출 | 특징 |
+|---|---|---|
+| `ortools-local` | 내장 OR-Tools | 직선거리 (OSRM 미사용). 초고속 |
+| `ortools-advanced` | 내장 OR-Tools + OSRM | OSRM 거리행렬 기반. 정확한 거리 |
+
+**HGLIS 계열**:
+
+| 플레이그라운드 서버 선택 | 실제 호출 | 특징 |
+|---|---|---|
+| `hglis-dispatch` | `POST /dispatch` | 가전배차 C1~C8 룰. 권역 2-Pass |
 
 래퍼를 직접 호출해야 하는 경우(플레이그라운드 외부):
 - HGLIS 배차 → 시나리오 A
@@ -290,10 +324,17 @@ X-API-Key: demo-key-12345
   └→ POST /dispatch
 
 나는 일반 VRP 최적화가 필요하다
-  ├─ 빠른 테스트 / 인증 없이 → POST /distribute
-  ├─ 비즈니스 로직 + 분석 필요 → POST /optimize
-  ├─ 속도 우선 → POST /optimize/basic
-  └─ 정확도 우선 → POST /optimize/premium
+  ├─ VROOM + OSRM (정적 거리, 빠름)
+  │   ├─ 빠른 테스트 / 인증 없이 → POST /distribute
+  │   ├─ 비즈니스 로직 + 분석 필요 → POST /optimize
+  │   ├─ 속도 우선 (1-Pass) → POST /optimize/basic
+  │   └─ 정확도 우선 (3-시나리오 병렬) → POST /optimize/premium
+  │
+  └─ VROOM + Valhalla (시간대별 ETA 보정)
+      ├─ 빠른 테스트 / 인증 없이 → POST /valhalla/distribute
+      ├─ 표준 + ETA 보정 → POST /valhalla/optimize
+      ├─ 속도 우선 (1-Pass) → POST /valhalla/optimize/basic
+      └─ 정확도 우선 (3-시나리오 + ETA) → POST /valhalla/optimize/premium
 
 나는 GPS 궤적을 도로에 맞춰야 한다
   └→ POST /map-matching/match
@@ -355,6 +396,10 @@ curl -H "X-API-Key: demo-key-12345" http://localhost:8000/optimize
 | `GET /map-matching/health` | 불필요 |
 | `POST /map-matching/validate` | 필요 |
 | `DELETE /cache/clear` | 필요 |
+| `POST /valhalla/distribute` | 불필요 |
+| `POST /valhalla/optimize` | 필요 |
+| `POST /valhalla/optimize/basic` | 필요 |
+| `POST /valhalla/optimize/premium` | 필요 |
 
 ### 요청률 제한
 
@@ -378,11 +423,15 @@ API Key 단위로 요청률 제한(Rate Limiting)이 적용된다.
 │  Wrapper (8000) │────▶│ OSRM     │     │ Redis   │
 │  Python/FastAPI │     │ (5000)   │     │ (6379)  │
 │  + VROOM Binary │     └──────────┘     └─────────┘
-└─────────────────┘
+│                 │────▶┌──────────┐
+│                 │     │ Valhalla │  ← /valhalla/* 및 HGLIS ETA 보정
+└─────────────────┘     │ (8002)   │
+                        └──────────┘
 ```
 
 - **Wrapper**: FastAPI + VROOM C++ 바이너리 (subprocess 직접 호출)
-- **OSRM**: MLD 알고리즘 기반 도로 라우팅 엔진
+- **OSRM**: MLD 알고리즘 기반 도로 라우팅 엔진 (정적 거리행렬)
+- **Valhalla**: 시간대 의존 라우팅 엔진 (ETA 보정, 한국 전체 데이터)
 - **Redis**: 캐싱 (선택, 미연결 시 인메모리 폴백)
 
 ### 최적화 처리 파이프라인
@@ -428,10 +477,10 @@ API Key 단위로 요청률 제한(Rate Limiting)이 적용된다.
 | 11 | GET | `/map-matching/health` | 맵 매칭 서비스 헬스 체크 | 불필요 |
 | 12 | POST | `/map-matching/validate` | 궤적 품질 검증 | 필요 |
 | 13 | DELETE | `/cache/clear` | 캐시 전체 초기화 | 필요 |
-| 14 | POST | `/valhalla/distribute` | Valhalla 라우팅 배차 (VROOM 호환) | 불필요 |
-| 15 | POST | `/valhalla/optimize` | Valhalla 표준 최적화 | 필요 |
-| 16 | POST | `/valhalla/optimize/basic` | Valhalla 기본 최적화 (경량) | 필요 |
-| 17 | POST | `/valhalla/optimize/premium` | Valhalla 프리미엄 최적화 (2-Pass) | 필요 |
+| 14 | POST | `/valhalla/distribute` | Valhalla 1-Pass 배차 (VROOM 호환, 인증 불필요) | 불필요 |
+| 15 | POST | `/valhalla/optimize/basic` | Valhalla 1-Pass + ETA 보정 | 필요 |
+| 16 | POST | `/valhalla/optimize` | Valhalla 2-Pass + ETA 보정 | 필요 |
+| 17 | POST | `/valhalla/optimize/premium` | Valhalla 3-시나리오 병렬 + ETA 보정 (최고 품질) | 필요 |
 
 ---
 
@@ -459,19 +508,22 @@ curl http://localhost:8000/
   "version": "3.0.0",
   "architecture": "Roouty Engine (Go) + Python Wrapper synthesis",
   "endpoints": {
-    "/": "Service info",
-    "/health": "Health check",
-    "/distribute": "VROOM-compatible VRP optimization (no auth)",
-    "/optimize": "Standard optimization pipeline (auth required)",
-    "/optimize/basic": "Basic optimization (auth required)",
-    "/optimize/premium": "Premium multi-scenario (auth required)",
-    "/dispatch": "HGLIS dispatch (auth required)",
-    "/jobs/{job_id}": "Async job status",
-    "/matrix/build": "OSRM distance/duration matrix",
-    "/map-matching/match": "GPS trajectory matching",
-    "/cache/clear": "Clear cache"
+    "distribute": "POST /distribute (VROOM+OSRM, 인증 불필요)",
+    "optimize_basic": "POST /optimize/basic (VROOM+OSRM 1-Pass, 인증 필요)",
+    "optimize": "POST /optimize (VROOM+OSRM 2-Pass, 인증 필요)",
+    "optimize_premium": "POST /optimize/premium (VROOM+OSRM 3-시나리오, 인증 필요)",
+    "dispatch": "POST /dispatch (HGLIS 가전배차 C1~C8, 인증 필요)",
+    "valhalla_distribute": "POST /valhalla/distribute (VROOM+Valhalla, 인증 불필요)",
+    "valhalla_optimize_basic": "POST /valhalla/optimize/basic (Valhalla 1-Pass+ETA, 인증 필요)",
+    "valhalla_optimize": "POST /valhalla/optimize (Valhalla 2-Pass+ETA, 인증 필요)",
+    "valhalla_optimize_premium": "POST /valhalla/optimize/premium (Valhalla 3-시나리오+ETA, 인증 필요)",
+    "jobs": "GET /jobs/{job_id} (비동기 작업 조회)",
+    "matrix": "POST /matrix/build (OSRM 거리/시간 매트릭스)",
+    "map_matching": "POST /map-matching/match (GPS 궤적 맵매칭, 인증 필요)",
+    "cache_clear": "DELETE /cache/clear (캐시 초기화, 인증 필요)",
+    "swagger_ui": "GET /docs (Swagger UI)"
   },
-  "authentication": "Required (Header: X-API-Key)",
+  "authentication": "X-API-Key 헤더 (distribute/valhalla-distribute 제외 필요)",
   "demo_api_key": "demo-key-12345"
 }
 ```
@@ -840,7 +892,7 @@ curl -X POST http://localhost:8000/optimize/basic \
 
 ### 6. POST /optimize/premium -- 프리미엄 최적화
 
-멀티 시나리오 비교와 2-Pass 최적화를 지원하는 프리미엄 엔드포인트이다.
+3가지 탐색 파라미터 시나리오를 병렬 실행하여 최적해를 선택하는 프리미엄 엔드포인트이다. ETA 보정은 없음 (OSRM 정적 거리 기반).
 
 **인증**: 필요 (`X-API-Key` 헤더, 프리미엄 권한)
 
@@ -878,13 +930,18 @@ HGLIS(가전 배송 물류) 전용 배차 엔드포인트이다. HGLIS 비즈니
 
 ```
 HGLIS 입력 → 검증 → 스킬 인코딩 → VROOM 조립
-           → OSRM 매트릭스 사전 계산 (1회)
+           → OSRM 매트릭스 사전 계산 (1회)    ← Pass 1+2 기반 공간 거리
            → UnreachableFilter
            → 2-Pass 최적화 (Pass1: 배정, Pass2: 경로최적화)
            → 미배정 재시도
            → C2/C6 설치비 검증
+           → [Pass 3] Valhalla ETA 보정         ← 현재 비활성화 (enabled=False)
            → 결과 변환
 ```
+
+> **Pass 3 (Valhalla ETA 보정)**: 코드가 구현되어 있으나 현재 `enabled=False`로 비활성화 상태.
+> 활성화 시 OSRM 기반 도착 시각을 Valhalla 시간대 의존 라우팅으로 재계산하여 ETA 정확도를 높인다.
+> 파라미터가 아닌 코드 레벨 설정(`dependencies.py`)으로 제어된다.
 
 #### 요청 구조
 
@@ -920,53 +977,160 @@ HGLIS 입력 → 검증 → 스킬 인코딩 → VROOM 조립
 
 **options 필드**:
 
-| 필드 | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `max_tasks_per_driver` | int | `12` | 기사 당 최대 배정 건수 |
-| `enable_joint_dispatch` | bool | `false` | 합배차 활성화 |
-| `geometry` | bool | `true` | 경로 지오메트리 포함 |
+```json
+{
+  "constraints": {
+    "C1": true, "C2": true, "C3": true, "C4": true,
+    "C5": true, "C6": true, "C7": true, "C8": true
+  },
+  "constraint_config": {
+    "C1": {
+      "allow_joint_dispatch": true,
+      "joint_fee_split": {"primary": 0.6, "secondary": 0.4}
+    },
+    "C3": {
+      "time_window_buffer_minutes": 60,
+      "time_slots": {
+        "오전1": {"start": "08:00", "end": "12:00"},
+        "오후1": {"start": "12:00", "end": "16:00"},
+        "오후2": {"start": "16:00", "end": "19:00"},
+        "오후3": {"start": "19:00", "end": "24:00"},
+        "하루종일": {"start": "08:00", "end": "24:00"}
+      }
+    },
+    "C2": {
+      "min_fee_by_grade": {"2인팀": 400000, "S": 280000, "A": 250000, "B": 220000, "C": 180000},
+      "weight": 50
+    },
+    "C6": {
+      "monthly_limit_by_grade": {"S": 12000000, "A": 11000000, "B": 9000000, "C": 7000000},
+      "warn_threshold_percent": 90,
+      "weight": 70
+    }
+  },
+  "engine": {
+    "calc_time_limit": 60,
+    "exploration_level": 5,
+    "balance_mode": "balanced"
+  }
+}
+```
+
+| 필드 | 설명 |
+|------|------|
+| `constraints.C1~C8` | 각 제약 활성화 토글 (bool). 기본 모두 true |
+| `constraint_config.C3.time_slots` | 시간대별 시작/종료 시각 오버라이드 |
+| `constraint_config.C2.min_fee_by_grade` | 등급별 최소 설치비 기준 (원) |
+| `constraint_config.C6.monthly_limit_by_grade` | 등급별 월 누적 설치비 상한 (원) |
+| `engine.calc_time_limit` | VROOM 탐색 시간 제한 (초) |
+| `engine.exploration_level` | VROOM 탐색 깊이 (1~5) |
+| `engine.balance_mode` | 부하 분산 모드 (`balanced` / `cost`) |
 
 #### HglisVehicle (기사)
 
 ```json
 {
-  "id": 1,
-  "driver_id": "DRV001",
-  "driver_name": "김기사",
-  "skill_grade": "A",
-  "service_grade": "A",
-  "capacity_cbm": 15.0,
+  "id": 10000,
+  "driver_id": "L0000022",
+  "driver_name": "이유승",
+  "driver_phone": "010****5460",
+  "grade": "S",
+  "service_grade": "B",
+  "cs_grade": "S",
+  "is_rookie": false,
+  "hire_date": "2019-12-27",
+  "vehicle_type": "카고",
+  "vehicle_number": "85어 1139",
+  "vehicle_ton": 1.0,
+  "capacity_cbm": 4.0,
   "location": {
-    "start": [127.027, 37.498],
-    "end": [127.027, 37.498]
+    "start": [126.978, 37.5665],
+    "end": [126.978, 37.5665],
+    "home": [126.978, 37.5665],
+    "center": [126.978, 37.5665]
   },
-  "region_code": "Y1",
-  "crew": {"size": 1, "is_filler": false},
-  "new_product_restricted": false,
-  "avoid_models": [],
-  "fee_status": {"monthly_accumulated": 3500000},
-  "work_time": {"end": "18:00", "breaks": [{"start": "12:00", "end": "13:00"}]}
+  "region_code": "Y3",
+  "sub_region_code": "Y3-2",
+  "installer_code": "INST-운창로지텍",
+  "center_code": "김포",
+  "work_time": {
+    "start": "08:00",
+    "end": "22:00",
+    "breaks": []
+  },
+  "limits": {
+    "max_orders": 12,
+    "max_distance_km": 200,
+    "max_work_minutes": 600
+  },
+  "crew": {
+    "size": 1,
+    "type": "1인팀",
+    "is_filler": true,
+    "can_joint_dispatch": false
+  },
+  "exclusions": {
+    "excluded_skus": [],
+    "avoid_models": []
+  },
+  "fee_status": {
+    "monthly_accumulated": 0,
+    "daily_target": 280000,
+    "monthly_dispatch_days": 0
+  },
+  "capabilities": {
+    "simple_delivery": false,
+    "simple_install": false,
+    "built_in_closet": false,
+    "all_items": false
+  }
 }
 ```
 
 | 필드 | 타입 | 필수 | 설명 |
 |------|------|:----:|------|
-| `id` | int | 필수 | 기사 고유 ID (양수) |
+| `id` | int | 필수 | 기사 고유 ID |
 | `driver_id` | string | 필수 | 기사 식별자 |
-| `driver_name` | string | 선택 | 기사명 |
-| `skill_grade` | string | 필수 | 기능도 (`S`/`A`/`B`/`C`) |
+| `driver_name` | string | 필수 | 기사명 |
+| `grade` | string | 필수 | 기능도 (`S`/`A`/`B`/`C`) — C1 제약 기준 |
 | `service_grade` | string | 필수 | 서비스등급 (`S`/`A`/`B`/`C`) |
-| `capacity_cbm` | float | 필수 | 적재 용량 (CBM) |
-| `location` | object | 필수 | 출발/복귀 위치 `{start: [lon,lat], end: [lon,lat]}` |
-| `region_code` | string | 필수 | 소속 권역코드 |
-| `crew` | object | 필수 | `{size: 1\|2, is_filler: bool}` |
-| `new_product_restricted` | bool | 선택 | 신제품 배정 회피 (C7 제약) |
-| `avoid_models` | array | 선택 | 미결 이력 모델 (C8 제약) `[{model, date}]` |
-| `fee_status` | object | 선택 | `{monthly_accumulated: int}` 당월 누적 설치비 (원) |
-| `work_time` | object | 선택 | `{end: "HH:MM", breaks: [{start, end}]}` |
+| `cs_grade` | string | 선택 | CS 등급 |
+| `is_rookie` | bool | 선택 | 신입 여부 — C7 신제품 제약 기준 |
+| `capacity_cbm` | float | 필수 | 적재 용량 (CBM) — C3 제약 기준 |
+| `location` | object | 필수 | 위치 정보 (아래 참고) |
+| `region_code` | string | 필수 | 소속 권역코드 — C4 제약 기준 |
+| `sub_region_code` | string | 선택 | 세부 권역코드 |
+| `center_code` | string | 선택 | 물류센터 코드 (start 위치의 소속 센터) |
+| `installer_code` | string | 선택 | 설치업체 코드 |
+| `work_time` | object | 선택 | 근무 시간 `{start, end, breaks}` |
+| `limits` | object | 선택 | 작업 제한 `{max_orders, max_distance_km, max_work_minutes}` |
+| `crew` | object | 필수 | 인원 구성 (아래 참고) |
+| `exclusions` | object | 선택 | 배정 제외 조건 `{excluded_skus, avoid_models}` — C7/C8 |
+| `fee_status` | object | 선택 | 수익 현황 `{monthly_accumulated, daily_target, monthly_dispatch_days}` — C2/C6 |
+| `capabilities` | object | 선택 | 취급 가능 품목 플래그 |
 
-**skill_grade 설명**: 기능도는 기사가 설치할 수 있는 제품의 등급을 나타낸다.
-- `S` > `A` > `B` > `C` (S 등급 기사는 A, B, C 제품도 설치 가능)
+**location 구조**:
+
+| 필드 | 설명 |
+|------|------|
+| `start` | 출발 좌표 — 물류센터(상차지). `center_code`에 해당하는 좌표 |
+| `end` | 복귀 좌표 — 기사 자택. 기준정보에서 매핑 |
+| `home` | 자택 좌표 (참고용) |
+| `center` | 물류센터 좌표 (참고용) |
+
+> **출발지 = 물류센터**: 기사는 권역별 물류센터(상차지)에서 출발한다. 기사 자택이 아님.
+> 좌표는 기준정보(배차 시스템)에서 `center_code`로 매핑되어 주입된다.
+
+**crew 구조**:
+
+| 필드 | 설명 |
+|------|------|
+| `size` | 팀 인원 수 (1 또는 2) |
+| `type` | 팀 유형 (`"1인팀"` / `"2인팀"`) |
+| `is_filler` | 충원기사 여부 |
+| `can_joint_dispatch` | 합배차 가능 여부 |
+
+**grade 설명**: `S` > `A` > `B` > `C` — S 등급 기사는 모든 등급 제품 설치 가능
 
 **허용 권역코드**: `Y1`, `Y2`, `Y3`, `Y5`, `W1`, `대전`, `대구`, `광주`, `원주`, `부산`, `울산`, `제주`
 
@@ -974,82 +1138,98 @@ HGLIS 입력 → 검증 → 스킬 인코딩 → VROOM 조립
 
 ```json
 {
-  "id": 1,
-  "order_id": "ORD-001",
-  "location": [127.029, 37.500],
-  "region_code": "Y1",
+  "id": 0,
+  "order_id": "20JB26022200001",
+  "order_type": "반품",
+  "location": [126.841205, 37.558543],
+  "region_code": "Y3",
+  "address_type": null,
+  "customer": {
+    "id": "202107262640",
+    "name": "홍길동",
+    "phone": "010-1234-5678",
+    "address": "서울특별시 강서구 공항대로 301",
+    "zip": "10011"
+  },
   "products": [
     {
       "model_code": "REF-500",
       "model_name": "냉장고 500L",
+      "sku_code": "SKU-001",
       "cbm": 2.5,
-      "fee": 80000,
       "is_new_product": false,
-      "required_grade": "A",
       "quantity": 1
     }
   ],
   "scheduling": {
     "preferred_time_slot": "오전1",
-    "service_minutes": 45,
-    "setup_minutes": 10
+    "preferred_date": "2026-03-05",
+    "service_minutes": 55,
+    "setup_minutes": 25
   },
   "constraints": {
-    "crew_type": "any"
+    "crew_type": "1인",
+    "required_grade": "A",
+    "is_filler_required": false
   },
   "priority": {
     "level": 0,
-    "is_urgent": false,
-    "is_vip": false
+    "is_urgent": false
   },
-  "customer": {
-    "name": "홍길동",
-    "phone": "010-1234-5678"
-  }
+  "fees": {
+    "install_fee": 80000,
+    "product_sales_amount": 1500000
+  },
+  "order_channel": "7J",
+  "notes": null,
+  "special_instructions": null
 }
 ```
 
 | 필드 | 타입 | 필수 | 설명 |
 |------|------|:----:|------|
-| `id` | int | 필수 | 오더 고유 ID (양수) |
+| `id` | int | 필수 | 오더 고유 ID |
 | `order_id` | string | 필수 | 주문번호 |
+| `order_type` | string | 선택 | 주문 유형 (`"배달"` / `"반품"` 등) |
 | `location` | [lon, lat] | 필수 | 배송지 좌표 |
 | `region_code` | string | 필수 | 권역코드 |
-| `products` | array | 필수 | 제품 목록 (최소 1개) |
+| `customer` | object | 선택 | 고객 정보 `{id, name, phone, address, zip}` |
+| `products` | array | 선택 | 제품 목록 (빈 배열 허용) |
 | `scheduling` | object | 필수 | 배송 스케줄링 |
-| `constraints` | object | 선택 | 인원 요구 (기본: any) |
+| `constraints` | object | 필수 | 배정 제약 조건 |
 | `priority` | object | 선택 | 우선순위 |
-| `customer` | object | 선택 | 고객 정보 |
+| `fees` | object | 선택 | 수수료 정보 |
+| `order_channel` | string | 선택 | 주문 채널 코드 |
 
-**products 필드**:
+**constraints 필드**:
 
-| 필드 | 타입 | 필수 | 설명 |
-|------|------|:----:|------|
-| `model_code` | string | 필수 | 모델코드 |
-| `model_name` | string | 선택 | 모델명 |
-| `cbm` | float | 필수 | CBM (부피) |
-| `fee` | int | 필수 | 설치비 (원) |
-| `is_new_product` | bool | 선택 | 신제품 여부 (C7 제약 대상) |
-| `required_grade` | string | 필수 | 필요 기능도 (`S`/`A`/`B`/`C`) |
-| `quantity` | int | 선택 | 수량 (기본: 1) |
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `crew_type` | string | 인원 요구 (`"any"` / `"1인"` / `"2인"`) |
+| `required_grade` | string | 필요 기능도 (`S`/`A`/`B`/`C`) — C1 제약 기준 |
+| `is_filler_required` | bool | 충원기사 필요 여부 |
+
+> `required_grade`는 과거 `products[].required_grade`에 있었으나, 오더 레벨 `constraints.required_grade`로 이동됨.
+
+**products 필드** (선택):
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `model_code` | string | 모델코드 |
+| `sku_code` | string | SKU 코드 — C7/C8 제약 기준 |
+| `cbm` | float | CBM (부피) — C3 용량 제약 기준 |
+| `is_new_product` | bool | 신제품 여부 — C7 신입×신제품 제약 기준 |
+| `quantity` | int | 수량 (기본: 1) |
 
 **scheduling.preferred_time_slot**:
 
-| 값 | 시간대 |
-|----|--------|
-| `오전1` | 오전 (09:00~12:00) |
-| `오후1` | 오후 초반 (13:00~15:00) |
-| `오후2` | 오후 중반 (15:00~17:00) |
-| `오후3` | 오후 후반 (17:00~19:00) |
-| `하루종일` | 전체 (09:00~19:00) |
-
-**constraints.crew_type**:
-
-| 값 | 설명 |
+| 값 | 시간대 (constraint_config.C3으로 오버라이드 가능) |
 |----|------|
-| `any` | 인원 제한 없음 (기본) |
-| `1인` | 1인 기사만 가능 |
-| `2인` | 2인 조 기사만 가능 |
+| `오전1` | 08:00~12:00 |
+| `오후1` | 12:00~16:00 |
+| `오후2` | 16:00~19:00 |
+| `오후3` | 19:00~24:00 |
+| `하루종일` | 08:00~24:00 |
 
 #### 동기 모드 요청 (기본)
 
@@ -1062,32 +1242,45 @@ curl -X POST http://localhost:8000/dispatch \
     "vehicles": [
       {
         "id": 1, "driver_id": "DRV001", "driver_name": "김기사",
-        "skill_grade": "A", "service_grade": "A", "capacity_cbm": 15.0,
-        "location": {"start": [127.027, 37.498], "end": [127.027, 37.498]},
-        "region_code": "Y1", "crew": {"size": 1, "is_filler": false}
+        "grade": "A", "service_grade": "A", "capacity_cbm": 15.0,
+        "location": {"start": [127.027, 37.498], "end": [127.027, 37.498], "home": [127.020, 37.490], "center": [127.027, 37.498]},
+        "region_code": "Y1", "center_code": "용인",
+        "crew": {"size": 1, "type": "1인팀", "is_filler": false, "can_joint_dispatch": true},
+        "work_time": {"start": "08:00", "end": "22:00", "breaks": []},
+        "limits": {"max_orders": 8},
+        "exclusions": {"excluded_skus": [], "avoid_models": []},
+        "fee_status": {"monthly_accumulated": 3500000, "daily_target": 250000}
       },
       {
         "id": 2, "driver_id": "DRV002", "driver_name": "이기사",
-        "skill_grade": "B", "service_grade": "B", "capacity_cbm": 12.0,
-        "location": {"start": [127.035, 37.505], "end": [127.035, 37.505]},
-        "region_code": "Y1", "crew": {"size": 1, "is_filler": false}
+        "grade": "B", "service_grade": "B", "capacity_cbm": 12.0,
+        "location": {"start": [127.035, 37.505], "end": [127.030, 37.500], "home": [127.030, 37.500], "center": [127.035, 37.505]},
+        "region_code": "Y1", "center_code": "용인",
+        "crew": {"size": 1, "type": "1인팀", "is_filler": false, "can_joint_dispatch": false},
+        "work_time": {"start": "08:00", "end": "22:00", "breaks": []},
+        "exclusions": {"excluded_skus": [], "avoid_models": []},
+        "fee_status": {"monthly_accumulated": 0, "daily_target": 220000}
       }
     ],
     "jobs": [
       {
         "id": 1, "order_id": "ORD-001", "location": [127.029, 37.500],
         "region_code": "Y1",
-        "products": [{"model_code": "REF-500", "cbm": 2.5, "fee": 80000, "required_grade": "A"}],
-        "scheduling": {"preferred_time_slot": "오전1", "service_minutes": 45}
+        "products": [{"model_code": "REF-500", "sku_code": "SKU-001", "cbm": 2.5, "is_new_product": false}],
+        "scheduling": {"preferred_time_slot": "오전1", "preferred_date": "2026-03-01", "service_minutes": 45, "setup_minutes": 15},
+        "constraints": {"crew_type": "1인", "required_grade": "A", "is_filler_required": false},
+        "fees": {"install_fee": 80000}
       },
       {
         "id": 2, "order_id": "ORD-002", "location": [127.032, 37.502],
         "region_code": "Y1",
-        "products": [{"model_code": "TV-55", "cbm": 1.2, "fee": 50000, "required_grade": "B"}],
-        "scheduling": {"preferred_time_slot": "오후1", "service_minutes": 30}
+        "products": [{"model_code": "TV-55", "sku_code": "SKU-002", "cbm": 1.2, "is_new_product": false}],
+        "scheduling": {"preferred_time_slot": "오후1", "preferred_date": "2026-03-01", "service_minutes": 30, "setup_minutes": 10},
+        "constraints": {"crew_type": "any", "required_grade": "B", "is_filler_required": false},
+        "fees": {"install_fee": 50000}
       }
     ],
-    "options": {"max_tasks_per_driver": 8, "geometry": true}
+    "options": {"constraints": {"C1": true, "C2": true, "C3": true, "C4": true, "C5": true, "C6": true, "C7": true, "C8": true}, "engine": {"calc_time_limit": 30, "exploration_level": 5}}
   }'
 ```
 
@@ -1117,6 +1310,7 @@ curl -X POST http://localhost:8000/dispatch \
   "results": [
     {
       "order_id": "ORD-001",
+      "model_name": "냉장고 500L",
       "dispatch_type": "단독",
       "driver_id": "DRV001",
       "driver_name": "김기사",
@@ -1129,6 +1323,7 @@ curl -X POST http://localhost:8000/dispatch \
     },
     {
       "order_id": "ORD-002",
+      "model_name": "세탁기 21kg 외 1건",
       "dispatch_type": "단독",
       "driver_id": "DRV001",
       "driver_name": "김기사",
@@ -1144,7 +1339,7 @@ curl -X POST http://localhost:8000/dispatch \
     {
       "driver_id": "DRV001",
       "driver_name": "김기사",
-      "skill_grade": "A",
+      "grade": "A",
       "service_grade": "A",
       "assigned_count": 2,
       "total_fee": 130000,
@@ -1158,7 +1353,7 @@ curl -X POST http://localhost:8000/dispatch \
     {
       "driver_id": "DRV002",
       "driver_name": "이기사",
-      "skill_grade": "B",
+      "grade": "B",
       "service_grade": "B",
       "assigned_count": 0,
       "total_fee": 0,
@@ -1180,6 +1375,7 @@ curl -X POST http://localhost:8000/dispatch \
 | 필드 | 타입 | 설명 |
 |------|------|------|
 | `order_id` | string | 주문번호 |
+| `model_name` | string | 제품명 (`products` 기반 자동 계산. 단품: `"냉장고 500L"`, 복수: `"냉장고 500L 외 1건"`) |
 | `dispatch_type` | string | `"단독"` / `"합배차_주"` / `"합배차_보조"` |
 | `driver_id` | string | 배정된 기사 ID |
 | `driver_name` | string | 기사명 |
@@ -1206,21 +1402,32 @@ curl -X POST http://localhost:8000/dispatch \
 | 필드 | 타입 | 설명 |
 |------|------|------|
 | `order_id` | string | 미배정 주문번호 |
-| `constraint` | string | 위반 제약 (예: `"C1_skill"`, `"C3_capacity"`) |
-| `reason` | string | 사유 설명 |
+| `description` | string | 주문번호 (order_id와 동일) |
+| `reasons` | array | 미배정 사유 목록 |
+| `reasons[].type` | string | 제약 유형 (`"capacity"`, `"skills"`, `"time_window"`, `"complex_constraint"`) |
+| `reasons[].description` | string | 한국어 사유 설명 |
+
+**reasons[].type 값**:
+
+| type | 의미 | 해당 HGLIS 제약 |
+|------|------|----------------|
+| `capacity` | CBM 용량 초과 | C5_CBM |
+| `skills` | 기능도 부족 또는 SKU/이력 제약 | C4_GRADE, C7_SKU, C8_HISTORY |
+| `time_window` | 희망시간대 충족 불가 | C3_TIME |
+| `complex_constraint` | 2인 작업 팀 없음 또는 기타 | C1_CREW |
 
 **HGLIS 비즈니스 제약 (자동 적용)**:
 
 | 제약 | 코드 | 설명 |
 |------|------|------|
-| 기능도 매칭 | C1 | 제품 required_grade ≤ 기사 skill_grade |
-| 설치비 하한 | C2 | 기사 월 최소 수익 보장 |
-| 적재 용량 | C3 | 오더 CBM 합 ≤ 기사 capacity_cbm |
-| 배송 건수 | C4 | 기사 당 최대 건수 제한 |
-| 시간대 | C5 | preferred_time_slot 기반 time_window |
-| 수익 상한 | C6 | 월 수익 상한 (S:1200만, A:1100만, B:900만, C:700만) |
-| 신제품 회피 | C7 | new_product_restricted 기사에게 신제품 미배정 |
-| 미결 이력 | C8 | avoid_models에 해당하는 모델 미배정 |
+| 기능도 매칭 | C1 | job.constraints.required_grade ≤ vehicle.grade (S>A>B>C) |
+| 설치비 하한 | C2 | 기사 등급별 최소 일 수익 보장 (`fee_status.min_daily_fee` 기준, 0이면 제약 없음) |
+| 적재 용량 | C3 | 오더 CBM 합 ≤ vehicle.capacity_cbm |
+| 배송 건수 | C4 | 기사 당 최대 건수 (limits.max_orders) |
+| 시간대 | C5 | scheduling.preferred_time_slot 기반 time_window |
+| 수익 상한 | C6 | 월 수익 상한 — constraint_config.C6.monthly_limit_by_grade |
+| 신제품/SKU 회피 | C7 | vehicle.is_rookie × job.products[].is_new_product, exclusions.excluded_skus |
+| 미결 이력 | C8 | vehicle.exclusions.avoid_models vs job.products[].sku_code |
 
 #### 비동기 모드 요청
 
@@ -1655,9 +1862,9 @@ curl -X POST http://localhost:8000/valhalla/distribute \
 
 ### 15. POST /valhalla/optimize -- Valhalla 표준 최적화
 
-Valhalla 라우팅 기반 표준 최적화. OSRM `/optimize`와 동일한 파이프라인을 Valhalla로 실행한다.
+Valhalla 라우팅 기반 2-Pass 표준 최적화. OSRM `/optimize`와 동일한 파이프라인을 Valhalla로 실행하며 시간대별 ETA가 보정된다.
 
-**처리 순서**: 전처리 → Valhalla 매트릭스 사전 계산 → 도달 불가 필터링 → VROOM 최적화 → 미배정 자동 재시도 → 분석 → 통계 → 캐싱
+**처리 순서**: 전처리 → Valhalla 매트릭스 사전 계산 → 도달 불가 필터링 → VROOM 2-Pass 최적화 → 미배정 자동 재시도 → **ETA 보정 (Valhalla)** → 분석 → 통계 → 캐싱
 
 **인증**: 필요 (`X-API-Key` 헤더)
 
@@ -1776,7 +1983,7 @@ curl -X POST http://localhost:8000/valhalla/optimize \
 
 ### 16. POST /valhalla/optimize/basic -- Valhalla 기본 최적화
 
-분석(analysis)·통계(statistics)·재시도 단계를 생략한 Valhalla 경량 최적화. 빠른 결과가 필요할 때 사용한다.
+분석(analysis)·통계(statistics)·재시도 단계를 생략한 Valhalla 1-Pass 경량 최적화 + ETA 보정. 빠른 결과가 필요할 때 사용한다.
 
 **인증**: 필요 (`X-API-Key` 헤더)
 
@@ -1826,7 +2033,7 @@ curl -X POST http://localhost:8000/valhalla/optimize/basic \
 
 ### 17. POST /valhalla/optimize/premium -- Valhalla 프리미엄 최적화
 
-Valhalla 매트릭스 선계산 + **2-Pass 최적화** (10개 이상 job 시 활성화)를 지원하는 프리미엄 엔드포인트이다.
+Valhalla 매트릭스 선계산 + **3-시나리오 병렬 실행 → 최적해 선택 + ETA 보정**을 지원하는 프리미엄 엔드포인트이다. VROOM+Valhalla 계열 중 최고 품질.
 
 **인증**: 필요 (`X-API-Key` 헤더, Premium 권한)
 

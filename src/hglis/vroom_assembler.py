@@ -83,11 +83,12 @@ def _build_vroom_job(
 ) -> Dict[str, Any]:
     """개별 오더 → VROOM job"""
 
-    # description
+    # description: 주문번호_고객명 [모델명]
     customer_name = ""
     if job.customer and job.customer.name:
         customer_name = f"_{job.customer.name}"
-    description = f"{job.order_id}{customer_name}"
+    model_info = job.computed_model_name
+    description = f"{job.order_id}{customer_name} [{model_info}]"
 
     # C5: CBM → delivery
     total_cbm = sum(p.cbm * p.quantity for p in job.products)
@@ -115,9 +116,12 @@ def _build_vroom_job(
         "service": service,
         "delivery": delivery,
         "skills": skills,
-        "time_windows": time_windows,
         "priority": priority,
     }
+
+    # 시간미정이면 time_windows 미설정 (제약 없음)
+    if time_windows:
+        vroom_job["time_windows"] = time_windows
 
     if setup:
         vroom_job["setup"] = setup
@@ -152,8 +156,8 @@ def _build_vroom_vehicle(
     vroom_vehicle: Dict[str, Any] = {
         "id": vehicle.id,
         "description": description,
-        "start": vehicle.location.start,
-        "end": vehicle.location.end,
+        "start": vehicle.location.center or vehicle.location.start,
+        "end": vehicle.location.home or vehicle.location.end,
         "capacity": capacity,
         "skills": skills,
         "time_window": time_window,

@@ -157,6 +157,7 @@ class HglisDispatcher:
             analysis = analyzer.analyze(
                 debug_vroom_input or {}, vroom_result,
             )
+            analysis["data_quality"] = _check_data_quality(request)
             response.analysis = analysis
         except Exception as e:
             logger.warning(f"분석 실패 (비치명적): {e}")
@@ -491,6 +492,7 @@ class HglisDispatcher:
 
                 results.append(DispatchResult(
                     order_id=job.order_id,
+                    model_name=job.computed_model_name,
                     dispatch_type=dispatch_type,
                     driver_id=vehicle.driver_id,
                     driver_name=vehicle.driver_name,
@@ -541,7 +543,7 @@ class HglisDispatcher:
             driver_summary.append(DriverSummary(
                 driver_id=v.driver_id,
                 driver_name=v.driver_name,
-                skill_grade=v.skill_grade,
+                grade=v.grade,
                 service_grade=v.service_grade,
                 assigned_count=stats.get("assigned_count", 0),
                 total_fee=stats.get("total_fee", 0),
@@ -647,3 +649,60 @@ class HglisDispatcher:
             return "C5_CBM"
 
         return "기타"
+
+
+def _check_data_quality(request: HglisDispatchRequest) -> dict:
+    """
+    입력 데이터 품질 검사 — analysis.data_quality 에 포함
+
+    항목:
+    - no_products: 제품 목록 없는 오더 (CBM 0, 기능도 fallback)
+    - time_undefined: 시간미정 오더 (time_windows 미설정)
+    - cbm_exceeds_all_vehicles: 모든 기사 단독 용량 초과 오더 (합배차 필요)
+    - grade_d_no_driver: grade D 오더인데 D 기사 없음
+    """
+    from .models import HglisDispatchRequest  # noqa: circular 방지
+
+    max_vehicle_cbm = max((v.capacity_cbm for v in request.vehicles), default=0)
+    vehicle_grades = {v.grade for v in request.vehicles}
+
+    no_products = []
+    time_undefined = []
+    cbm_exceeds = []
+    grade_d_warn = []
+
+    for j in request.jobs:
+        if not j.products:
+            no_products.append({"order_id": j.order_id, "note": "products 비어있음 → CBM=0, 기능도 fallback"})
+
+        if j.scheduling.preferred_time_slot == "시간미정":
+            time_undefined.append({"order_id": j.order_id, "note": "시간 제약 없이 배차됨"})
+
+        total_cbm = sum(p.cbm * p.quantity for p in j.products)
+        if total_cbm > max_vehicle_cbm:
+            cbm_exceeds.append({
+                "order_id": j.order_id,
+                "cbm": round(total_cbm, 2),
+                "max_vehicle_cbm": max_vehicle_cbm,
+                "note": "합배차 없으면 미배정 가능",
+            })
+
+        req_grade = j.constraints.required_grade
+        if not req_grade and j.products:
+            from .skill_encoder import GRADE_SKILL
+            req_grade = max((p.required_grade for p in j.products), key=lambda g: GRADE_SKILL.get(g, 0))
+        if req_grade == "D" and "D" not in vehicle_grades:
+            grade_d_warn.append({"order_id": j.order_id, "note": "grade D 오더지만 D 기사 없음 → C 이상이면 처리 가능"})
+
+    return {
+        "no_products": no_products,
+        "time_undefined": time_undefined,
+        "cbm_exceeds_all_vehicles": cbm_exceeds,
+        "grade_d_no_driver": grade_d_warn,
+        "summary": {
+            "no_products_count": len(no_products),
+            "time_undefined_count": len(time_undefined),
+            "cbm_exceeds_count": len(cbm_exceeds),
+            "grade_d_warn_count": len(grade_d_warn),
+        },
+    }

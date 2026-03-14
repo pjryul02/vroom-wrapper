@@ -16,14 +16,15 @@ from .models import HglisJob, HglisVehicle, METRO_REGIONS, LOCAL_REGIONS
 logger = logging.getLogger(__name__)
 
 # C4: 기능도 → skill ID (계층적)
-GRADE_SKILL: Dict[str, int] = {"C": 1, "B": 2, "A": 3, "S": 4}
+GRADE_SKILL: Dict[str, int] = {"D": 1, "C": 2, "B": 3, "A": 4, "S": 5}
 
 # 기사 기능도 → 처리 가능한 skill 목록 (자기 등급 이하 전부)
 GRADE_SKILLS_MAP: Dict[str, List[int]] = {
-    "S": [1, 2, 3, 4],
-    "A": [1, 2, 3],
-    "B": [1, 2],
-    "C": [1],
+    "S": [1, 2, 3, 4, 5],
+    "A": [1, 2, 3, 4],
+    "B": [1, 2, 3],
+    "C": [1, 2],
+    "D": [1],
 }
 
 # 스킬 ID 베이스
@@ -42,7 +43,7 @@ class SkillEncodeResult:
         self.vehicle_skills: Dict[int, List[int]] = {}
         # 역매핑: skill_id → 의미 설명
         self.skill_legend: Dict[int, str] = {
-            1: "기능도 C", 2: "기능도 B", 3: "기능도 A", 4: "기능도 S",
+            1: "기능도 D", 2: "기능도 C", 3: "기능도 B", 4: "기능도 A", 5: "기능도 S",
             SOFA_SKILL: "소파 전용",
         }
 
@@ -98,15 +99,20 @@ def _encode_c4_grade(
 ):
     """C4 기능도: 오더에 최고 필요등급 1개, 기사에 자기 이하 전부"""
     for j in jobs:
-        max_grade = max(
-            (p.required_grade for p in j.products),
-            key=lambda g: GRADE_SKILL[g]
-        )
+        # 제품 목록에서 최고 등급 결정 (없으면 constraints.required_grade → 기본 "C")
+        product_grades = [p.required_grade for p in j.products]
+        constraint_grade = j.constraints.required_grade
+        if product_grades:
+            max_grade = max(product_grades, key=lambda g: GRADE_SKILL[g])
+        elif constraint_grade:
+            max_grade = constraint_grade
+        else:
+            max_grade = "C"  # 기본값
         skill_id = GRADE_SKILL[max_grade]
         result.job_skills[j.id].append(skill_id)
 
     for v in vehicles:
-        skills = GRADE_SKILLS_MAP.get(v.skill_grade, [1])
+        skills = GRADE_SKILLS_MAP.get(v.grade, [1])
         result.vehicle_skills[v.id].extend(skills)
 
 
@@ -170,7 +176,7 @@ def _encode_c8_avoid_model(
     # 1. 전체 회피 모델코드 수집
     all_avoid_models: Set[str] = set()
     for v in vehicles:
-        for am in v.avoid_models:
+        for am in v.effective_avoid_models:
             all_avoid_models.add(am.model)
 
     if not all_avoid_models:
@@ -195,9 +201,8 @@ def _encode_c8_avoid_model(
                     result.job_skills[j.id].append(skill_id)
 
     # 4. 기사에 skill 부여 (역방향: 회피 안 하는 모델만)
-    all_c8_skills = set(c8_map.values())
     for v in vehicles:
-        driver_avoid = {am.model for am in v.avoid_models}
+        driver_avoid = {am.model for am in v.effective_avoid_models}
         for model, skill_id in c8_map.items():
             if model not in driver_avoid:
                 result.vehicle_skills[v.id].append(skill_id)
