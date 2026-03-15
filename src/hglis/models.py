@@ -378,6 +378,7 @@ class UnassignedJob(BaseModel):
     order_id: str
     constraint: str
     reason: str
+    reasons: List[Dict[str, Any]] = []
 
 
 class HglisDispatchResponse(BaseModel):

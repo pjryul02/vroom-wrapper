@@ -171,6 +171,7 @@ services:
       context: .
       dockerfile: Dockerfile.v3
     container_name: vroom-celery-worker
+    hostname: vroom-worker-1
     command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker1@%h
     environment:
       - USE_DIRECT_CALL=true
@@ -208,6 +209,7 @@ services:
       context: .
       dockerfile: Dockerfile.v3
     container_name: vroom-celery-worker-2
+    hostname: vroom-worker-2
     command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker2@%h
     environment:
       - USE_DIRECT_CALL=true
@@ -249,7 +251,7 @@ services:
       context: .
       dockerfile: Dockerfile.v3
     container_name: vroom-flower
-    command: python -m celery -A src.services.celery_app.celery_app flower --port=5555
+    command: python -m celery -A src.services.celery_app.celery_app flower --port=5555 --basic_auth=admin:hglis2024
     ports:
       - "5555:5555"
     environment:

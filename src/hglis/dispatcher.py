@@ -171,7 +171,7 @@ class HglisDispatcher:
                 for uj in response.unassigned:
                     job = next((j for j in request.jobs if j.order_id == uj.order_id), None)
                     if job and job.id in reasons_map:
-                        uj.reason = "; ".join(reasons_map[job.id])
+                        uj.reasons = reasons_map[job.id]
             except Exception as e:
                 logger.warning(f"미배정 정밀 분석 실패 (비치명적): {e}")
 
