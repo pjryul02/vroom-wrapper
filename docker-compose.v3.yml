@@ -171,7 +171,7 @@ services:
       context: .
       dockerfile: Dockerfile.v3
     container_name: vroom-celery-worker
-    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3
+    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker1@%h
     environment:
       - USE_DIRECT_CALL=true
       - VROOM_BINARY_PATH=/usr/local/bin/vroom
@@ -202,6 +202,65 @@ services:
       - routing-net
     volumes:
       - ./logs:/app/logs
+
+  celery-worker-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.v3
+    container_name: vroom-celery-worker-2
+    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker2@%h
+    environment:
+      - USE_DIRECT_CALL=true
+      - VROOM_BINARY_PATH=/usr/local/bin/vroom
+      - VROOM_ROUTER=osrm
+      - VROOM_THREADS=4
+      - VROOM_EXPLORATION=5
+      - VROOM_TIMEOUT=300
+      - OSRM_URL=http://osrm:5000
+      - VALHALLA_URL=http://valhalla:8002
+      - REDIS_URL=redis://redis:6379
+      - TWO_PASS_ENABLED=true
+      - TWO_PASS_MAX_WORKERS=4
+      - MATRIX_PREP_ENABLED=true
+      - UNREACHABLE_FILTER_ENABLED=true
+      - UNREACHABLE_THRESHOLD=43200
+      - OSRM_CHUNK_SIZE=75
+      - OSRM_MAX_WORKERS=8
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      osrm:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - routing-network
+      - routing-net
+    volumes:
+      - ./logs:/app/logs
+
+  # ──────────────────────────────────────────────────
+  # Flower — Celery 모니터링 웹 UI (포트 5555)
+  # http://localhost:5555
+  # ──────────────────────────────────────────────────
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile.v3
+    container_name: vroom-flower
+    command: python -m celery -A src.services.celery_app.celery_app flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - routing-network
+      - routing-net
 
 volumes:
   redis-data:
