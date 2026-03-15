@@ -162,18 +162,9 @@ class HglisDispatcher:
         except Exception as e:
             logger.warning(f"분석 실패 (비치명적): {e}")
 
-        # Step 6.3: 미배정 정밀 사유 분석 (ConstraintChecker)
-        if vroom_result.get("unassigned") and debug_vroom_input:
-            try:
-                checker = ConstraintChecker(debug_vroom_input)
-                reasons_map = checker.analyze_unassigned(vroom_result["unassigned"])
-                # 기존 추론 사유에 정밀 분석 추가
-                for uj in response.unassigned:
-                    job = next((j for j in request.jobs if j.order_id == uj.order_id), None)
-                    if job and job.id in reasons_map:
-                        uj.reasons = reasons_map[job.id]
-            except Exception as e:
-                logger.warning(f"미배정 정밀 분석 실패 (비치명적): {e}")
+        # Step 6.3: reasons[]는 _make_reason()이 생성한 비즈니스 언어 설명을 사용.
+        # ConstraintChecker는 VROOM raw 스킬 번호를 노출하므로 reasons 덮어쓰기 제거.
+        # 필요 시 debug.vroom_input으로 raw VROOM 분석 가능.
 
         # Step 6.4: 디버그 정보 (중간 VROOM 입출력)
         if debug_vroom_input:
@@ -530,10 +521,12 @@ class HglisDispatcher:
                     constraint = "기사_부재"
                 else:
                     constraint = self._guess_constraint(u, job, skill_result)
+                reason, reasons = self._make_reason(constraint, job)
                 unassigned.append(UnassignedJob(
                     order_id=job.order_id,
                     constraint=constraint,
-                    reason=desc,
+                    reason=reason,
+                    reasons=reasons,
                 ))
 
         # 기사별 요약
@@ -649,6 +642,53 @@ class HglisDispatcher:
             return "C5_CBM"
 
         return "기타"
+
+    def _make_reason(self, constraint: str, job: Any) -> tuple:
+        """constraint 코드 + job 정보 → (reason: str, reasons: List[Dict])"""
+        products = job.products or []
+        model_names = [p.model_name or p.model_code for p in products]
+        model_str = "·".join(model_names[:2]) + (" 외" if len(model_names) > 2 else "")
+        req_grade = (
+            job.constraints.required_grade
+            or (products[0].required_grade if products else "?")
+        )
+        total_cbm = round(sum(p.cbm * p.quantity for p in products), 1)
+        region = job.region_code or "미지정"
+
+        _MAP = {
+            "C8_미결이력": (
+                f"[C8] 미결 이력 회피 — {model_str} 배정 불가",
+                [{"type": "C8", "description": f"회피 대상 모델 포함 ({model_str}), 담당 가능 기사 없음"}],
+            ),
+            "C7_신제품": (
+                f"[C7] 신제품 교육 미이수 — {model_str} 처리 기사 없음",
+                [{"type": "C7", "description": f"신제품 취급 불가 기사만 존재 ({model_str})"}],
+            ),
+            "소파_권역": (
+                f"[소파] 소파 전문 기사 없음 — {region} 권역 소파 담당 기사 부족",
+                [{"type": "소파", "description": f"소파 배송 자격 기사 없음 (권역: {region})"}],
+            ),
+            "C4_기능도": (
+                f"[C1] 기능도 부족 — {req_grade}급 이상 배정 가능 기사 없음",
+                [{"type": "C1", "description": f"필요 기능도: {req_grade}급 이상, 해당 권역 배정 가능 기사 없음"}],
+            ),
+            "C5_CBM": (
+                f"[C3] 적재 용량 초과 — {total_cbm}CBM, 단독 처리 불가",
+                [{"type": "C3", "description": f"오더 CBM {total_cbm} — 단독 적재 가능한 기사 없음 (합배차 필요)"}],
+            ),
+            "기사_부재": (
+                f"[권역] 해당 권역 기사 없음 — {region} 권역 배정 가능 기사 0명",
+                [{"type": "권역", "description": f"권역 {region} 내 배정 가능 기사 없음"}],
+            ),
+            "기타": (
+                "[C5] 시간대·복합 제약 미충족 — 희망 시간대 배정 가능 기사 없음",
+                [{"type": "C5", "description": f"희망 시간대({job.scheduling.preferred_time_slot}) 또는 복합 제약 충족 기사 없음"}],
+            ),
+        }
+        return _MAP.get(
+            constraint,
+            (f"미배정: {constraint}", [{"type": constraint, "description": f"제약 코드: {constraint}"}]),
+        )
 
 
 def _check_data_quality(request: HglisDispatchRequest) -> dict:
