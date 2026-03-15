@@ -1,4 +1,10 @@
-# VROOM Wrapper v3.0 API 문서
+# VROOM Wrapper API 문서 (v3.1.2)
+
+> **이 문서는**: 래퍼의 모든 API 엔드포인트 레퍼런스.
+> **언제 읽는가**: API 연동 개발, 요청/응답 형식 확인, 환경변수 설정, Docker 배포 시.
+> **관련 문서**: 코드 구조 → `WRAPPER-QUICK-GUIDE.md` / HGLIS 제약 → `HGLIS_배차엔진_통합명세서_v8.3.md`
+
+---
 
 VRP(Vehicle Routing Problem) 최적화 플랫폼 - Python FastAPI 기반 VROOM C++ 바이너리 래퍼
 

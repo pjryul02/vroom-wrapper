@@ -93,15 +93,16 @@ src/
 
 ## 문서
 
-| 문서 | 내용 |
-|------|------|
-| [docs/API-DOCUMENTATION.md](docs/API-DOCUMENTATION.md) | API 전체 레퍼런스 (엔드포인트, 요청/응답, 환경변수) |
-| [docs/V3-GUIDE.md](docs/V3-GUIDE.md) | 설치/가동 가이드 |
-| [docs/WRAPPER-QUICK-GUIDE.md](docs/WRAPPER-QUICK-GUIDE.md) | 코드 구조 빠른 이해 |
-| [docs/TECHNICAL-ARCHITECTURE.md](docs/TECHNICAL-ARCHITECTURE.md) | 기술 아키텍처 상세 |
-| [docs/HGLIS_배차엔진_통합명세서_v8.3.md](docs/HGLIS_배차엔진_통합명세서_v8.3.md) | HGLIS 배차 제약 명세 (C1~C8) |
-| [docs/CHANGELOG.md](docs/CHANGELOG.md) | 버전별 변경 이력 |
-| [docs/archive/](docs/archive/) | 구버전 문서 (v1/v2) |
+| 문서 | 언제 읽는가 |
+|------|-----------|
+| [docs/WRAPPER-QUICK-GUIDE.md](docs/WRAPPER-QUICK-GUIDE.md) | 처음 코드베이스 파악 — 전체 그림을 빠르게 |
+| [docs/API-DOCUMENTATION.md](docs/API-DOCUMENTATION.md) | API 연동 개발, 요청/응답 형식, 환경변수 확인 |
+| [docs/TECHNICAL-ARCHITECTURE.md](docs/TECHNICAL-ARCHITECTURE.md) | 특정 로직 수정/디버깅, 파이프라인 상세 이해 |
+| [docs/HGLIS_배차엔진_통합명세서_v8.3.md](docs/HGLIS_배차엔진_통합명세서_v8.3.md) | /dispatch 개발, 시뮬레이터 팀과 제약 협의 |
+| [docs/V3-GUIDE.md](docs/V3-GUIDE.md) | 서버 세팅, Docker 설치/가동 |
+| [docs/PRD.md](docs/PRD.md) | 기능 범위 확인, 설계 의도 파악 |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | 변경 이력, Breaking change 확인 |
+| [docs/archive/](docs/archive/) | 구버전 문서 (v1/v2, 참고용) |
 
 ## 사전 요구사항
 

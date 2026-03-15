@@ -1,4 +1,8 @@
-# VROOM Wrapper v3.0 - 설치/가동/사용 가이드
+# VROOM Wrapper v3.0 - 설치/가동 가이드
+
+> **이 문서는**: Docker 환경 설치, 빌드, 서비스 가동/중지 실전 가이드.
+> **언제 읽는가**: 서버 세팅, 신규 환경 구축, Docker 가동 문제 해결 시.
+> **관련 문서**: API 사용 → `API-DOCUMENTATION.md` / 전체 구조 → `WRAPPER-QUICK-GUIDE.md`
 
 ---
 

@@ -1,4 +1,8 @@
-# PRD: VROOM Wrapper v3.0 - 정반합 (Synthesis Edition)
+# PRD: VROOM Wrapper v3.0 - 제품 요구사항 정의서
+
+> **이 문서는**: 래퍼 v3.0의 기능 범위, 비기능 요구사항, 설계 의도 정의서.
+> **언제 읽는가**: 기능 추가 전 범위 확인, 시뮬레이터 팀과 인터페이스 계약 검토, 아키텍처 방향 재확인 시.
+> **관련 문서**: 실제 구현 상태 → `TECHNICAL-ARCHITECTURE.md` / API 계약 → `API-DOCUMENTATION.md`
 
 **Product Requirements Document**
 **작성일**: 2026-02-13
