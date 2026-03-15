@@ -1467,6 +1467,8 @@ curl -X POST "http://localhost:8000/dispatch?async=true" \
 
 `/dispatch?async=true`로 시작한 비동기 배차 작업의 진행률과 결과를 조회한다.
 
+> **구현**: Celery + Redis 큐 기반. `dispatch_task.delay()`로 워커에 전달, `AsyncResult(job_id)`로 상태 조회. 워커 2개(각 concurrency=3) — 동시 최대 6건 처리 가능. 워커 상태는 Flower(http://localhost:5555)에서 실시간 확인.
+
 **인증**: 불필요
 
 **요청**:
@@ -2373,6 +2375,13 @@ Pydantic 검증 실패 (422):
 | `UNREACHABLE_FILTER_ENABLED` | `true` | 도달 불가 작업 사전 필터링 |
 | `UNREACHABLE_THRESHOLD` | `43200` | 도달 불가 판정 기준 (초, 기본 12시간) |
 
+### Celery 비동기 큐
+
+| 변수 | 기본값 | 설명 |
+|------|--------|------|
+| `REDIS_URL` | `redis://redis:6379` | Redis URL (Celery broker + backend, 캐시 겸용) |
+| `MAX_CONCURRENT_DISPATCH` | `3` | Wrapper 동기 모드 동시 실행 제한 (Celery와 별개) |
+
 ### 캐시
 
 | 변수 | 기본값 | 설명 |
@@ -2410,8 +2419,11 @@ Pydantic 검증 실패 (422):
 | 서비스 | 포트 | 설명 |
 |--------|------|------|
 | OSRM | `:5000` | MLD 알고리즘 도로 라우팅 엔진 |
-| Redis | `:6379` | 캐시 저장소 |
+| Valhalla | `:8002` | time-dependent 라우팅 엔진 (한국 전체) |
+| Redis | `:6379` | 캐시 + Celery 브로커/백엔드 |
 | Wrapper | `:8000` | VROOM Wrapper API 서버 + VROOM 바이너리 |
+| celery-worker (×2) | — | 비동기 dispatch 처리 워커 (각 concurrency=3, 총 동시 6건) |
+| Flower | `:5555` | Celery 모니터링 웹 UI (http://localhost:5555, admin/hglis2024) |
 
 ### 실행
 
@@ -2435,11 +2447,18 @@ docker compose -f docker-compose.v3.yml ps
 # 헬스 체크
 curl http://localhost:8000/health
 
-# 로그 확인
+# Wrapper 로그
 docker logs vroom-wrapper-v3 --tail 50
 
+# Celery 워커 로그 (처리 중인 dispatch 확인)
+docker logs vroom-celery-worker --tail 50
+docker logs vroom-celery-worker-2 --tail 50
+
 # 2-Pass 동작 확인
-docker logs vroom-wrapper-v3 2>&1 | grep -E "PASS 1|PASS 2|MATRIX_PREP|FILTER"
+docker logs vroom-celery-worker 2>&1 | grep -E "PASS 1|PASS 2|MATRIX_PREP|FILTER"
+
+# Celery 모니터링 웹 UI
+http://localhost:5555  # admin / hglis2024
 ```
 
 ### OSRM 데이터 준비
@@ -2455,6 +2474,19 @@ docker logs vroom-wrapper-v3 2>&1 | grep -E "PASS 1|PASS 2|MATRIX_PREP|FILTER"
 ---
 
 ## 버전 이력
+
+### v3.1.2 (2026-03-15)
+
+- **Celery 워커 2개** (worker1@vroom-worker-1, worker2@vroom-worker-2): 동시 6건 비동기 dispatch 처리
+- **Flower 모니터링** (`:5555`): 워커 상태, 태스크 큐, 처리 이력 웹 UI
+- **`UnassignedJob.reasons[]` 버그 수정**: ConstraintChecker 분석 결과가 응답에 정상 반영됨
+  - `reason: str` (기존 유지) + `reasons: List[Dict]` 추가 (상세 사유 배열)
+
+### v3.1.1 (2026-03-14)
+
+- **Celery + Redis 큐 도입**: 비동기 dispatch 백엔드를 FastAPI BackgroundTasks → Celery로 전환
+- **`unassigned[].reasons[]` 구조 변경** ⚠️ Breaking Change: `reason: str` → `reasons: [{type, description}]` 배열
+- **`results[].model_name`**: products 기반 자동 계산 (`"소파 3인용 외 1건"` 형식)
 
 ### v3.1 (2026-03)
 

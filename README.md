@@ -19,14 +19,16 @@ VROOM 바이너리 직접 호출, 미배정 사유 분석, 비즈니스 규칙, 
 ## 시스템 구성
 
 ```
-Docker Compose (4 컨테이너)
-  OSRM (:5000)      ─┐
-  Valhalla (:8002)   ─┤── Wrapper (:8000)
-  Redis (:6379)      ─┤   FastAPI + VROOM 바이너리
-                      └── (vroom-express 제거!)
+Docker Compose (7 컨테이너)
+  OSRM (:5000)            ─┐
+  Valhalla (:8002)         ─┤── Wrapper (:8000)  FastAPI + VROOM 바이너리
+  Redis (:6379)            ─┤── Celery Worker 1  비동기 dispatch (concurrency=3)
+                            ├── Celery Worker 2  비동기 dispatch (concurrency=3)
+                            └── Flower (:5555)   Celery 모니터링 웹 UI
 ```
 
 - **Valhalla** — 한국 전체 데이터(south-korea-latest.osm.pbf), time-dependent routing 지원
+- **Celery Workers** — Redis 큐 기반, 동시 최대 6건 비동기 dispatch 처리
 
 ## Quick Start
 
@@ -93,10 +95,13 @@ src/
 
 | 문서 | 내용 |
 |------|------|
-| [PRD.md](PRD.md) | 제품 요구사항 정의서 |
-| [V3-GUIDE.md](V3-GUIDE.md) | 설치/가동 가이드 |
-| [CHANGELOG.md](CHANGELOG.md) | 버전별 변경 이력 |
-| [DOCUMENT-INDEX.md](DOCUMENT-INDEX.md) | 전체 문서 인덱스 |
+| [docs/API-DOCUMENTATION.md](docs/API-DOCUMENTATION.md) | API 전체 레퍼런스 (엔드포인트, 요청/응답, 환경변수) |
+| [docs/V3-GUIDE.md](docs/V3-GUIDE.md) | 설치/가동 가이드 |
+| [docs/WRAPPER-QUICK-GUIDE.md](docs/WRAPPER-QUICK-GUIDE.md) | 코드 구조 빠른 이해 |
+| [docs/TECHNICAL-ARCHITECTURE.md](docs/TECHNICAL-ARCHITECTURE.md) | 기술 아키텍처 상세 |
+| [docs/HGLIS_배차엔진_통합명세서_v8.3.md](docs/HGLIS_배차엔진_통합명세서_v8.3.md) | HGLIS 배차 제약 명세 (C1~C8) |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | 버전별 변경 이력 |
+| [docs/archive/](docs/archive/) | 구버전 문서 (v1/v2) |
 
 ## 사전 요구사항
 
@@ -110,7 +115,9 @@ src/
 - **OSRM** (OpenStreetMap 라우팅)
 - **Valhalla** v3.5+ (time-dependent routing, 한국 전체 데이터)
 - **FastAPI** + **uvicorn** (Python 웹 프레임워크)
-- **Redis** 7+ (캐싱, 선택)
+- **Celery** 5.3+ (비동기 태스크 큐, 워커 2개)
+- **Flower** 2.0+ (Celery 모니터링 웹 UI)
+- **Redis** 7+ (캐시 + Celery broker/backend)
 - **Docker** (멀티스테이지 빌드)
 
 ## 라이센스
