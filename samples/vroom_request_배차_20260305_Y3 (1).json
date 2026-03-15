@@ -1,0 +1,3923 @@
+{
+  "mode": "solving",
+  "jobs": [
+    {
+      "id": 0,
+      "description": "20JB26022200001 - 리바트 강서점",
+      "location": [
+        126.841205714231,
+        37.5585437067605
+      ],
+      "setup": 1500,
+      "service": 3300,
+      "delivery": [
+        83,
+        0,
+        0
+      ],
+      "skills": [
+        2
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JB26022200001",
+      "region_code": "Y3",
+      "install_fee": 44500,
+      "model_code": "20JB26022200001",
+      "model_name": "",
+      "crew_type": "1인",
+      "customer_id": "202107262640",
+      "customer_name": "리바트 강서점"
+    },
+    {
+      "id": 1,
+      "description": "51JT26022300285 - 강원도민일보 서울본부",
+      "location": [
+        126.977873671097,
+        37.5674198878673
+      ],
+      "setup": 1500,
+      "service": 2580,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "51JT26022300285",
+      "region_code": "Y3",
+      "install_fee": 24530,
+      "model_code": "51JT26022300285",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602231491",
+      "customer_name": "강원도민일보 서울본부"
+    },
+    {
+      "id": 2,
+      "description": "80JT26022101304 - 이수진",
+      "location": [
+        126.962352257162,
+        37.5708610950823
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022101304",
+      "region_code": "Y3",
+      "install_fee": 21840,
+      "model_code": "80JT26022101304",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202601300813",
+      "customer_name": "이수진"
+    },
+    {
+      "id": 3,
+      "description": "21JT26030100204 - 이재구",
+      "location": [
+        126.948807747156,
+        37.5883336578387
+      ],
+      "setup": 1500,
+      "service": 1200,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26030100204",
+      "region_code": "Y3",
+      "install_fee": 26600,
+      "model_code": "21JT26030100204",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202603010542",
+      "customer_name": "이재구"
+    },
+    {
+      "id": 4,
+      "description": "21JT26022301123 - 김형호",
+      "location": [
+        126.917907814167,
+        37.5744019902031
+      ],
+      "setup": 1500,
+      "service": 7380,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022301123",
+      "region_code": "Y3",
+      "install_fee": 81240,
+      "model_code": "21JT26022301123",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602231464",
+      "customer_name": "김형호"
+    },
+    {
+      "id": 5,
+      "description": "20JT26022800360 - 김종향",
+      "location": [
+        126.95422378666,
+        37.5524339233654
+      ],
+      "setup": 1500,
+      "service": 14040,
+      "delivery": [
+        10,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022800360",
+      "region_code": "Y3",
+      "install_fee": 49680,
+      "model_code": "20JT26022800360",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602281361",
+      "customer_name": "김종향"
+    },
+    {
+      "id": 6,
+      "description": "21JT26020900994 - 공하정",
+      "location": [
+        126.953053235925,
+        37.5474551772509
+      ],
+      "setup": 1500,
+      "service": 3300,
+      "delivery": [
+        35,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26020900994",
+      "region_code": "Y3",
+      "install_fee": 53500,
+      "model_code": "21JT26020900994",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602091124",
+      "customer_name": "공하정"
+    },
+    {
+      "id": 7,
+      "description": "21JT26022600777 - 송가람",
+      "location": [
+        126.932047243944,
+        37.5509239825243
+      ],
+      "setup": 1500,
+      "service": 3660,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022600777",
+      "region_code": "Y3",
+      "install_fee": 48500,
+      "model_code": "21JT26022600777",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602260708",
+      "customer_name": "송가람"
+    },
+    {
+      "id": 8,
+      "description": "20JT26030300010 - 이주영",
+      "location": [
+        126.932098856535,
+        37.6005343844723
+      ],
+      "setup": 1500,
+      "service": 600,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26030300010",
+      "region_code": "Y3",
+      "install_fee": 4200,
+      "model_code": "20JT26030300010",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202403241390",
+      "customer_name": "이주영"
+    },
+    {
+      "id": 9,
+      "description": "21JT26020401259 - 강지선",
+      "location": [
+        126.906172127572,
+        37.5925615004272
+      ],
+      "setup": 1500,
+      "service": 5880,
+      "delivery": [
+        10,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26020401259",
+      "region_code": "Y3",
+      "install_fee": 72520,
+      "model_code": "21JT26020401259",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602041281",
+      "customer_name": "강지선"
+    },
+    {
+      "id": 10,
+      "description": "21JT26022700358 - 이후열",
+      "location": [
+        126.92285620811,
+        37.6027109037882
+      ],
+      "setup": 1500,
+      "service": 3660,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022700358",
+      "region_code": "Y3",
+      "install_fee": 44300,
+      "model_code": "21JT26022700358",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602270487",
+      "customer_name": "이후열"
+    },
+    {
+      "id": 11,
+      "description": "21JT26022000262 - 문선성",
+      "location": [
+        126.916658717175,
+        37.600929396655
+      ],
+      "setup": 1500,
+      "service": 4920,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022000262",
+      "region_code": "Y3",
+      "install_fee": 54160,
+      "model_code": "21JT26022000262",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602011665",
+      "customer_name": "문선성"
+    },
+    {
+      "id": 12,
+      "description": "21JT26022700064 - 민숙현",
+      "location": [
+        126.918495725549,
+        37.6241815030998
+      ],
+      "setup": 1500,
+      "service": 8160,
+      "delivery": [
+        127,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022700064",
+      "region_code": "Y3",
+      "install_fee": 76860,
+      "model_code": "21JT26022700064",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602270076",
+      "customer_name": "민숙현"
+    },
+    {
+      "id": 13,
+      "description": "21JT26022700511 - 이주영",
+      "location": [
+        126.932098856535,
+        37.6005343844723
+      ],
+      "setup": 1500,
+      "service": 0,
+      "delivery": [
+        28,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022700511",
+      "region_code": "Y3",
+      "install_fee": 61740,
+      "model_code": "21JT26022700511",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202403241390",
+      "customer_name": "이주영"
+    },
+    {
+      "id": 14,
+      "description": "20JT26030200007 - 김륜경",
+      "location": [
+        127.035231549474,
+        37.6608617479387
+      ],
+      "setup": 1500,
+      "service": 4440,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26030200007",
+      "region_code": "Y3",
+      "install_fee": 37960,
+      "model_code": "20JT26030200007",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202103200775",
+      "customer_name": "김륜경"
+    },
+    {
+      "id": 15,
+      "description": "21JB26022600032 - 이인숙",
+      "location": [
+        127.049275691881,
+        37.6577863519515
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JB26022600032",
+      "region_code": "Y3",
+      "install_fee": 24200,
+      "model_code": "21JB26022600032",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "201903041139",
+      "customer_name": "이인숙"
+    },
+    {
+      "id": 16,
+      "description": "21JT26022100153 - 하정희",
+      "location": [
+        127.039419989197,
+        37.6522593770325
+      ],
+      "setup": 1500,
+      "service": 24660,
+      "delivery": [
+        83,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022100153",
+      "region_code": "Y3",
+      "install_fee": 271590,
+      "model_code": "21JT26022100153",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "080220000017",
+      "customer_name": "하정희"
+    },
+    {
+      "id": 17,
+      "description": "20JH26021400018 - 조향자",
+      "location": [
+        127.033761228725,
+        37.6615036766958
+      ],
+      "setup": 1500,
+      "service": 3180,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JH26021400018",
+      "region_code": "Y3",
+      "install_fee": 46840,
+      "model_code": "20JH26021400018",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602140803",
+      "customer_name": "조향자"
+    },
+    {
+      "id": 18,
+      "description": "20JT26022800116 - 최경숙",
+      "location": [
+        127.035231549474,
+        37.6608617479387
+      ],
+      "setup": 1500,
+      "service": 1440,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022800116",
+      "region_code": "Y3",
+      "install_fee": 10400,
+      "model_code": "20JT26022800116",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602280449",
+      "customer_name": "최경숙"
+    },
+    {
+      "id": 19,
+      "description": "21JT26022800180 - 강경훈",
+      "location": [
+        127.028483736629,
+        37.5623897051914
+      ],
+      "setup": 1500,
+      "service": 7560,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022800180",
+      "region_code": "Y3",
+      "install_fee": 81120,
+      "model_code": "21JT26022800180",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602280455",
+      "customer_name": "강경훈"
+    },
+    {
+      "id": 20,
+      "description": "20JT26022200318 - 김고은",
+      "location": [
+        127.026186636459,
+        37.5545314695033
+      ],
+      "setup": 1500,
+      "service": 3660,
+      "delivery": [
+        7,
+        0,
+        0
+      ],
+      "skills": [
+        2
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022200318",
+      "region_code": "Y3",
+      "install_fee": 37380,
+      "model_code": "20JT26022200318",
+      "model_name": "",
+      "crew_type": "1인",
+      "customer_id": "202602221379",
+      "customer_name": "김고은"
+    },
+    {
+      "id": 21,
+      "description": "21JT26022700407 - 박항순",
+      "location": [
+        127.013847173899,
+        37.5460598514009
+      ],
+      "setup": 1500,
+      "service": 3600,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022700407",
+      "region_code": "Y3",
+      "install_fee": 79800,
+      "model_code": "21JT26022700407",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602270570",
+      "customer_name": "박항순"
+    },
+    {
+      "id": 22,
+      "description": "80JT26022800148 - 김인회",
+      "location": [
+        127.029745358029,
+        37.5981471356607
+      ],
+      "setup": 1500,
+      "service": 4140,
+      "delivery": [
+        9,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022800148",
+      "region_code": "Y3",
+      "install_fee": 41700,
+      "model_code": "80JT26022800148",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202506280262",
+      "customer_name": "김인회"
+    },
+    {
+      "id": 23,
+      "description": "21JT26030100247 - 김지은",
+      "location": [
+        127.011184237787,
+        37.5993048838944
+      ],
+      "setup": 1500,
+      "service": 1200,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26030100247",
+      "region_code": "Y3",
+      "install_fee": 26600,
+      "model_code": "21JT26030100247",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602060068",
+      "customer_name": "김지은"
+    },
+    {
+      "id": 24,
+      "description": "21JT26022600227 - 조남선",
+      "location": [
+        127.062261154976,
+        37.6065244839458
+      ],
+      "setup": 1500,
+      "service": 1200,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022600227",
+      "region_code": "Y3",
+      "install_fee": 26600,
+      "model_code": "21JT26022600227",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602260289",
+      "customer_name": "조남선"
+    },
+    {
+      "id": 25,
+      "description": "80JT26022400268 - 이재선",
+      "location": [
+        127.020946793788,
+        37.6026910997043
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022400268",
+      "region_code": "Y3",
+      "install_fee": 45600,
+      "model_code": "80JT26022400268",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202112120199",
+      "customer_name": "이재선"
+    },
+    {
+      "id": 26,
+      "description": "21JT26030200216 - 정진규",
+      "location": [
+        127.04265205735,
+        37.6002341968287
+      ],
+      "setup": 1500,
+      "service": 1980,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26030200216",
+      "region_code": "Y3",
+      "install_fee": 20900,
+      "model_code": "21JT26030200216",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202603020560",
+      "customer_name": "정진규"
+    },
+    {
+      "id": 27,
+      "description": "80JT26021600150 - 권수현",
+      "location": [
+        127.023262558082,
+        37.6071180410239
+      ],
+      "setup": 1500,
+      "service": 17880,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26021600150",
+      "region_code": "Y3",
+      "install_fee": 246380,
+      "model_code": "80JT26021600150",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202601311328",
+      "customer_name": "권수현"
+    },
+    {
+      "id": 28,
+      "description": "80JT26022700187 - 권수현",
+      "location": [
+        127.023262558082,
+        37.6071180410239
+      ],
+      "setup": 1500,
+      "service": 5880,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022700187",
+      "region_code": "Y3",
+      "install_fee": 68440,
+      "model_code": "80JT26022700187",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202601311329",
+      "customer_name": "권수현"
+    },
+    {
+      "id": 29,
+      "description": "20JH26022300012 - 유수종",
+      "location": [
+        126.972803521826,
+        37.5495710662674
+      ],
+      "setup": 1500,
+      "service": 6660,
+      "delivery": [
+        303,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JH26022300012",
+      "region_code": "Y3",
+      "install_fee": 101500,
+      "model_code": "20JH26022300012",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602230830",
+      "customer_name": "유수종"
+    },
+    {
+      "id": 30,
+      "description": "21JT26022600457 - 백주미",
+      "location": [
+        126.853925567309,
+        37.5612628471993
+      ],
+      "setup": 1500,
+      "service": 3060,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022600457",
+      "region_code": "Y3",
+      "install_fee": 31170,
+      "model_code": "21JT26022600457",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202005170913",
+      "customer_name": "백주미"
+    },
+    {
+      "id": 31,
+      "description": "21JT26021700296 - 정지선",
+      "location": [
+        126.843139788854,
+        37.5311736007117
+      ],
+      "setup": 1500,
+      "service": 3960,
+      "delivery": [
+        16,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26021700296",
+      "region_code": "Y3",
+      "install_fee": 72180,
+      "model_code": "21JT26021700296",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202007081414",
+      "customer_name": "정지선"
+    },
+    {
+      "id": 32,
+      "description": "21JT26022200307 - 홍윤화",
+      "location": [
+        126.75650874832,
+        37.4948418899236
+      ],
+      "setup": 1500,
+      "service": 2400,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022200307",
+      "region_code": "Y3",
+      "install_fee": 53200,
+      "model_code": "21JT26022200307",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602221696",
+      "customer_name": "홍윤화"
+    },
+    {
+      "id": 33,
+      "description": "21JT26022800053 - 이치현",
+      "location": [
+        126.770699481344,
+        37.5081145042151
+      ],
+      "setup": 1500,
+      "service": 1980,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022800053",
+      "region_code": "Y3",
+      "install_fee": 20900,
+      "model_code": "21JT26022800053",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602280032",
+      "customer_name": "이치현"
+    },
+    {
+      "id": 34,
+      "description": "20JT26022000116 - 김현배",
+      "location": [
+        127.044548738053,
+        37.7297661551965
+      ],
+      "setup": 1500,
+      "service": 2400,
+      "delivery": [
+        20,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022000116",
+      "region_code": "Y3",
+      "install_fee": 40800,
+      "model_code": "20JT26022000116",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602180170",
+      "customer_name": "김현배"
+    },
+    {
+      "id": 35,
+      "description": "20JT26022700022 - 이은숙",
+      "location": [
+        127.107564968611,
+        37.7527432695341
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022700022",
+      "region_code": "Y3",
+      "install_fee": 45600,
+      "model_code": "20JT26022700022",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "180725000199",
+      "customer_name": "이은숙"
+    },
+    {
+      "id": 36,
+      "description": "20JT26022100250 - 이정희",
+      "location": [
+        127.057302338164,
+        37.7291514092715
+      ],
+      "setup": 1500,
+      "service": 1320,
+      "delivery": [
+        5,
+        0,
+        0
+      ],
+      "skills": [
+        2
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022100250",
+      "region_code": "Y3",
+      "install_fee": 11700,
+      "model_code": "20JT26022100250",
+      "model_name": "",
+      "crew_type": "1인",
+      "customer_id": "202002150993",
+      "customer_name": "이정희"
+    },
+    {
+      "id": 37,
+      "description": "21JT26020800411 - 박명희",
+      "location": [
+        127.079881980971,
+        37.7390539875774
+      ],
+      "setup": 1500,
+      "service": 4800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26020800411",
+      "region_code": "Y3",
+      "install_fee": 36120,
+      "model_code": "21JT26020800411",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202006061368",
+      "customer_name": "박명희"
+    },
+    {
+      "id": 38,
+      "description": "21JT26021500351 - 이정민",
+      "location": [
+        126.647902743998,
+        37.4784332175081
+      ],
+      "setup": 1500,
+      "service": 2760,
+      "delivery": [
+        31,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26021500351",
+      "region_code": "Y3",
+      "install_fee": 43800,
+      "model_code": "21JT26021500351",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602151144",
+      "customer_name": "이정민"
+    },
+    {
+      "id": 39,
+      "description": "20JH26022200033 - 유진숙",
+      "location": [
+        126.647902743998,
+        37.4784332175081
+      ],
+      "setup": 1500,
+      "service": 6600,
+      "delivery": [
+        813,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JH26022200033",
+      "region_code": "Y3",
+      "install_fee": 90300,
+      "model_code": "20JH26022200033",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602221273",
+      "customer_name": "유진숙"
+    },
+    {
+      "id": 40,
+      "description": "80JT26022700027 - 이금석",
+      "location": [
+        126.724257058214,
+        37.5142879041401
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022700027",
+      "region_code": "Y3",
+      "install_fee": 22800,
+      "model_code": "80JT26022700027",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602260919",
+      "customer_name": "이금석"
+    },
+    {
+      "id": 41,
+      "description": "11JT26022500013 - 김지윤",
+      "location": [
+        126.732228235138,
+        37.5089606904603
+      ],
+      "setup": 1500,
+      "service": 360,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "11JT26022500013",
+      "region_code": "Y3",
+      "install_fee": 3200,
+      "model_code": "11JT26022500013",
+      "model_name": "",
+      "crew_type": "1인",
+      "customer_id": "160418M00558",
+      "customer_name": "김지윤"
+    },
+    {
+      "id": 42,
+      "description": "80JT26022500052 - 이보연",
+      "location": [
+        126.687842417028,
+        37.6073595436945
+      ],
+      "setup": 1500,
+      "service": 3180,
+      "delivery": [
+        2,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022500052",
+      "region_code": "Y3",
+      "install_fee": 33580,
+      "model_code": "80JT26022500052",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602100623",
+      "customer_name": "이보연"
+    },
+    {
+      "id": 43,
+      "description": "20JH26022000003 - 리바트 서인천점",
+      "location": [
+        126.673482,
+        37.5794758
+      ],
+      "setup": 1500,
+      "service": 12660,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JH26022000003",
+      "region_code": "Y3",
+      "install_fee": 201420,
+      "model_code": "20JH26022000003",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202012212226",
+      "customer_name": "리바트 서인천점"
+    },
+    {
+      "id": 44,
+      "description": "21JT26022700425 - 서경진",
+      "location": [
+        126.677497400845,
+        37.4963053292528
+      ],
+      "setup": 1500,
+      "service": 1200,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022700425",
+      "region_code": "Y3",
+      "install_fee": 26600,
+      "model_code": "21JT26022700425",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602270579",
+      "customer_name": "서경진"
+    },
+    {
+      "id": 45,
+      "description": "80JT26030200594 - 정문식",
+      "location": [
+        126.730772008397,
+        37.3953577557423
+      ],
+      "setup": 1500,
+      "service": 4140,
+      "delivery": [
+        9,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26030200594",
+      "region_code": "Y3",
+      "install_fee": 41700,
+      "model_code": "80JT26030200594",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202302191475",
+      "customer_name": "정문식"
+    },
+    {
+      "id": 46,
+      "description": "21JT26021400401 - 최미슬",
+      "location": [
+        126.674283182308,
+        37.4237155979949
+      ],
+      "setup": 1500,
+      "service": 3300,
+      "delivery": [
+        33,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26021400401",
+      "region_code": "Y3",
+      "install_fee": 50200,
+      "model_code": "21JT26021400401",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602141305",
+      "customer_name": "최미슬"
+    },
+    {
+      "id": 47,
+      "description": "21JT26030200134 - 김진",
+      "location": [
+        126.762249533941,
+        37.6838961547011
+      ],
+      "setup": 1500,
+      "service": 1200,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772694000,
+          1772704740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26030200134",
+      "region_code": "Y3",
+      "install_fee": 26600,
+      "model_code": "21JT26030200134",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202603020128",
+      "customer_name": "김진"
+    },
+    {
+      "id": 48,
+      "description": "80JT26022200691 - 김진석",
+      "location": [
+        126.783943875067,
+        37.6520649590515
+      ],
+      "setup": 1500,
+      "service": 5460,
+      "delivery": [
+        120,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022200691",
+      "region_code": "Y3",
+      "install_fee": 56700,
+      "model_code": "80JT26022200691",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602220824",
+      "customer_name": "김진석"
+    },
+    {
+      "id": 49,
+      "description": "80JT26022700028 - 박은영",
+      "location": [
+        126.752317218486,
+        37.697473765541
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26022700028",
+      "region_code": "Y3",
+      "install_fee": 22800,
+      "model_code": "80JT26022700028",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202208150532",
+      "customer_name": "박은영"
+    },
+    {
+      "id": 50,
+      "description": "80JT26030100681 - 이아름",
+      "location": [
+        126.761907563283,
+        37.6681268320959
+      ],
+      "setup": 1500,
+      "service": 2100,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "80JT26030100681",
+      "region_code": "Y3",
+      "install_fee": 33600,
+      "model_code": "80JT26030100681",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202301240226",
+      "customer_name": "이아름"
+    },
+    {
+      "id": 51,
+      "description": "20JT26022600056 - 이재하",
+      "location": [
+        126.712557029506,
+        37.7117517984374
+      ],
+      "setup": 1500,
+      "service": 3780,
+      "delivery": [
+        2,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022600056",
+      "region_code": "Y3",
+      "install_fee": 40420,
+      "model_code": "20JT26022600056",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "160122M00053",
+      "customer_name": "이재하"
+    },
+    {
+      "id": 52,
+      "description": "21JT26030200091 - 겅남호",
+      "location": [
+        126.72205975954,
+        37.7148878870385
+      ],
+      "setup": 1500,
+      "service": 2400,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        2,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26030200091",
+      "region_code": "Y3",
+      "install_fee": 53200,
+      "model_code": "21JT26030200091",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202603020101",
+      "customer_name": "겅남호"
+    },
+    {
+      "id": 53,
+      "description": "21JT26022400177 - 양도희",
+      "location": [
+        126.756958390986,
+        37.7165892626908
+      ],
+      "setup": 1500,
+      "service": 2400,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "21JT26022400177",
+      "region_code": "Y3",
+      "install_fee": 21000,
+      "model_code": "21JT26022400177",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202601220316",
+      "customer_name": "양도희"
+    },
+    {
+      "id": 54,
+      "description": "20JT26030100001 - 윤문숙",
+      "location": [
+        126.764705135788,
+        37.7259219117275
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26030100001",
+      "region_code": "Y3",
+      "install_fee": 22800,
+      "model_code": "20JT26030100001",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602280563",
+      "customer_name": "윤문숙"
+    },
+    {
+      "id": 55,
+      "description": "20JT26030100002 - 도인호",
+      "location": [
+        126.719552504638,
+        37.7109727276051
+      ],
+      "setup": 1500,
+      "service": 1800,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        4,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772722740
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26030100002",
+      "region_code": "Y3",
+      "install_fee": 45600,
+      "model_code": "20JT26030100002",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202602280133",
+      "customer_name": "도인호"
+    },
+    {
+      "id": 56,
+      "description": "20JT26022600118 - 전희숙",
+      "location": [
+        126.701841912899,
+        37.7701613128687
+      ],
+      "setup": 1500,
+      "service": 5340,
+      "delivery": [
+        0,
+        0,
+        0
+      ],
+      "skills": [
+        3,
+        100
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772679600,
+          1772693940
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26022600118",
+      "region_code": "Y3",
+      "install_fee": 60900,
+      "model_code": "20JT26022600118",
+      "model_name": "",
+      "crew_type": "2인",
+      "customer_id": "202012160035",
+      "customer_name": "전희숙"
+    },
+    {
+      "id": 57,
+      "description": "20JT26011900107 - 조미숙",
+      "location": [
+        126.672081645977,
+        37.6515811736471
+      ],
+      "setup": 1500,
+      "service": 1080,
+      "delivery": [
+        92,
+        0,
+        0
+      ],
+      "skills": [
+        1
+      ],
+      "priority": 0,
+      "time_windows": [
+        [
+          1772665200,
+          1772679540
+        ]
+      ],
+      "groups": [
+        "Y3"
+      ],
+      "order_id": "20JT26011900107",
+      "region_code": "Y3",
+      "install_fee": 0,
+      "model_code": "20JT26011900107",
+      "model_name": "",
+      "crew_type": "1인",
+      "customer_id": "202601160684",
+      "customer_name": "조미숙"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 10000,
+      "description": "이유승 (85어 1139)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000022",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 280000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10001,
+      "description": "채병회 (91보 5910)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000038",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10002,
+      "description": "이재홍 (85어 9786)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000055",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10003,
+      "description": "조한신 (96구 3898)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000085",
+      "region_code": "Y3",
+      "grade": "A",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 250000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10004,
+      "description": "서윤석 (88두 3878)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        100,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000128",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "2인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 400000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10005,
+      "description": "조희봉 (806구 2067)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000203",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10006,
+      "description": "유승규 (80버 5884)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000220",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10007,
+      "description": "신유민 (85누 2105)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000287",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 280000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10008,
+      "description": "김하경 (800러 9285)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000400",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10009,
+      "description": "김용배 (82부 7134)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000595",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 280000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10010,
+      "description": "배양수 (87사 1897)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000651",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 280000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10011,
+      "description": "조정수 (82다8037)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        100,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000803",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "2인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 400000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10012,
+      "description": "최병석 (81누 0640)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0000993",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10013,
+      "description": "노용학 (86고 0517)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001011",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10014,
+      "description": "박성현 (80자 5871)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001023",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10015,
+      "description": "남의성 (91노 0336)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001025",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10016,
+      "description": "지왕근 (86나 4769)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001106",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10017,
+      "description": "김영준 (82노 9892)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001107",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10018,
+      "description": "김재수 (92조 1995)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001112",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10019,
+      "description": "이만철 (87보 6692)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001130",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10020,
+      "description": "최진혁 (92서 1960)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        101
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001131",
+      "region_code": "Y3",
+      "grade": "S",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 280000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10021,
+      "description": "황현호 (83주 7875)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001153",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10022,
+      "description": "정승모 (88노 1381)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001162",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10023,
+      "description": "강재석 (87무 9973)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L0001169",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10024,
+      "description": "김현빈 (855두 5414)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L04653A001",
+      "region_code": "Y3",
+      "grade": "B",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 220000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10025,
+      "description": "김중곤 (835노 9339)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A006",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10026,
+      "description": "조재성 (802러 5823)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A012",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10027,
+      "description": "인석호 (802러 5874)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A013",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10028,
+      "description": "이재욱 (801러 5831)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A015",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10029,
+      "description": "박길수 (871도 7000)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A016",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10030,
+      "description": "양범열 (820무 6278)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A017",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10031,
+      "description": "한은우 (83라 3678)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A025",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10032,
+      "description": "윤치선 (894고2618)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A026",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10033,
+      "description": "서문철 (808다7183)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A027",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10034,
+      "description": "윤성주 (816수1960)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A029",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10035,
+      "description": "김주형 (804조4276)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A030",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10036,
+      "description": "안태명 (802러5831)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "L29780A031",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    },
+    {
+      "id": 10037,
+      "description": "박재현 (826너 4686)",
+      "start": [
+        126.978,
+        37.5665
+      ],
+      "end": [
+        126.978,
+        37.5665
+      ],
+      "capacity": [
+        400,
+        0,
+        0
+      ],
+      "skills": [
+        1,
+        2
+      ],
+      "time_window": [
+        1772665200,
+        1772719200
+      ],
+      "max_tasks": 12,
+      "groups": [
+        "Y3"
+      ],
+      "driver_id": "TEMP010",
+      "region_code": "Y3",
+      "grade": "C",
+      "crew_type": "1인팀",
+      "is_rookie": false,
+      "excluded_skus": [],
+      "avoid_models": [],
+      "capacity_cbm": 4.0,
+      "daily_target_fee": 180000,
+      "monthly_accumulated_fee": 0
+    }
+  ],
+  "distribute_options": {
+    "custom_matrix": {
+      "enabled": true
+    },
+    "calc_time_limit": 60
+  },
+  "constraints": {
+    "hard": {
+      "C1": {
+        "enabled": true,
+        "name": "2인팀 매칭",
+        "description": "2인 작업 필수 오더는 2인팀 또는 합배차로만 배정",
+        "details": {
+          "allow_joint_dispatch": true,
+          "joint_fee_split": {
+            "primary": 0.6,
+            "secondary": 0.4
+          }
+        }
+      },
+      "C3": {
+        "enabled": true,
+        "name": "희망배송시간",
+        "description": "고객 희망시간대 내 도착 필수",
+        "details": {
+          "time_window_buffer_minutes": 60,
+          "time_slots": {
+            "오전1": {
+              "start": "08:00",
+              "end": "12:00"
+            },
+            "오후1": {
+              "start": "12:00",
+              "end": "16:00"
+            },
+            "오후2": {
+              "start": "16:00",
+              "end": "19:00"
+            },
+            "오후3": {
+              "start": "19:00",
+              "end": "24:00"
+            },
+            "하루종일": {
+              "start": "08:00",
+              "end": "24:00"
+            }
+          }
+        }
+      },
+      "C4": {
+        "enabled": true,
+        "name": "기능도 매칭",
+        "description": "오더 필요기능도 ≤ 기사 기능도",
+        "details": {
+          "grade_hierarchy": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "joint_dispatch_exception": true
+        }
+      },
+      "C5": {
+        "enabled": true,
+        "name": "CBM 용량",
+        "description": "차량 적재용량(CBM) 초과 불가",
+        "details": {
+          "allow_overflow": false,
+          "overflow_margin_percent": 0
+        }
+      },
+      "C7": {
+        "enabled": true,
+        "name": "신제품/교육 제약",
+        "description": "신입 기사에게 신제품 배정 제외 + 교육 미이수 SKU 배정 제외",
+        "details": {
+          "checks": [
+            {
+              "name": "신입×신제품",
+              "match_field": {
+                "vehicle": "is_rookie",
+                "job": "has_new_product"
+              },
+              "match_logic": "vehicle.is_rookie=true AND job.has_new_product=true → 배정 제외"
+            },
+            {
+              "name": "교육 미이수 SKU",
+              "match_field": {
+                "vehicle": "excluded_skus",
+                "job": "sku_codes"
+              },
+              "match_logic": "job.sku_codes와 vehicle.excluded_skus 교집합 있으면 배정 제외"
+            }
+          ],
+          "action_on_violation": "skip_assignment"
+        }
+      },
+      "C8": {
+        "enabled": true,
+        "name": "미결 이력 회피",
+        "description": "과거 설치 미숙 미결 발생 모델은 해당 기사에게 재배정 제외",
+        "details": {
+          "match_field": {
+            "vehicle": "avoid_models",
+            "job": "sku_codes"
+          },
+          "match_logic": "job.sku_codes와 vehicle.avoid_models 교집합 있으면 배정 제외",
+          "history_period_days": 365,
+          "action_on_violation": "skip_assignment"
+        }
+      }
+    },
+    "soft": {
+      "C2": {
+        "enabled": true,
+        "name": "설치비 하한",
+        "description": "기사 일일 설치비 최소 보장선",
+        "weight": 50,
+        "details": {
+          "min_fee_by_grade": {
+            "2인팀": 400000,
+            "S": 280000,
+            "A": 250000,
+            "B": 220000,
+            "C": 180000
+          }
+        }
+      },
+      "C6": {
+        "enabled": true,
+        "name": "월 설치비 상한",
+        "description": "서비스등급별 월 상한 관리",
+        "weight": 70,
+        "details": {
+          "monthly_limit_by_grade": {
+            "S": 12000000,
+            "A": 11000000,
+            "B": 9000000,
+            "C": 7000000
+          },
+          "warn_threshold_percent": 90
+        }
+      }
+    }
+  },
+  "engine_settings": {
+    "skill_mapping": {
+      "enabled": true,
+      "grade_to_skill_id": {
+        "S": 4,
+        "A": 3,
+        "B": 2,
+        "C": 1,
+        "D": 0
+      },
+      "two_person_skill_id": 100,
+      "filler_skill_id": 101,
+      "note": "C4 비활성화 시 jobs.skills에 기능도 미포함"
+    },
+    "time_settings": {
+      "enabled": true,
+      "buffer_minutes": 60,
+      "work_start": "08:00",
+      "work_end": "23:00",
+      "lunch_start": null,
+      "lunch_end": null,
+      "note": "C3 비활성화 시 time_windows를 전체 업무시간으로 설정"
+    },
+    "capacity_settings": {
+      "enabled": true,
+      "cbm_multiplier": 100,
+      "max_cbm_ratio": 1.0,
+      "note": "C5 비활성화 시 capacity 제한 해제 (매우 큰 값 설정)"
+    },
+    "driver_limits": {
+      "max_orders_per_driver": 12,
+      "max_work_minutes": 600,
+      "max_distance_km": 200
+    },
+    "depot_settings": {
+      "start_location": "center",
+      "end_location": "center",
+      "return_required": true
+    },
+    "region_constraint": {
+      "mode": "strict",
+      "allow_cross_region": false,
+      "adjacent_regions": {
+        "Y1": [
+          "Y2",
+          "Y3"
+        ],
+        "Y2": [
+          "Y1",
+          "Y3",
+          "Y5"
+        ],
+        "Y3": [
+          "Y1",
+          "Y2"
+        ],
+        "Y5": [
+          "Y2"
+        ],
+        "W1": [
+          "Y1",
+          "Y2"
+        ]
+      },
+      "note": "strict=기사 권역만, flexible=인접 권역 허용, ignore=전체 허용"
+    },
+    "pre_filter": {
+      "C7_excluded_sku": {
+        "enabled": true,
+        "action": "기사-오더 SKU 매칭 필터링"
+      },
+      "C8_history_avoid": {
+        "enabled": true,
+        "action": "기사-고객 미결이력 회피 필터링"
+      },
+      "C6_monthly_limit": {
+        "enabled": true,
+        "action": "월 상한 초과 기사 제외"
+      }
+    },
+    "general": {
+      "work_start": "08:00",
+      "work_end": "23:00",
+      "avg_speed_kmh": 40,
+      "base_stay_minutes": 25,
+      "distance_calc_type": "road",
+      "traffic_factor": 1.0,
+      "priority_enabled": true,
+      "priority_weight": 100
+    }
+  },
+  "_simulation": {
+    "simulation_name": "배차_20260305_Y3",
+    "delivery_date": "2026-03-05",
+    "total_jobs": 58,
+    "total_vehicles": 38,
+    "generated_at": "2026-03-13T17:57:56.670081"
+  }
+}

@@ -140,8 +140,12 @@ services:
       # Redis
       - REDIS_URL=redis://redis:6379
 
+      # 동시 실행 제한
+      - MAX_CONCURRENT_DISPATCH=3
+
       # 로그
-      - LOG_LEVEL=INFO
+      - LOG_LEVEL=DEBUG
+      - PYTHONUNBUFFERED=1
     depends_on:
       osrm:
         condition: service_healthy
@@ -158,6 +162,46 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+  # ──────────────────────────────────────────────────
+  # Celery Worker — 비동기 dispatch 처리
+  # ──────────────────────────────────────────────────
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.v3
+    container_name: vroom-celery-worker
+    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3
+    environment:
+      - USE_DIRECT_CALL=true
+      - VROOM_BINARY_PATH=/usr/local/bin/vroom
+      - VROOM_ROUTER=osrm
+      - VROOM_THREADS=4
+      - VROOM_EXPLORATION=5
+      - VROOM_TIMEOUT=300
+      - OSRM_URL=http://osrm:5000
+      - VALHALLA_URL=http://valhalla:8002
+      - REDIS_URL=redis://redis:6379
+      - TWO_PASS_ENABLED=true
+      - TWO_PASS_MAX_WORKERS=4
+      - MATRIX_PREP_ENABLED=true
+      - UNREACHABLE_FILTER_ENABLED=true
+      - UNREACHABLE_THRESHOLD=43200
+      - OSRM_CHUNK_SIZE=75
+      - OSRM_MAX_WORKERS=8
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      osrm:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - routing-network
+      - routing-net
+    volumes:
+      - ./logs:/app/logs
 
 volumes:
   redis-data:

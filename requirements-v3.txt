@@ -11,6 +11,9 @@ httpx==0.26.0
 # Redis (optional, with fallback)
 redis==5.0.1
 
+# Celery (태스크 큐)
+celery[redis]>=5.3
+
 # Testing
 pytest==7.4.3
 pytest-asyncio==0.21.1

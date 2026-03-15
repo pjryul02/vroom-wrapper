@@ -3,7 +3,8 @@
 import logging
 from fastapi import APIRouter, HTTPException
 
-from ..services.job_manager import get_job_manager
+from celery.result import AsyncResult
+from ..services.celery_app import celery_app
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -26,17 +27,13 @@ router = APIRouter()
 - `result`: 완료 시 배차 결과 (HglisDispatchResponse)
 - `error`: 실패 시 오류 메시지
 
-### 진행 단계
-| stage | % | 설명 |
-|-------|---|------|
-| queued | 0 | 대기 중 |
-| validating | 10 | 입력 검증 |
-| preprocessing | 20 | 전처리 (매트릭스, 필터) |
-| optimizing | 40 | Pass 1 최적화 |
-| optimizing_pass2 | 60 | Pass 2 최적화 |
-| retry_relaxation | 75 | 제약 완화 재시도 |
-| postprocessing | 90 | 후처리 (C2/C6) |
-| completed | 100 | 완료 |
+### Celery 상태 매핑
+| Celery 상태 | 응답 status | stage | % |
+|-------------|-------------|-------|---|
+| PENDING | processing | queued | 0 |
+| STARTED | processing | optimizing | 50 |
+| SUCCESS | completed | — | 100 |
+| FAILURE | failed | — | — |
 
 ### 폴링 권장 간격
 1~2초
@@ -47,10 +44,39 @@ router = APIRouter()
     },
 )
 async def get_job_status(job_id: str):
-    jm = get_job_manager()
-    job = jm.get_job(job_id)
+    result = AsyncResult(job_id, app=celery_app)
+    state = result.state
 
-    if not job:
-        raise HTTPException(status_code=404, detail=f"Job {job_id} not found")
-
-    return job.to_dict()
+    if state == "PENDING":
+        return {
+            "job_id": job_id,
+            "status": "processing",
+            "progress": {"stage": "queued", "stage_label": "대기 중", "percentage": 0},
+        }
+    elif state == "STARTED":
+        return {
+            "job_id": job_id,
+            "status": "processing",
+            "progress": {"stage": "optimizing", "stage_label": "최적화 중", "percentage": 50},
+        }
+    elif state == "SUCCESS":
+        return {
+            "job_id": job_id,
+            "status": "completed",
+            "progress": {"stage": "completed", "stage_label": "완료", "percentage": 100},
+            "result": result.get(),
+        }
+    elif state == "FAILURE":
+        return {
+            "job_id": job_id,
+            "status": "failed",
+            "progress": {"stage": "failed", "stage_label": "실패", "percentage": 100},
+            "error": str(result.result),
+        }
+    else:
+        # RETRY, REVOKED 등 기타 상태
+        return {
+            "job_id": job_id,
+            "status": "processing",
+            "progress": {"stage": state.lower(), "stage_label": state, "percentage": 30},
+        }

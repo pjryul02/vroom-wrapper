@@ -1,0 +1,5480 @@
+{
+  "meta": {
+    "request_id": "SIM-2026-03-05-175840",
+    "date": "2026-03-05",
+    "region_mode": "strict",
+    "regions": [
+      "Y3"
+    ],
+    "source": "시뮬레이터"
+  },
+  "jobs": [
+    {
+      "id": 1,
+      "order_id": "20JB26022200001",
+      "order_type": "반품",
+      "location": [
+        126.841205714231,
+        37.5585437067605
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JB26022200001",
+          "model_name": null,
+          "cbm": 0.83,
+          "fee": 44500,
+          "required_grade": "C",
+          "quantity": 4,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 55,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "1인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202107262640",
+        "name": "리바트 강서점",
+        "phone": "",
+        "address": "서울특별시 강서구 공항대로 301 (등촌동)",
+        "zip": "10011"
+      },
+      "fees": {
+        "install_fee": 44500,
+        "product_sales_amount": 837273
+      },
+      "order_channel": "7J",
+      "address_type": null
+    },
+    {
+      "id": 2,
+      "order_id": "51JT26022300285",
+      "order_type": "정품",
+      "location": [
+        126.977873671097,
+        37.5674198878673
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "51JT26022300285",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 24530,
+          "required_grade": "D",
+          "quantity": 5,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 43,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "D",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602231491",
+        "name": "강원도민일보 서울본부",
+        "phone": "",
+        "address": "서울 중구 세종대로 124 (태평로1가) 한국프레스센터 1804호 강원도민일보 서울본부",
+        "zip": "10011"
+      },
+      "fees": {
+        "install_fee": 24530,
+        "product_sales_amount": 545452
+      },
+      "order_channel": "Z00066",
+      "address_type": null
+    },
+    {
+      "id": 3,
+      "order_id": "80JT26022101304",
+      "order_type": "정품",
+      "location": [
+        126.962352257162,
+        37.5708610950823
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022101304",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 21840,
+          "required_grade": "D",
+          "quantity": 3,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "D",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202601300813",
+        "name": "이수진",
+        "phone": "",
+        "address": "서울특별시 종로구 송월길 99 경희궁자이 2단지 209-307",
+        "zip": "11010"
+      },
+      "fees": {
+        "install_fee": 21840,
+        "product_sales_amount": 491818
+      },
+      "order_channel": "A76145",
+      "address_type": null
+    },
+    {
+      "id": 4,
+      "order_id": "21JT26030100204",
+      "order_type": "정품",
+      "location": [
+        126.948807747156,
+        37.5883336578387
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26030100204",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 26600,
+          "required_grade": "C",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 20,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202603010542",
+        "name": "이재구",
+        "phone": "",
+        "address": "서울특별시 서대문구 통일로34길 43 (홍제동, 홍제원현대아파트)106동 1103호",
+        "zip": "12012"
+      },
+      "fees": {
+        "install_fee": 26600,
+        "product_sales_amount": 303300
+      },
+      "order_channel": "L03687",
+      "address_type": null
+    },
+    {
+      "id": 5,
+      "order_id": "21JT26022301123",
+      "order_type": "정품",
+      "location": [
+        126.917907814167,
+        37.5744019902031
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022301123",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 81240,
+          "required_grade": "B",
+          "quantity": 18,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 123,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602231464",
+        "name": "김형호",
+        "phone": "",
+        "address": "서울 서대문구 가재울미래로 2 (남가좌동, DMC파크뷰자이) 305동 503호",
+        "zip": "12012"
+      },
+      "fees": {
+        "install_fee": 81240,
+        "product_sales_amount": 675840
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 6,
+      "order_id": "20JT26022800360",
+      "order_type": "정품",
+      "location": [
+        126.95422378666,
+        37.5524339233654
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022800360",
+          "model_name": null,
+          "cbm": 0.1038,
+          "fee": 49680,
+          "required_grade": "B",
+          "quantity": 19,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 234,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602281361",
+        "name": "김종향",
+        "phone": "",
+        "address": "서울특별시 마포구 마포대로 195 마포래미안푸르지오 305동 1303호",
+        "zip": "121200"
+      },
+      "fees": {
+        "install_fee": 49680,
+        "product_sales_amount": 740361
+      },
+      "order_channel": "L08377",
+      "address_type": null
+    },
+    {
+      "id": 7,
+      "order_id": "21JT26020900994",
+      "order_type": "정품",
+      "location": [
+        126.953053235925,
+        37.5474551772509
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26020900994",
+          "model_name": null,
+          "cbm": 0.353,
+          "fee": 53500,
+          "required_grade": "C",
+          "quantity": 3,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 55,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602091124",
+        "name": "공하정",
+        "phone": "",
+        "address": "서울특별시 마포구 공덕동 462 공덕파크팰리스2 ㅡ1803호",
+        "zip": "121200"
+      },
+      "fees": {
+        "install_fee": 53500,
+        "product_sales_amount": 579600
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 8,
+      "order_id": "21JT26022600777",
+      "order_type": "정품",
+      "location": [
+        126.932047243944,
+        37.5509239825243
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022600777",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 48500,
+          "required_grade": "C",
+          "quantity": 7,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 61,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602260708",
+        "name": "송가람",
+        "phone": "",
+        "address": "서울특별시 마포구 서강로 83(창전동, 창전동현대홈타운) 105동 501호",
+        "zip": "121200"
+      },
+      "fees": {
+        "install_fee": 48500,
+        "product_sales_amount": 826200
+      },
+      "order_channel": "A39770",
+      "address_type": null
+    },
+    {
+      "id": 9,
+      "order_id": "20JT26030300010",
+      "order_type": "정품",
+      "location": [
+        126.932098856535,
+        37.6005343844723
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26030300010",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 4200,
+          "required_grade": "C",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 10,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202403241390",
+        "name": "이주영",
+        "phone": "",
+        "address": "서울 은평구 은평로 220 (응암동, 녹번역e편한세상캐슬) 116동 302호",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 4200,
+        "product_sales_amount": 82000
+      },
+      "order_channel": null,
+      "address_type": null
+    },
+    {
+      "id": 10,
+      "order_id": "21JT26020401259",
+      "order_type": "정품",
+      "location": [
+        126.906172127572,
+        37.5925615004272
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26020401259",
+          "model_name": null,
+          "cbm": 0.109,
+          "fee": 72520,
+          "required_grade": "C",
+          "quantity": 11,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 98,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602041281",
+        "name": "강지선",
+        "phone": "",
+        "address": "서울 은평구 은평터널로7길 2 (신사동, 신성수정아파트) 101동 113호",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 72520,
+        "product_sales_amount": 1531086
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 11,
+      "order_id": "21JT26022700358",
+      "order_type": "정품",
+      "location": [
+        126.92285620811,
+        37.6027109037882
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022700358",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 44300,
+          "required_grade": "C",
+          "quantity": 7,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 61,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602270487",
+        "name": "이후열",
+        "phone": "",
+        "address": "서울특별시 은평구 응암로 356 (녹번동, 녹번타워)601호",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 44300,
+        "product_sales_amount": 739800
+      },
+      "order_channel": "L03687",
+      "address_type": null
+    },
+    {
+      "id": 12,
+      "order_id": "21JT26022000262",
+      "order_type": "정품",
+      "location": [
+        126.916658717175,
+        37.600929396655
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022000262",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 54160,
+          "required_grade": "B",
+          "quantity": 12,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 82,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602011665",
+        "name": "문선성",
+        "phone": "",
+        "address": "서울 은평구 연서로2길 3 (역촌동) 302호",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 54160,
+        "product_sales_amount": 443267
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 13,
+      "order_id": "21JT26022700064",
+      "order_type": "정품",
+      "location": [
+        126.918495725549,
+        37.6241815030998
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022700064",
+          "model_name": null,
+          "cbm": 1.2749,
+          "fee": 76860,
+          "required_grade": "C",
+          "quantity": 22,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 136,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602270076",
+        "name": "민숙현",
+        "phone": "",
+        "address": "서울특별시 은평구 통일로89길11-9, 1층 (갈현동)",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 76860,
+        "product_sales_amount": 991800
+      },
+      "order_channel": "A89340",
+      "address_type": null
+    },
+    {
+      "id": 14,
+      "order_id": "21JT26022700511",
+      "order_type": "정품",
+      "location": [
+        126.932098856535,
+        37.6005343844723
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022700511",
+          "model_name": null,
+          "cbm": 0.2888,
+          "fee": 61740,
+          "required_grade": "D",
+          "quantity": 19,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 0,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "D",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202403241390",
+        "name": "이주영",
+        "phone": "",
+        "address": "서울 은평구 은평로 220 (응암동, 녹번역e편한세상캐슬) 116동 302호",
+        "zip": "12210"
+      },
+      "fees": {
+        "install_fee": 61740,
+        "product_sales_amount": 803000
+      },
+      "order_channel": null,
+      "address_type": null
+    },
+    {
+      "id": 15,
+      "order_id": "20JT26030200007",
+      "order_type": "정품",
+      "location": [
+        127.035231549474,
+        37.6608617479387
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26030200007",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 37960,
+          "required_grade": "B",
+          "quantity": 15,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 74,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202103200775",
+        "name": "김륜경",
+        "phone": "",
+        "address": "서울특별시 도봉구 도당로 32 성진파크뷰 아파트 1302호",
+        "zip": "13210"
+      },
+      "fees": {
+        "install_fee": 37960,
+        "product_sales_amount": 311818
+      },
+      "order_channel": "L08375",
+      "address_type": null
+    },
+    {
+      "id": 16,
+      "order_id": "21JB26022600032",
+      "order_type": "반품",
+      "location": [
+        127.049275691881,
+        37.6577863519515
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JB26022600032",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 24200,
+          "required_grade": "D",
+          "quantity": 2,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "D",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "201903041139",
+        "name": "이인숙",
+        "phone": "",
+        "address": "서울특별시 도봉구 노해로69길 103 동아청솔아파트 118동 1306호",
+        "zip": "13210"
+      },
+      "fees": {
+        "install_fee": 24200,
+        "product_sales_amount": 419545
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 17,
+      "order_id": "21JT26022100153",
+      "order_type": "정품",
+      "location": [
+        127.039419989197,
+        37.6522593770325
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022100153",
+          "model_name": null,
+          "cbm": 0.833,
+          "fee": 271590,
+          "required_grade": "C",
+          "quantity": 48,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 411,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "080220000017",
+        "name": "하정희",
+        "phone": "",
+        "address": "서울 도봉구 노해로 279-42 (창동) 다보맨션  402호",
+        "zip": "13210"
+      },
+      "fees": {
+        "install_fee": 271590,
+        "product_sales_amount": 3552479
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 18,
+      "order_id": "20JH26021400018",
+      "order_type": "회수",
+      "location": [
+        127.033761228725,
+        37.6615036766958
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JH26021400018",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 46840,
+          "required_grade": "C",
+          "quantity": 9,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 53,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602140803",
+        "name": "조향자",
+        "phone": "",
+        "address": "서울특별시 도봉구 도당로 37 삼익세라믹아파트 103동 102호",
+        "zip": "13210"
+      },
+      "fees": {
+        "install_fee": 46840,
+        "product_sales_amount": 62727
+      },
+      "order_channel": "L13305",
+      "address_type": null
+    },
+    {
+      "id": 19,
+      "order_id": "20JT26022800116",
+      "order_type": "정품",
+      "location": [
+        127.035231549474,
+        37.6608617479387
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022800116",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 10400,
+          "required_grade": "B",
+          "quantity": 4,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 24,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602280449",
+        "name": "최경숙",
+        "phone": "",
+        "address": "서울특별시 도봉구 도당로 32 성진파크뷰 아파트 1503호",
+        "zip": "13210"
+      },
+      "fees": {
+        "install_fee": 10400,
+        "product_sales_amount": 222728
+      },
+      "order_channel": "L08375",
+      "address_type": null
+    },
+    {
+      "id": 20,
+      "order_id": "21JT26022800180",
+      "order_type": "정품",
+      "location": [
+        127.028483736629,
+        37.5623897051914
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022800180",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 81120,
+          "required_grade": "B",
+          "quantity": 21,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 126,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602280455",
+        "name": "강경훈",
+        "phone": "",
+        "address": "서울특별시 성동구 왕십리로31나길 22 (하왕십리동, 한신무학아파트)1동607호",
+        "zip": "13310"
+      },
+      "fees": {
+        "install_fee": 81120,
+        "product_sales_amount": 1073700
+      },
+      "order_channel": "L03687",
+      "address_type": null
+    },
+    {
+      "id": 21,
+      "order_id": "20JT26022200318",
+      "order_type": "정품",
+      "location": [
+        127.026186636459,
+        37.5545314695033
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022200318",
+          "model_name": null,
+          "cbm": 0.079,
+          "fee": 37380,
+          "required_grade": "C",
+          "quantity": 9,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 61,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "1인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602221379",
+        "name": "김고은",
+        "phone": "",
+        "address": "서울특별시 성동구 금호로 100 벽산아파트 110-903",
+        "zip": "13310"
+      },
+      "fees": {
+        "install_fee": 37380,
+        "product_sales_amount": 323364
+      },
+      "order_channel": "L07025",
+      "address_type": null
+    },
+    {
+      "id": 22,
+      "order_id": "21JT26022700407",
+      "order_type": "정품",
+      "location": [
+        127.013847173899,
+        37.5460598514009
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022700407",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 79800,
+          "required_grade": "C",
+          "quantity": 18,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 60,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602270570",
+        "name": "박항순",
+        "phone": "",
+        "address": "서울특별시 성동구 매봉길 15 (옥수동, 래미안 옥수 리버젠) 103동1204호",
+        "zip": "13310"
+      },
+      "fees": {
+        "install_fee": 79800,
+        "product_sales_amount": 909900
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 23,
+      "order_id": "80JT26022800148",
+      "order_type": "정품",
+      "location": [
+        127.029745358029,
+        37.5981471356607
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022800148",
+          "model_name": null,
+          "cbm": 0.093,
+          "fee": 41700,
+          "required_grade": "B",
+          "quantity": 17,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 69,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202506280262",
+        "name": "김인회",
+        "phone": "",
+        "address": "서울특별시 성북구 종암로23길 35 래미안세레니티 213동 602호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 41700,
+        "product_sales_amount": 527637
+      },
+      "order_channel": "Z01010",
+      "address_type": null
+    },
+    {
+      "id": 24,
+      "order_id": "21JT26030100247",
+      "order_type": "정품",
+      "location": [
+        127.011184237787,
+        37.5993048838944
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26030100247",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 26600,
+          "required_grade": "C",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 20,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602060068",
+        "name": "김지은",
+        "phone": "",
+        "address": "서울특별시 성북구 아리랑로5길 121 (정릉동) 401호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 26600,
+        "product_sales_amount": 303300
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 25,
+      "order_id": "21JT26022600227",
+      "order_type": "정품",
+      "location": [
+        127.062261154976,
+        37.6065244839458
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022600227",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 26600,
+          "required_grade": "C",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 20,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602260289",
+        "name": "조남선",
+        "phone": "",
+        "address": "서울특별시 성북구 돌곶이로8길 22(래미안아트리치) 111동 1403호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 26600,
+        "product_sales_amount": 303300
+      },
+      "order_channel": "A48500",
+      "address_type": null
+    },
+    {
+      "id": 26,
+      "order_id": "80JT26022400268",
+      "order_type": "정품",
+      "location": [
+        127.020946793788,
+        37.6026910997043
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022400268",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 45600,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202112120199",
+        "name": "이재선",
+        "phone": "",
+        "address": "서울특별시 성북구 길음로9길 50 길음뉴타운 915동 1502호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 45600,
+        "product_sales_amount": 0
+      },
+      "order_channel": "L29780",
+      "address_type": null
+    },
+    {
+      "id": 27,
+      "order_id": "21JT26030200216",
+      "order_type": "정품",
+      "location": [
+        127.04265205735,
+        37.6002341968287
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26030200216",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 20900,
+          "required_grade": "C",
+          "quantity": 3,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 33,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202603020560",
+        "name": "정진규",
+        "phone": "",
+        "address": "서울특별시 성북구 월곡로14길 26 (하월곡동, 월곡래미안루나밸리)월곡래미안루나밸리 109동 1102호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 20900,
+        "product_sales_amount": 167400
+      },
+      "order_channel": "L03687",
+      "address_type": null
+    },
+    {
+      "id": 28,
+      "order_id": "80JT26021600150",
+      "order_type": "정품",
+      "location": [
+        127.023262558082,
+        37.6071180410239
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26021600150",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 246380,
+          "required_grade": "B",
+          "quantity": 41,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 298,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202601311328",
+        "name": "권수현",
+        "phone": "",
+        "address": "서울특별시 성북구 길음로 16 길음뉴타운 603동 504호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 246380,
+        "product_sales_amount": 2024185
+      },
+      "order_channel": "Z00376",
+      "address_type": null
+    },
+    {
+      "id": 29,
+      "order_id": "80JT26022700187",
+      "order_type": "정품",
+      "location": [
+        127.023262558082,
+        37.6071180410239
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022700187",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 68440,
+          "required_grade": "B",
+          "quantity": 19,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 98,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202601311329",
+        "name": "권수현",
+        "phone": "",
+        "address": "서울특별시 성북구 길음로 16 길음뉴타운 603동 504호",
+        "zip": "13620"
+      },
+      "fees": {
+        "install_fee": 68440,
+        "product_sales_amount": 598459
+      },
+      "order_channel": "Z00376",
+      "address_type": null
+    },
+    {
+      "id": 30,
+      "order_id": "20JH26022300012",
+      "order_type": "회수",
+      "location": [
+        126.972803521826,
+        37.5495710662674
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JH26022300012",
+          "model_name": null,
+          "cbm": 3.0382,
+          "fee": 101500,
+          "required_grade": "C",
+          "quantity": 9,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 111,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602230830",
+        "name": "유수종",
+        "phone": "",
+        "address": "서울특별시 용산구 한강대로102길 18 동양아파트 306호",
+        "zip": "14011"
+      },
+      "fees": {
+        "install_fee": 101500,
+        "product_sales_amount": 1429547
+      },
+      "order_channel": "Z00384",
+      "address_type": null
+    },
+    {
+      "id": 31,
+      "order_id": "21JT26022600457",
+      "order_type": "정품",
+      "location": [
+        126.853925567309,
+        37.5612628471993
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022600457",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 31170,
+          "required_grade": "C",
+          "quantity": 10,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 51,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202005170913",
+        "name": "백주미",
+        "phone": "",
+        "address": "서울특별시 강서구 양천로482, 611호 (등촌동)",
+        "zip": "15710"
+      },
+      "fees": {
+        "install_fee": 31170,
+        "product_sales_amount": 362700
+      },
+      "order_channel": "A89340",
+      "address_type": null
+    },
+    {
+      "id": 32,
+      "order_id": "21JT26021700296",
+      "order_type": "정품",
+      "location": [
+        126.843139788854,
+        37.5311736007117
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26021700296",
+          "model_name": null,
+          "cbm": 0.1614,
+          "fee": 72180,
+          "required_grade": "C",
+          "quantity": 30,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 66,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202007081414",
+        "name": "정지선",
+        "phone": "",
+        "address": "서울 강서구 곰달래로19나길 15-9 (화곡동, 에스엠파크빌) 301호",
+        "zip": "15710"
+      },
+      "fees": {
+        "install_fee": 72180,
+        "product_sales_amount": 676262
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 33,
+      "order_id": "21JT26022200307",
+      "order_type": "정품",
+      "location": [
+        126.75650874832,
+        37.4948418899236
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022200307",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 53200,
+          "required_grade": "C",
+          "quantity": 12,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 40,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602221696",
+        "name": "홍윤화",
+        "phone": "",
+        "address": "경기 부천시 원미구 장말로 137 (상동, 사랑마을) 1617동 1503호",
+        "zip": "42010"
+      },
+      "fees": {
+        "install_fee": 53200,
+        "product_sales_amount": 492540
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 34,
+      "order_id": "21JT26022800053",
+      "order_type": "정품",
+      "location": [
+        126.770699481344,
+        37.5081145042151
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022800053",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 20900,
+          "required_grade": "C",
+          "quantity": 3,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 33,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602280032",
+        "name": "이치현",
+        "phone": "",
+        "address": "경기도 부천시 원미구 계남로 195 (중동, 설악마을) 310동 1503호",
+        "zip": "42010"
+      },
+      "fees": {
+        "install_fee": 20900,
+        "product_sales_amount": 167400
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 35,
+      "order_id": "20JT26022000116",
+      "order_type": "정품",
+      "location": [
+        127.044548738053,
+        37.7297661551965
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022000116",
+          "model_name": null,
+          "cbm": 0.208,
+          "fee": 40800,
+          "required_grade": "C",
+          "quantity": 2,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 40,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602180170",
+        "name": "김현배",
+        "phone": "",
+        "address": "경기도 의정부시 백석로 62 호원두산아파트 102동 1008호",
+        "zip": "48010"
+      },
+      "fees": {
+        "install_fee": 40800,
+        "product_sales_amount": 523637
+      },
+      "order_channel": "L08375",
+      "address_type": null
+    },
+    {
+      "id": 36,
+      "order_id": "20JT26022700022",
+      "order_type": "정품",
+      "location": [
+        127.107564968611,
+        37.7527432695341
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022700022",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 45600,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "180725000199",
+        "name": "이은숙",
+        "phone": "",
+        "address": "경기도 의정부시 송양로 16 6단지 호반베르디움 602-703",
+        "zip": "48010"
+      },
+      "fees": {
+        "install_fee": 45600,
+        "product_sales_amount": 0
+      },
+      "order_channel": "Z00404",
+      "address_type": null
+    },
+    {
+      "id": 37,
+      "order_id": "20JT26022100250",
+      "order_type": "정품",
+      "location": [
+        127.057302338164,
+        37.7291514092715
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022100250",
+          "model_name": null,
+          "cbm": 0.0564,
+          "fee": 11700,
+          "required_grade": "C",
+          "quantity": 5,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 22,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "1인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202002150993",
+        "name": "이정희",
+        "phone": "",
+        "address": "경기도 의정부시 신곡로 36 한일� 삼익아파트 101동 1502호",
+        "zip": "48010"
+      },
+      "fees": {
+        "install_fee": 11700,
+        "product_sales_amount": 303637
+      },
+      "order_channel": "L08375",
+      "address_type": null
+    },
+    {
+      "id": 38,
+      "order_id": "21JT26020800411",
+      "order_type": "정품",
+      "location": [
+        127.079881980971,
+        37.7390539875774
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26020800411",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 36120,
+          "required_grade": "C",
+          "quantity": 18,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 80,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202006061368",
+        "name": "박명희",
+        "phone": "",
+        "address": "경기 의정부시 용현로 42 (용현동, 신도10차 파크힐타운) 106동102호",
+        "zip": "48010"
+      },
+      "fees": {
+        "install_fee": 36120,
+        "product_sales_amount": 98088
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 39,
+      "order_id": "21JT26021500351",
+      "order_type": "정품",
+      "location": [
+        126.647902743998,
+        37.4784332175081
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26021500351",
+          "model_name": null,
+          "cbm": 0.3112,
+          "fee": 43800,
+          "required_grade": "C",
+          "quantity": 4,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 46,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602151144",
+        "name": "이정민",
+        "phone": "",
+        "address": "인천 동구 샛골로162번길 45 (송림동, 인천두산위브더센트럴) 109동 1701호",
+        "zip": "40110"
+      },
+      "fees": {
+        "install_fee": 43800,
+        "product_sales_amount": 469907
+      },
+      "order_channel": "IP0010",
+      "address_type": null
+    },
+    {
+      "id": 40,
+      "order_id": "20JH26022200033",
+      "order_type": "회수",
+      "location": [
+        126.647902743998,
+        37.4784332175081
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JH26022200033",
+          "model_name": null,
+          "cbm": 8.1374,
+          "fee": 90300,
+          "required_grade": "C",
+          "quantity": 12,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 110,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602221273",
+        "name": "유진숙",
+        "phone": "",
+        "address": "인천광역시 동구 샛골로162번길 45 인천두산위브더센트럴 103동 403호",
+        "zip": "40110"
+      },
+      "fees": {
+        "install_fee": 90300,
+        "product_sales_amount": 2505360
+      },
+      "order_channel": "L08374",
+      "address_type": null
+    },
+    {
+      "id": 41,
+      "order_id": "80JT26022700027",
+      "order_type": "정품",
+      "location": [
+        126.724257058214,
+        37.5142879041401
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022700027",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 22800,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602260919",
+        "name": "이금석",
+        "phone": "",
+        "address": "인천광역시 부평구 부평대로278번길 42 한국아파트 104동 702호",
+        "zip": "40311"
+      },
+      "fees": {
+        "install_fee": 22800,
+        "product_sales_amount": 0
+      },
+      "order_channel": "Z00372",
+      "address_type": null
+    },
+    {
+      "id": 42,
+      "order_id": "11JT26022500013",
+      "order_type": "정품",
+      "location": [
+        126.732228235138,
+        37.5089606904603
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "11JT26022500013",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 3200,
+          "required_grade": "C",
+          "quantity": 2,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "시간미정",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 6,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "1인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "160418M00558",
+        "name": "김지윤",
+        "phone": "",
+        "address": "인천광역시 부평구 체육관로 27 삼산타운 7단지 713동 1403호",
+        "zip": "40311"
+      },
+      "fees": {
+        "install_fee": 3200,
+        "product_sales_amount": 36000
+      },
+      "order_channel": "000000",
+      "address_type": null
+    },
+    {
+      "id": 43,
+      "order_id": "80JT26022500052",
+      "order_type": "정품",
+      "location": [
+        126.687842417028,
+        37.6073595436945
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022500052",
+          "model_name": null,
+          "cbm": 0.0236,
+          "fee": 33580,
+          "required_grade": "A",
+          "quantity": 11,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 53,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602100623",
+        "name": "이보연",
+        "phone": "",
+        "address": "인천광역시 서구 검마루로 124 검단호수공원역 호반써밋 5404동2402호",
+        "zip": "404140"
+      },
+      "fees": {
+        "install_fee": 33580,
+        "product_sales_amount": 333637
+      },
+      "order_channel": "Z00377",
+      "address_type": null
+    },
+    {
+      "id": 44,
+      "order_id": "20JH26022000003",
+      "order_type": "회수",
+      "location": [
+        126.673482,
+        37.5794758
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JH26022000003",
+          "model_name": null,
+          "cbm": 0.0006,
+          "fee": 201420,
+          "required_grade": "A",
+          "quantity": 30,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 211,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202012212226",
+        "name": "리바트 서인천점",
+        "phone": "",
+        "address": "",
+        "zip": "404140"
+      },
+      "fees": {
+        "install_fee": 201420,
+        "product_sales_amount": 1339548
+      },
+      "order_channel": "L08374",
+      "address_type": null
+    },
+    {
+      "id": 45,
+      "order_id": "21JT26022700425",
+      "order_type": "정품",
+      "location": [
+        126.677497400845,
+        37.4963053292528
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022700425",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 26600,
+          "required_grade": "C",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 20,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602270579",
+        "name": "서경진",
+        "phone": "",
+        "address": "인천광역시 서구 건지로318번길27, 세우아파트 A동 202호 (가좌동, 세우아파트)",
+        "zip": "404140"
+      },
+      "fees": {
+        "install_fee": 26600,
+        "product_sales_amount": 303300
+      },
+      "order_channel": "A89340",
+      "address_type": null
+    },
+    {
+      "id": 46,
+      "order_id": "80JT26030200594",
+      "order_type": "정품",
+      "location": [
+        126.730772008397,
+        37.3953577557423
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26030200594",
+          "model_name": null,
+          "cbm": 0.093,
+          "fee": 41700,
+          "required_grade": "B",
+          "quantity": 17,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 69,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202302191475",
+        "name": "정문식",
+        "phone": "",
+        "address": "인천광역시 남동구 논고개로 17 에코메트로11단지한화꿈에그린아파트 1115동 903호",
+        "zip": "405230"
+      },
+      "fees": {
+        "install_fee": 41700,
+        "product_sales_amount": 544362
+      },
+      "order_channel": "Z00381",
+      "address_type": null
+    },
+    {
+      "id": 47,
+      "order_id": "21JT26021400401",
+      "order_type": "정품",
+      "location": [
+        126.674283182308,
+        37.4237155979949
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26021400401",
+          "model_name": null,
+          "cbm": 0.3371,
+          "fee": 50200,
+          "required_grade": "C",
+          "quantity": 3,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 55,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602141305",
+        "name": "최미슬",
+        "phone": "",
+        "address": "인천광역시 연수구 새말로 21 (연수동, 동남아파트) 101동1002호",
+        "zip": "40650"
+      },
+      "fees": {
+        "install_fee": 50200,
+        "product_sales_amount": 544500
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 48,
+      "order_id": "21JT26030200134",
+      "order_type": "정품",
+      "location": [
+        126.762249533941,
+        37.6838961547011
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26030200134",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 26600,
+          "required_grade": "C",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후2",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 20,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202603020128",
+        "name": "김진",
+        "phone": "",
+        "address": "경기도 고양시 일산서구 킨텍스로 456 (일산동, 후곡마을1단지아파트) 102동 602호",
+        "zip": "41150"
+      },
+      "fees": {
+        "install_fee": 26600,
+        "product_sales_amount": 303300
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 49,
+      "order_id": "80JT26022200691",
+      "order_type": "정품",
+      "location": [
+        126.783943875067,
+        37.6520649590515
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022200691",
+          "model_name": null,
+          "cbm": 1.2002,
+          "fee": 56700,
+          "required_grade": "C",
+          "quantity": 11,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 91,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602220824",
+        "name": "김진석",
+        "phone": "",
+        "address": "경기도 고양시 일산동구 강송로 153 강촌마을3단지아파트 311동 1304호",
+        "zip": "41150"
+      },
+      "fees": {
+        "install_fee": 56700,
+        "product_sales_amount": 1839727
+      },
+      "order_channel": "Z00378",
+      "address_type": null
+    },
+    {
+      "id": 50,
+      "order_id": "80JT26022700028",
+      "order_type": "정품",
+      "location": [
+        126.752317218486,
+        37.697473765541
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26022700028",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 22800,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202208150532",
+        "name": "박은영",
+        "phone": "",
+        "address": "경기도 고양시 일산서구 하이파크3로 61 하이파크시티일산파밀리에4단지 409동1105호",
+        "zip": "41150"
+      },
+      "fees": {
+        "install_fee": 22800,
+        "product_sales_amount": 0
+      },
+      "order_channel": "Z00378",
+      "address_type": null
+    },
+    {
+      "id": 51,
+      "order_id": "80JT26030100681",
+      "order_type": "정품",
+      "location": [
+        126.761907563283,
+        37.6681268320959
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "80JT26030100681",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 33600,
+          "required_grade": "C",
+          "quantity": 4,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 35,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202301240226",
+        "name": "이아름",
+        "phone": "",
+        "address": "경기도 고양시 일산서구 강선로 33 강선마을14단지아파트 1406동 501호",
+        "zip": "41150"
+      },
+      "fees": {
+        "install_fee": 33600,
+        "product_sales_amount": 635728
+      },
+      "order_channel": "Z01030",
+      "address_type": null
+    },
+    {
+      "id": 52,
+      "order_id": "20JT26022600056",
+      "order_type": "정품",
+      "location": [
+        126.712557029506,
+        37.7117517984374
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022600056",
+          "model_name": null,
+          "cbm": 0.0213,
+          "fee": 40420,
+          "required_grade": "B",
+          "quantity": 11,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 63,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "160122M00053",
+        "name": "이재하",
+        "phone": "",
+        "address": "경기 파주시 초롱꽃로 130 (동패동, 파주운정신도시 디에트르 더 퍼스트) 1301-1302",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 40420,
+        "product_sales_amount": 0
+      },
+      "order_channel": "L29780",
+      "address_type": null
+    },
+    {
+      "id": 53,
+      "order_id": "21JT26030200091",
+      "order_type": "정품",
+      "location": [
+        126.72205975954,
+        37.7148878870385
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26030200091",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 53200,
+          "required_grade": "C",
+          "quantity": 12,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 40,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "C",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202603020101",
+        "name": "겅남호",
+        "phone": "",
+        "address": "경기도 파주시 동패동 2287 물향기 마을 1012동 2101호",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 53200,
+        "product_sales_amount": 606600
+      },
+      "order_channel": "A81804",
+      "address_type": null
+    },
+    {
+      "id": 54,
+      "order_id": "21JT26022400177",
+      "order_type": "정품",
+      "location": [
+        126.756958390986,
+        37.7165892626908
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "21JT26022400177",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 21000,
+          "required_grade": "B",
+          "quantity": 2,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 40,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202601220316",
+        "name": "양도희",
+        "phone": "",
+        "address": "경기도 파주시 한빛로70, 516-2301 (야당동, 한빛마을 5단지 캐슬앤칸타빌)",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 21000,
+        "product_sales_amount": 79200
+      },
+      "order_channel": "A89340",
+      "address_type": null
+    },
+    {
+      "id": 55,
+      "order_id": "20JT26030100001",
+      "order_type": "정품",
+      "location": [
+        126.764705135788,
+        37.7259219117275
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26030100001",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 22800,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602280563",
+        "name": "윤문숙",
+        "phone": "",
+        "address": "경기도 파주시 와석순환로515번길 10 힐스테이트 더 운정 111동 4101호",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 22800,
+        "product_sales_amount": 0
+      },
+      "order_channel": "L08378",
+      "address_type": null
+    },
+    {
+      "id": 56,
+      "order_id": "20JT26030100002",
+      "order_type": "정품",
+      "location": [
+        126.719552504638,
+        37.7109727276051
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26030100002",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 45600,
+          "required_grade": "A",
+          "quantity": 1,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "하루종일",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 30,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "A",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202602280133",
+        "name": "도인호",
+        "phone": "",
+        "address": "경기도 파주시 초롱꽃로 130 파주운정신도시 디에트르 더 퍼스트 1309동 1402호",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 45600,
+        "product_sales_amount": 0
+      },
+      "order_channel": "L08378",
+      "address_type": null
+    },
+    {
+      "id": 57,
+      "order_id": "20JT26022600118",
+      "order_type": "정품",
+      "location": [
+        126.701841912899,
+        37.7701613128687
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26022600118",
+          "model_name": null,
+          "cbm": 0,
+          "fee": 60900,
+          "required_grade": "B",
+          "quantity": 19,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오후1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 89,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "2인",
+        "required_grade": "B",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202012160035",
+        "name": "전희숙",
+        "phone": "",
+        "address": "경기도 파주시 여치길 77 효자그린빌 101동 304호",
+        "zip": "413840"
+      },
+      "fees": {
+        "install_fee": 60900,
+        "product_sales_amount": 978550
+      },
+      "order_channel": "L08378",
+      "address_type": null
+    },
+    {
+      "id": 58,
+      "order_id": "20JT26011900107",
+      "order_type": "정품",
+      "location": [
+        126.672081645977,
+        37.6515811736471
+      ],
+      "region_code": "Y3",
+      "products": [
+        {
+          "model_code": "20JT26011900107",
+          "model_name": null,
+          "cbm": 0.924,
+          "fee": 0,
+          "required_grade": "D",
+          "quantity": 6,
+          "is_sofa": false
+        }
+      ],
+      "scheduling": {
+        "preferred_time_slot": "오전1",
+        "preferred_date": "2026-03-05",
+        "service_minutes": 18,
+        "setup_minutes": 25
+      },
+      "constraints": {
+        "crew_type": "1인",
+        "required_grade": "D",
+        "is_filler_required": false
+      },
+      "priority": {
+        "level": 0,
+        "is_urgent": false,
+        "is_vip": false
+      },
+      "customer": {
+        "id": "202601160684",
+        "name": "조미숙",
+        "phone": "",
+        "address": "경기도 김포시 청송로 70 청송마을현대아파트 103동 1203호",
+        "zip": "415860"
+      },
+      "fees": {
+        "install_fee": 0,
+        "product_sales_amount": 1057092
+      },
+      "order_channel": "L08378",
+      "address_type": null
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 10001,
+      "driver_id": "L0000022",
+      "driver_name": "이유승",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10002,
+      "driver_id": "L0000038",
+      "driver_name": "채병회",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10003,
+      "driver_id": "L0000055",
+      "driver_name": "이재홍",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10004,
+      "driver_id": "L0000085",
+      "driver_name": "조한신",
+      "grade": "A",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10005,
+      "driver_id": "L0000128",
+      "driver_name": "서윤석",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 2,
+        "type": "2인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10006,
+      "driver_id": "L0000203",
+      "driver_name": "조희봉",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10007,
+      "driver_id": "L0000220",
+      "driver_name": "유승규",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10008,
+      "driver_id": "L0000287",
+      "driver_name": "신유민",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10009,
+      "driver_id": "L0000400",
+      "driver_name": "김하경",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10010,
+      "driver_id": "L0000595",
+      "driver_name": "김용배",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10011,
+      "driver_id": "L0000651",
+      "driver_name": "배양수",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10012,
+      "driver_id": "L0000803",
+      "driver_name": "조정수",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 2,
+        "type": "2인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10013,
+      "driver_id": "L0000993",
+      "driver_name": "최병석",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10014,
+      "driver_id": "L0001011",
+      "driver_name": "노용학",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10015,
+      "driver_id": "L0001023",
+      "driver_name": "박성현",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10016,
+      "driver_id": "L0001025",
+      "driver_name": "남의성",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10017,
+      "driver_id": "L0001106",
+      "driver_name": "지왕근",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10018,
+      "driver_id": "L0001107",
+      "driver_name": "김영준",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10019,
+      "driver_id": "L0001112",
+      "driver_name": "김재수",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10020,
+      "driver_id": "L0001130",
+      "driver_name": "이만철",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10021,
+      "driver_id": "L0001131",
+      "driver_name": "최진혁",
+      "grade": "S",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": true,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10022,
+      "driver_id": "L0001153",
+      "driver_name": "황현호",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10023,
+      "driver_id": "L0001162",
+      "driver_name": "정승모",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10024,
+      "driver_id": "L0001169",
+      "driver_name": "강재석",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10025,
+      "driver_id": "L04653A001",
+      "driver_name": "김현빈",
+      "grade": "B",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10026,
+      "driver_id": "L29780A006",
+      "driver_name": "김중곤",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10027,
+      "driver_id": "L29780A012",
+      "driver_name": "조재성",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10028,
+      "driver_id": "L29780A013",
+      "driver_name": "인석호",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10029,
+      "driver_id": "L29780A015",
+      "driver_name": "이재욱",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10030,
+      "driver_id": "L29780A016",
+      "driver_name": "박길수",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10031,
+      "driver_id": "L29780A017",
+      "driver_name": "양범열",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10032,
+      "driver_id": "L29780A025",
+      "driver_name": "한은우",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10033,
+      "driver_id": "L29780A026",
+      "driver_name": "윤치선",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10034,
+      "driver_id": "L29780A027",
+      "driver_name": "서문철",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10035,
+      "driver_id": "L29780A029",
+      "driver_name": "윤성주",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10036,
+      "driver_id": "L29780A030",
+      "driver_name": "김주형",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-2",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10037,
+      "driver_id": "L29780A031",
+      "driver_name": "안태명",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-3",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    },
+    {
+      "id": 10038,
+      "driver_id": "TEMP010",
+      "driver_name": "박재현",
+      "grade": "C",
+      "service_grade": "B",
+      "capacity_cbm": 4.0,
+      "location": {
+        "start": [
+          126.978,
+          37.5665
+        ],
+        "end": [
+          126.978,
+          37.5665
+        ],
+        "home": [
+          126.978,
+          37.5665
+        ],
+        "center": [
+          126.978,
+          37.5665
+        ]
+      },
+      "region_code": "Y3",
+      "sub_region_code": "Y3-1",
+      "center_code": "김포",
+      "crew": {
+        "size": 1,
+        "type": "1인팀",
+        "is_filler": false,
+        "can_joint_dispatch": false
+      },
+      "new_product_restricted": false,
+      "avoid_models": [],
+      "exclusions": {
+        "excluded_skus": [],
+        "avoid_models": []
+      },
+      "fee_status": {
+        "monthly_accumulated": 0,
+        "daily_target": null,
+        "monthly_dispatch_days": 0
+      },
+      "work_time": {
+        "start": "08:00",
+        "end": "23:00",
+        "breaks": []
+      },
+      "limits": {
+        "max_orders": 12,
+        "max_distance_km": 200,
+        "max_work_minutes": 600
+      },
+      "capabilities": {
+        "simple_delivery": false,
+        "simple_install": false,
+        "built_in_closet": false,
+        "sliding_closet": false,
+        "regular_closet": false,
+        "all_items": false,
+        "medium_difficulty": false,
+        "hanging": false
+      },
+      "is_rookie": false
+    }
+  ],
+  "options": {
+    "max_tasks_per_driver": 12,
+    "enable_joint_dispatch": false,
+    "geometry": true,
+    "constraints": null,
+    "constraint_config": null,
+    "engine": {
+      "calc_time_limit": 60,
+      "exploration_level": 5,
+      "balance_mode": "balanced"
+    }
+  },
+  "_simulation": {
+    "simulation_name": "배차_20260305_Y3",
+    "delivery_date": "2026-03-05",
+    "total_jobs": 58,
+    "total_vehicles": 38,
+    "generated_at": "2026-03-13T17:58:40.810758"
+  }
+}
