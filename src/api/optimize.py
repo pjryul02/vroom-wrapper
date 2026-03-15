@@ -114,7 +114,8 @@ async def optimize_standard(
                 'engine': 'direct' if config.USE_DIRECT_CALL else 'http',
                 'processing_time_ms': processing_time,
                 'from_cache': False,
-                'timestamp': time.time()
+                'timestamp': time.time(),
+                **vroom_result.get('_execution', {}),
             }
         }
 
@@ -181,6 +182,7 @@ async def optimize_basic(
                 'api_key': api_key_info['name'],
                 'control_level': 'BASIC',
                 'engine': 'direct' if config.USE_DIRECT_CALL else 'http',
+                **result.get('_execution', {}),
             }
         }
     except Exception as e:
@@ -270,8 +272,8 @@ async def optimize_premium(
                 'api_key': api_key_info['name'],
                 'control_level': 'PREMIUM',
                 'engine': 'direct' if config.USE_DIRECT_CALL else 'http',
-                'two_pass': True,
                 'processing_time_ms': processing_time,
+                **result.get('_execution', {}),
             }
         }
     except Exception as e:

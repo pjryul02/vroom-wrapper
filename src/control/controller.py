@@ -79,10 +79,16 @@ class OptimizationController:
                 max_workers=config.TWO_PASS_MAX_WORKERS,
                 initial_threads=config.TWO_PASS_INITIAL_THREADS,
                 route_threads=config.TWO_PASS_ROUTE_THREADS,
+                initial_exploration=config.TWO_PASS_INITIAL_EXPLORATION,
+                route_exploration=config.TWO_PASS_ROUTE_EXPLORATION,
             )
             logger.info(
                 f"TwoPassOptimizer 초기화 완료 "
-                f"(workers={config.TWO_PASS_MAX_WORKERS})"
+                f"(workers={config.TWO_PASS_MAX_WORKERS}, "
+                f"initial_threads={config.TWO_PASS_INITIAL_THREADS}, "
+                f"route_threads={config.TWO_PASS_ROUTE_THREADS}, "
+                f"initial_exploration={config.TWO_PASS_INITIAL_EXPLORATION}, "
+                f"route_exploration={config.TWO_PASS_ROUTE_EXPLORATION})"
             )
 
         # v3.0: UnreachableFilter
@@ -148,6 +154,7 @@ class OptimizationController:
                 }
 
         # 3. 최적화 실행
+        used_two_pass = False
         if self.enable_multi_scenario or control_level == ControlLevel.PREMIUM:
             # 다중 시나리오 (기존)
             result = await self._optimize_multi_scenario(vrp_input, vroom_config)
@@ -155,6 +162,7 @@ class OptimizationController:
         elif self.two_pass_optimizer and num_jobs >= 10:
             # 2-Pass 최적화 (v3.0 - 10개 이상 작업일 때)
             logger.info(f"[2-PASS] 2단계 최적화 실행 (jobs={num_jobs})")
+            used_two_pass = True
             result = await self.two_pass_optimizer.optimize(
                 vrp_input, geometry=True,
             )
@@ -162,6 +170,19 @@ class OptimizationController:
         else:
             # 단일 최적화
             result = await self._call_vroom(vrp_input, vroom_config)
+
+        # 실행 파라미터를 결과에 삽입 (api 레이어에서 _metadata로 올림)
+        result['_execution'] = {
+            'two_pass': used_two_pass,
+            'vroom_threads': vroom_config.get('threads', config.VROOM_THREADS),
+            'vroom_exploration': vroom_config.get('exploration', config.VROOM_EXPLORATION),
+            'pass1_threads': config.TWO_PASS_INITIAL_THREADS if used_two_pass else None,
+            'pass2_threads': config.TWO_PASS_ROUTE_THREADS if used_two_pass else None,
+            'pass1_exploration': config.TWO_PASS_INITIAL_EXPLORATION if used_two_pass else None,
+            'pass2_exploration': config.TWO_PASS_ROUTE_EXPLORATION if used_two_pass else None,
+            'pass2_max_workers': config.TWO_PASS_MAX_WORKERS if used_two_pass else None,
+            'computing_times': result.get('summary', {}).get('computing_times'),
+        }
 
         # 도달 불가능 작업을 unassigned에 추가
         if unreachable_jobs:

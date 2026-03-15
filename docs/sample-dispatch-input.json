@@ -1,0 +1,410 @@
+{
+    "meta": {
+        "request_id": "SAMPLE-001",
+        "date": "2026-03-16",
+        "region_mode": "strict",
+        "source": "simulator"
+    },
+    "vehicles": [
+        {
+            "id": 1,
+            "driver_id": "KP-D001",
+            "driver_name": "\uae40\ucca0\uc218",
+            "grade": "A",
+            "service_grade": "A",
+            "capacity_cbm": 14.0,
+            "location": {
+                "start": [
+                    126.715,
+                    37.619
+                ],
+                "end": [
+                    126.748,
+                    37.626
+                ],
+                "center": [
+                    126.715,
+                    37.619
+                ],
+                "home": [
+                    126.748,
+                    37.626
+                ]
+            },
+            "region_code": "KP",
+            "crew": {
+                "size": 2,
+                "type": "2\uc778",
+                "is_filler": false,
+                "can_joint_dispatch": false
+            },
+            "new_product_restricted": false,
+            "avoid_models": [],
+            "fee_status": {
+                "monthly_accumulated": 3200000
+            }
+        },
+        {
+            "id": 2,
+            "driver_id": "KP-D002",
+            "driver_name": "\uc774\uc601\ud76c",
+            "grade": "B",
+            "service_grade": "B",
+            "capacity_cbm": 12.0,
+            "location": {
+                "start": [
+                    126.715,
+                    37.619
+                ],
+                "end": [
+                    126.838,
+                    37.561
+                ],
+                "center": [
+                    126.715,
+                    37.619
+                ],
+                "home": [
+                    126.838,
+                    37.561
+                ]
+            },
+            "region_code": "KP",
+            "crew": {
+                "size": 1,
+                "type": "1\uc778",
+                "is_filler": false,
+                "can_joint_dispatch": false
+            },
+            "new_product_restricted": false,
+            "avoid_models": [],
+            "fee_status": {
+                "monthly_accumulated": 5800000
+            }
+        },
+        {
+            "id": 3,
+            "driver_id": "KP-D003",
+            "driver_name": "\ubc15\ubbfc\uc900",
+            "grade": "C",
+            "service_grade": "C",
+            "capacity_cbm": 10.0,
+            "location": {
+                "start": [
+                    126.715,
+                    37.619
+                ],
+                "end": [
+                    126.691,
+                    37.559
+                ],
+                "center": [
+                    126.715,
+                    37.619
+                ],
+                "home": [
+                    126.691,
+                    37.559
+                ]
+            },
+            "region_code": "KP",
+            "crew": {
+                "size": 1,
+                "type": "1\uc778",
+                "is_filler": true,
+                "can_joint_dispatch": false
+            },
+            "new_product_restricted": false,
+            "avoid_models": [],
+            "fee_status": {
+                "monthly_accumulated": 2100000
+            }
+        }
+    ],
+    "jobs": [
+        {
+            "id": 1,
+            "order_id": "ORD-KP-001",
+            "location": [
+                126.691,
+                37.559
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "TV-65Q",
+                    "model_name": "65\uc778\uce58 QLED TV",
+                    "cbm": 1.8,
+                    "fee": 65000,
+                    "is_new_product": false,
+                    "required_grade": "B",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\uc8041",
+                "service_minutes": 25
+            },
+            "constraints": {
+                "crew_type": "any"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 65000
+            }
+        },
+        {
+            "id": 2,
+            "order_id": "ORD-KP-002",
+            "location": [
+                126.721,
+                37.582
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "WM-21K",
+                    "model_name": "\ub4dc\ub7fc\uc138\ud0c1\uae30 21kg",
+                    "cbm": 2.2,
+                    "fee": 90000,
+                    "is_new_product": false,
+                    "required_grade": "A",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\uc8041",
+                "service_minutes": 60
+            },
+            "constraints": {
+                "crew_type": "2\uc778"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 90000
+            }
+        },
+        {
+            "id": 3,
+            "order_id": "ORD-KP-003",
+            "location": [
+                126.763,
+                37.505
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "BOX-STD",
+                    "model_name": "\ubc15\uc2a4 \ubc30\uc1a1\ud488",
+                    "cbm": 0.3,
+                    "fee": 18000,
+                    "is_new_product": false,
+                    "required_grade": "C",
+                    "quantity": 3
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\ud6c41",
+                "service_minutes": 25
+            },
+            "constraints": {
+                "crew_type": "any"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 54000
+            }
+        },
+        {
+            "id": 4,
+            "order_id": "ORD-KP-004",
+            "location": [
+                126.858,
+                37.502
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "REF-870L",
+                    "model_name": "\uc591\ubb38\ud615 \ub0c9\uc7a5\uace0 870L",
+                    "cbm": 3.8,
+                    "fee": 130000,
+                    "is_new_product": false,
+                    "required_grade": "A",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\uc8041",
+                "service_minutes": 60
+            },
+            "constraints": {
+                "crew_type": "2\uc778"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 130000
+            }
+        },
+        {
+            "id": 5,
+            "order_id": "ORD-KP-005",
+            "location": [
+                126.8826,
+                37.481
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "MSR-001",
+                    "model_name": "\uc2e4\uce21 \uc11c\ube44\uc2a4",
+                    "cbm": 0.0,
+                    "fee": 30000,
+                    "is_new_product": false,
+                    "required_grade": "C",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\ud6c42",
+                "service_minutes": 20
+            },
+            "constraints": {
+                "crew_type": "any"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 30000
+            }
+        },
+        {
+            "id": 6,
+            "order_id": "ORD-KP-006",
+            "location": [
+                126.8997,
+                37.578
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "RCV-AC",
+                    "model_name": "\uc5d0\uc5b4\ucee8 \ud68c\uc218",
+                    "cbm": 1.5,
+                    "fee": 45000,
+                    "is_new_product": false,
+                    "required_grade": "B",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\ud6c41",
+                "service_minutes": 30
+            },
+            "constraints": {
+                "crew_type": "any"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 45000
+            }
+        },
+        {
+            "id": 7,
+            "order_id": "ORD-KP-007",
+            "location": [
+                126.925,
+                37.5217
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "DW-14S",
+                    "model_name": "\uc2dd\uae30\uc138\ucc99\uae30 14\uc778\uc6a9",
+                    "cbm": 1.6,
+                    "fee": 75000,
+                    "is_new_product": true,
+                    "required_grade": "A",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\uc8041",
+                "service_minutes": 60
+            },
+            "constraints": {
+                "crew_type": "2\uc778"
+            },
+            "priority": {
+                "level": 1,
+                "is_urgent": false,
+                "is_vip": true
+            },
+            "fees": {
+                "install_fee": 75000
+            }
+        },
+        {
+            "id": 8,
+            "order_id": "ORD-KP-008",
+            "location": [
+                126.9769,
+                37.5725
+            ],
+            "region_code": "KP",
+            "products": [
+                {
+                    "model_code": "AC-18K",
+                    "model_name": "\uc5d0\uc5b4\ucee8 18K (S\uae09 \uc2e0\uc81c\ud488)",
+                    "cbm": 2.0,
+                    "fee": 150000,
+                    "is_new_product": true,
+                    "required_grade": "S",
+                    "quantity": 1
+                }
+            ],
+            "scheduling": {
+                "preferred_time_slot": "\uc624\ud6c43",
+                "service_minutes": 60
+            },
+            "constraints": {
+                "crew_type": "2\uc778"
+            },
+            "priority": {
+                "level": 0,
+                "is_urgent": false,
+                "is_vip": false
+            },
+            "fees": {
+                "install_fee": 150000
+            }
+        }
+    ],
+    "options": {
+        "max_tasks_per_driver": 12,
+        "geometry": true
+    }
+}

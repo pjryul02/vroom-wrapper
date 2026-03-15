@@ -1,0 +1,569 @@
+{
+  "status": "partial",
+  "meta": {
+    "request_id": "SAMPLE-001",
+    "date": "2026-03-16",
+    "execution_time_ms": 205,
+    "engine": "direct",
+    "vroom_code": 0,
+    "regions_processed": [
+      "KP"
+    ]
+  },
+  "statistics": {
+    "total_orders": 8,
+    "assigned_orders": 7,
+    "unassigned_orders": 1,
+    "assignment_rate": 87.5,
+    "joint_dispatch_count": 0,
+    "total_vehicles": 3,
+    "active_vehicles": 2,
+    "total_distance_km": 115.9
+  },
+  "results": [
+    {
+      "order_id": "ORD-KP-002",
+      "model_name": "드럼세탁기 21kg",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 1,
+      "scheduled_arrival": "08:09",
+      "install_fee": 90000
+    },
+    {
+      "order_id": "ORD-KP-001",
+      "model_name": "65인치 QLED TV",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 2,
+      "scheduled_arrival": "09:50",
+      "install_fee": 65000
+    },
+    {
+      "order_id": "ORD-KP-004",
+      "model_name": "양문형 냉장고 870L",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 3,
+      "scheduled_arrival": "11:03",
+      "install_fee": 130000
+    },
+    {
+      "order_id": "ORD-KP-007",
+      "model_name": "식기세척기 14인용",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 4,
+      "scheduled_arrival": "12:36",
+      "install_fee": 75000
+    },
+    {
+      "order_id": "ORD-KP-006",
+      "model_name": "에어컨 회수",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 5,
+      "scheduled_arrival": "14:12",
+      "install_fee": 45000
+    },
+    {
+      "order_id": "ORD-KP-003",
+      "model_name": "박스 배송품 x3",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D002",
+      "driver_name": "이영희",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 1,
+      "scheduled_arrival": "13:53",
+      "install_fee": 54000
+    },
+    {
+      "order_id": "ORD-KP-005",
+      "model_name": "실측 서비스",
+      "dispatch_type": "단독",
+      "driver_id": "KP-D002",
+      "driver_name": "이영희",
+      "secondary_driver_id": null,
+      "secondary_driver_name": null,
+      "delivery_sequence": 2,
+      "scheduled_arrival": "15:00",
+      "install_fee": 30000
+    }
+  ],
+  "driver_summary": [
+    {
+      "driver_id": "KP-D001",
+      "driver_name": "김철수",
+      "grade": "A",
+      "service_grade": "A",
+      "assigned_count": 5,
+      "total_fee": 405000,
+      "distance_km": 71.9,
+      "c2_status": "ok",
+      "c2_threshold": 400000,
+      "monthly_after": 3605000,
+      "c6_status": "ok",
+      "c6_cap": 11000000
+    },
+    {
+      "driver_id": "KP-D002",
+      "driver_name": "이영희",
+      "grade": "B",
+      "service_grade": "B",
+      "assigned_count": 2,
+      "total_fee": 84000,
+      "distance_km": 44.0,
+      "c2_status": "warning",
+      "c2_threshold": 220000,
+      "monthly_after": 5884000,
+      "c6_status": "ok",
+      "c6_cap": 9000000
+    },
+    {
+      "driver_id": "KP-D003",
+      "driver_name": "박민준",
+      "grade": "C",
+      "service_grade": "C",
+      "assigned_count": 0,
+      "total_fee": 0,
+      "distance_km": 0.0,
+      "c2_status": "ok",
+      "c2_threshold": 0,
+      "monthly_after": 2100000,
+      "c6_status": "ok",
+      "c6_cap": 7000000
+    }
+  ],
+  "unassigned": [
+    {
+      "order_id": "ORD-KP-008",
+      "constraint": "C7_신제품",
+      "reason": "[C7] 신제품 교육 미이수 — 에어컨 18K (S급 신제품) 처리 기사 없음",
+      "reasons": [
+        {
+          "type": "C7",
+          "description": "신제품 취급 불가 기사만 존재 (에어컨 18K (S급 신제품))"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "type": "C4_GRADE_SHORTAGE",
+      "message": "기능도 S 이상 오더 1건 vs 처리 가능 기사 0명",
+      "grade": "S",
+      "demand": 1,
+      "supply": 0
+    },
+    {
+      "type": "C4_GRADE_SHORTAGE",
+      "message": "기능도 A 이상 오더 4건 vs 처리 가능 기사 1명",
+      "grade": "A",
+      "demand": 4,
+      "supply": 1
+    },
+    {
+      "type": "C4_GRADE_SHORTAGE",
+      "message": "기능도 B 이상 오더 6건 vs 처리 가능 기사 2명",
+      "grade": "B",
+      "demand": 6,
+      "supply": 2
+    },
+    {
+      "type": "C4_GRADE_SHORTAGE",
+      "message": "기능도 C 이상 오더 8건 vs 처리 가능 기사 3명",
+      "grade": "C",
+      "demand": 8,
+      "supply": 3
+    },
+    {
+      "type": "C4_GRADE_SHORTAGE",
+      "message": "기능도 D 이상 오더 8건 vs 처리 가능 기사 3명",
+      "grade": "D",
+      "demand": 8,
+      "supply": 3
+    },
+    {
+      "type": "C2_FEE_BELOW_THRESHOLD",
+      "driver_id": "KP-D002",
+      "driver_name": "이영희",
+      "message": "기사 KP-D002: 일일수익 84,000원 (설치비 84,000 + 거리비 0) < 하한 220,000원",
+      "daily_income": 84000,
+      "install_fee": 84000,
+      "distance_fee": 0,
+      "distance_km": 44.0,
+      "threshold": 220000
+    }
+  ],
+  "routes": [
+    {
+      "vehicle": 1,
+      "cost": 6160,
+      "description": "KP-D001_김철수",
+      "delivery": [
+        1090,
+        0,
+        0
+      ],
+      "amount": [
+        1090,
+        0,
+        0
+      ],
+      "pickup": [
+        0,
+        0,
+        0
+      ],
+      "setup": 0,
+      "service": 21600,
+      "duration": 5160,
+      "waiting_time": 0,
+      "priority": 81,
+      "distance": 71871,
+      "steps": [
+        {
+          "type": "start",
+          "location": [
+            126.715,
+            37.619
+          ],
+          "location_index": 0,
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            1090,
+            0,
+            0
+          ],
+          "arrival": 1773615600,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-002 [드럼세탁기 21kg]",
+          "location": [
+            126.721,
+            37.582
+          ],
+          "location_index": 4,
+          "id": 2,
+          "setup": 0,
+          "service": 5100,
+          "waiting_time": 0,
+          "job": 2,
+          "load": [
+            870,
+            0,
+            0
+          ],
+          "arrival": 1773616150,
+          "duration": 550,
+          "violations": [],
+          "distance": 5790
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-001 [65인치 QLED TV]",
+          "location": [
+            126.691,
+            37.559
+          ],
+          "location_index": 3,
+          "id": 1,
+          "setup": 0,
+          "service": 3000,
+          "waiting_time": 0,
+          "job": 1,
+          "load": [
+            690,
+            0,
+            0
+          ],
+          "arrival": 1773622214,
+          "duration": 1514,
+          "violations": [],
+          "distance": 16500
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-004 [양문형 냉장고 870L]",
+          "location": [
+            126.858,
+            37.502
+          ],
+          "location_index": 6,
+          "id": 4,
+          "setup": 0,
+          "service": 5100,
+          "waiting_time": 0,
+          "job": 4,
+          "load": [
+            310,
+            0,
+            0
+          ],
+          "arrival": 1773626615,
+          "duration": 2915,
+          "violations": [],
+          "distance": 36865
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-007 [식기세척기 14인용]",
+          "location": [
+            126.925,
+            37.5217
+          ],
+          "location_index": 9,
+          "id": 7,
+          "setup": 0,
+          "service": 5100,
+          "waiting_time": 0,
+          "job": 7,
+          "load": [
+            150,
+            0,
+            0
+          ],
+          "arrival": 1773632218,
+          "duration": 3418,
+          "violations": [],
+          "distance": 44660
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-006 [에어컨 회수]",
+          "location": [
+            126.8997,
+            37.578
+          ],
+          "location_index": 8,
+          "id": 6,
+          "setup": 0,
+          "service": 3300,
+          "waiting_time": 0,
+          "job": 6,
+          "load": [
+            0,
+            0,
+            0
+          ],
+          "arrival": 1773637946,
+          "duration": 4046,
+          "violations": [],
+          "distance": 54365
+        },
+        {
+          "type": "end",
+          "location": [
+            126.748,
+            37.626
+          ],
+          "location_index": 1,
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            0,
+            0,
+            0
+          ],
+          "arrival": 1773642360,
+          "duration": 5160,
+          "violations": [],
+          "distance": 71871
+        }
+      ],
+      "violations": []
+    },
+    {
+      "vehicle": 2,
+      "cost": 3960,
+      "description": "KP-D002_이영희",
+      "delivery": [
+        89,
+        0,
+        0
+      ],
+      "amount": [
+        89,
+        0,
+        0
+      ],
+      "pickup": [
+        0,
+        0,
+        0
+      ],
+      "setup": 0,
+      "service": 5700,
+      "duration": 2960,
+      "waiting_time": 0,
+      "priority": 0,
+      "distance": 43988,
+      "steps": [
+        {
+          "type": "start",
+          "location": [
+            126.715,
+            37.619
+          ],
+          "location_index": 0,
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            89,
+            0,
+            0
+          ],
+          "arrival": 1773635674,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-003 [박스 배송품 x3]",
+          "location": [
+            126.763,
+            37.505
+          ],
+          "location_index": 5,
+          "id": 3,
+          "setup": 0,
+          "service": 3000,
+          "waiting_time": 0,
+          "job": 3,
+          "load": [
+            0,
+            0,
+            0
+          ],
+          "arrival": 1773636809,
+          "duration": 1135,
+          "violations": [],
+          "distance": 18463
+        },
+        {
+          "type": "job",
+          "description": "ORD-KP-005 [실측 서비스]",
+          "location": [
+            126.8826,
+            37.481
+          ],
+          "location_index": 7,
+          "id": 5,
+          "setup": 0,
+          "service": 2700,
+          "waiting_time": 0,
+          "job": 5,
+          "load": [
+            0,
+            0,
+            0
+          ],
+          "arrival": 1773640800,
+          "duration": 2126,
+          "violations": [],
+          "distance": 31222
+        },
+        {
+          "type": "end",
+          "location": [
+            126.838,
+            37.561
+          ],
+          "location_index": 2,
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "load": [
+            0,
+            0,
+            0
+          ],
+          "arrival": 1773644334,
+          "duration": 2960,
+          "violations": [],
+          "distance": 43988
+        }
+      ],
+      "violations": [],
+      "_note": "(steps 생략 — job 2건)"
+    }
+  ],
+  "analysis": {
+    "quality_score": 79.9,
+    "assignment_rate": 87.5,
+    "route_balance": {
+      "routes": [
+        {
+          "vehicle": 1,
+          "num_jobs": 5,
+          "duration": 5160,
+          "distance": 71871
+        },
+        {
+          "vehicle": 2,
+          "num_jobs": 2,
+          "duration": 2960,
+          "distance": 43988
+        }
+      ],
+      "balance_score": 57.14
+    },
+    "time_window_utilization": {
+      "utilization": [
+        {
+          "vehicle": 1,
+          "start_time": 1773615600,
+          "end_time": 1773642360,
+          "duration": 26760
+        },
+        {
+          "vehicle": 2,
+          "start_time": 1773635674,
+          "end_time": 1773644334,
+          "duration": 8660
+        }
+      ]
+    },
+    "suggestions": [
+      "경로 균형도가 낮습니다 (57.1%). 작업 분배를 개선하거나 차량 용량을 조정하세요.",
+      "1개 작업이 미배정되었습니다. 제약조건 완화 또는 차량 추가를 시도하세요."
+    ],
+    "data_quality": {
+      "no_products": [],
+      "time_undefined": [],
+      "cbm_exceeds_all_vehicles": [],
+      "grade_d_no_driver": [],
+      "summary": {
+        "no_products_count": 0,
+        "time_undefined_count": 0,
+        "cbm_exceeds_count": 0,
+        "grade_d_warn_count": 0
+      }
+    }
+  }
+}

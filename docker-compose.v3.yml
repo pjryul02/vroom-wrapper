@@ -123,8 +123,10 @@ services:
       # 2-Pass 최적화
       - TWO_PASS_ENABLED=true
       - TWO_PASS_MAX_WORKERS=4
-      - TWO_PASS_INITIAL_THREADS=16
+      - TWO_PASS_INITIAL_THREADS=8
       - TWO_PASS_ROUTE_THREADS=4
+      - TWO_PASS_INITIAL_EXPLORATION=5
+      - TWO_PASS_ROUTE_EXPLORATION=5
 
       # HGLIS 매트릭스 사전 계산
       - MATRIX_PREP_ENABLED=true
@@ -136,12 +138,17 @@ services:
       # OSRM 매트릭스 청킹
       - OSRM_CHUNK_SIZE=75
       - OSRM_MAX_WORKERS=8
+      - MATRIX_CACHE_TTL=300
+      - MATRIX_PARALLEL_REQUESTS=10
 
       # Redis
       - REDIS_URL=redis://redis:6379
 
       # 동시 실행 제한
       - MAX_CONCURRENT_DISPATCH=3
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=100
+      - RATE_LIMIT_WINDOW=3600
 
       # 로그
       - LOG_LEVEL=DEBUG
@@ -172,7 +179,7 @@ services:
       dockerfile: Dockerfile.v3
     container_name: vroom-celery-worker
     hostname: vroom-worker-1
-    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker1@%h
+    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=debug --concurrency=2 -n worker1@%h
     environment:
       - USE_DIRECT_CALL=true
       - VROOM_BINARY_PATH=/usr/local/bin/vroom
@@ -185,12 +192,23 @@ services:
       - REDIS_URL=redis://redis:6379
       - TWO_PASS_ENABLED=true
       - TWO_PASS_MAX_WORKERS=4
+      - TWO_PASS_INITIAL_THREADS=8
+      - TWO_PASS_ROUTE_THREADS=4
+      - TWO_PASS_INITIAL_EXPLORATION=5
+      - TWO_PASS_ROUTE_EXPLORATION=5
       - MATRIX_PREP_ENABLED=true
       - UNREACHABLE_FILTER_ENABLED=true
       - UNREACHABLE_THRESHOLD=43200
       - OSRM_CHUNK_SIZE=75
       - OSRM_MAX_WORKERS=8
-      - LOG_LEVEL=INFO
+      - MATRIX_CACHE_TTL=300
+      - MATRIX_PARALLEL_REQUESTS=10
+      - VALHALLA_CHUNK_SIZE=50
+      - VALHALLA_MAX_WORKERS=4
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=100
+      - RATE_LIMIT_WINDOW=3600
+      - LOG_LEVEL=DEBUG
       - PYTHONUNBUFFERED=1
     depends_on:
       osrm:
@@ -210,7 +228,7 @@ services:
       dockerfile: Dockerfile.v3
     container_name: vroom-celery-worker-2
     hostname: vroom-worker-2
-    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=info --concurrency=3 -n worker2@%h
+    command: python -m celery -A src.services.celery_app.celery_app worker --loglevel=debug --concurrency=2 -n worker2@%h
     environment:
       - USE_DIRECT_CALL=true
       - VROOM_BINARY_PATH=/usr/local/bin/vroom
@@ -223,12 +241,23 @@ services:
       - REDIS_URL=redis://redis:6379
       - TWO_PASS_ENABLED=true
       - TWO_PASS_MAX_WORKERS=4
+      - TWO_PASS_INITIAL_THREADS=8
+      - TWO_PASS_ROUTE_THREADS=4
+      - TWO_PASS_INITIAL_EXPLORATION=5
+      - TWO_PASS_ROUTE_EXPLORATION=5
       - MATRIX_PREP_ENABLED=true
       - UNREACHABLE_FILTER_ENABLED=true
       - UNREACHABLE_THRESHOLD=43200
       - OSRM_CHUNK_SIZE=75
       - OSRM_MAX_WORKERS=8
-      - LOG_LEVEL=INFO
+      - MATRIX_CACHE_TTL=300
+      - MATRIX_PARALLEL_REQUESTS=10
+      - VALHALLA_CHUNK_SIZE=50
+      - VALHALLA_MAX_WORKERS=4
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=100
+      - RATE_LIMIT_WINDOW=3600
+      - LOG_LEVEL=DEBUG
       - PYTHONUNBUFFERED=1
     depends_on:
       osrm:

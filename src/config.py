@@ -51,6 +51,8 @@ TWO_PASS_ENABLED = os.getenv("TWO_PASS_ENABLED", "true").lower() == "true"
 TWO_PASS_MAX_WORKERS = int(os.getenv("TWO_PASS_MAX_WORKERS", "4"))
 TWO_PASS_INITIAL_THREADS = int(os.getenv("TWO_PASS_INITIAL_THREADS", "16"))
 TWO_PASS_ROUTE_THREADS = int(os.getenv("TWO_PASS_ROUTE_THREADS", "4"))
+TWO_PASS_INITIAL_EXPLORATION = int(os.getenv("TWO_PASS_INITIAL_EXPLORATION", "5"))
+TWO_PASS_ROUTE_EXPLORATION = int(os.getenv("TWO_PASS_ROUTE_EXPLORATION", "5"))
 
 
 # ============================================================

@@ -2368,16 +2368,23 @@ Pydantic 검증 실패 (422):
 | `OSRM_URL` | `http://osrm:5000` | OSRM 서버 URL |
 | `OSRM_CHUNK_SIZE` | `75` | 매트릭스 청크 크기 (75x75) |
 | `OSRM_MAX_WORKERS` | `8` | 매트릭스 병렬 처리 워커 수 |
+| `VALHALLA_URL` | `http://valhalla:8002` | Valhalla 서버 URL |
+| `VALHALLA_CHUNK_SIZE` | `50` | Valhalla 매트릭스 청크 크기 |
+| `VALHALLA_MAX_WORKERS` | `4` | Valhalla 병렬 처리 워커 수 |
 
 ### 최적화 파이프라인
 
 | 변수 | 기본값 | 설명 |
 |------|--------|------|
 | `TWO_PASS_ENABLED` | `true` | 2-Pass 최적화 활성화 |
-| `TWO_PASS_MAX_WORKERS` | `4` | Pass 2 병렬 워커 수 |
-| `TWO_PASS_INITIAL_THREADS` | `16` | Pass 1 (배정) 스레드 수 |
-| `TWO_PASS_ROUTE_THREADS` | `4` | Pass 2 (경로 최적화) 스레드 수 |
+| `TWO_PASS_MAX_WORKERS` | `4` | Pass 2 동시 경로 최적화 수 |
+| `TWO_PASS_INITIAL_THREADS` | `8` | Pass 1 (전체 배정) VROOM 스레드 수 |
+| `TWO_PASS_ROUTE_THREADS` | `4` | Pass 2 (경로별 순서) VROOM 스레드 수 |
+| `TWO_PASS_INITIAL_EXPLORATION` | `5` | Pass 1 탐색 깊이 (1~5, 높을수록 품질↑ 속도↓) |
+| `TWO_PASS_ROUTE_EXPLORATION` | `5` | Pass 2 탐색 깊이 (1~5) |
 | `MATRIX_PREP_ENABLED` | `true` | OSRM 매트릭스 사전 계산 (HGLIS 파이프라인) |
+| `MATRIX_CACHE_TTL` | `300` | 거리행렬 캐시 유효시간 (초) |
+| `MATRIX_PARALLEL_REQUESTS` | `10` | 거리행렬 병렬 요청 수 (높을수록 빠름, OSRM 부하↑) |
 | `UNREACHABLE_FILTER_ENABLED` | `true` | 도달 불가 작업 사전 필터링 |
 | `UNREACHABLE_THRESHOLD` | `43200` | 도달 불가 판정 기준 (초, 기본 12시간) |
 
